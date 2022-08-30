@@ -1,32 +1,92 @@
-#include "Client.h"
+ï»¿#include "Client.h"
 #include "Product.h"
 #include <vector>
 #include <algorithm>
+#include <windows.h>	//ì½˜ì†” ì§€ìš°ê¸° ìœ„í•œ í—¤ë”
+#include "ClientManager.cpp"
+#include "ProductManager.cpp"
+
+void showMenu();
+void search_client();
 int main()
 {
-	cout << "========================================================================" << endl;
-	cout << "                           »óÇ° °ü¸® ÇÁ·Î±×·¥                         " << endl;
-	cout << "                           1. °í°´ Á¤º¸ °ü¸®                         " << endl;
-	cout << "                           2. »óÇ° Á¤º¸ °ü¸®                         " << endl;
-	cout << "                           3. ¼îÇÎ Á¤º¸ °ü¸®                         " << endl;
-	cout << "                        ¸î¹øÀ» ÀÔ·Â ÇÏ½Ã°Ú½À´Ï±î ?                         " << endl;
-	cout << "========================================================================" << endl;
-	vector<Client*> clientList;
-	vector<Product*> productList;
+	int menu;
+	int customer_menu;
+	int product_menu;
 
-	Client* client1 = new Client("È«", "01022426950", "¾È»ê½Ã");
-	Product* product1 = new Product(1178465412, "ÀÓÇÃ¶õÆ®", 716200);
+	ClientManager CM;
+	ProductManager PM;
 
-	clientList.push_back(client1);
-	productList.push_back(product1);
+	while (1) {
+		//system("cls");
+		showMenu();
+		cin >> menu;
+		switch (menu)
+		{
+		case 1:		//ê³ ê° ì •ë³´ ê´€ë¦¬
+			system("cls");
 
-	for_each(clientList.begin(), clientList.end(), [](Client* c) {
-		cout << c->getName() << " : " << c->getPhoneNumber()<<"   " << c->getAddress() << endl;
-		});
+			cout << "1. ì…ë ¥ / 2. ì¡°íšŒ / 3. ê²€ìƒ‰ / 4. ì‚­ì œ / 5. ë³€ê²½" << endl;
 
-	for_each(productList.begin(), productList.end(), [](Product* p) {
-		cout << "»óÇ°ÄÚµå : " << p->getProductID()<<" »óÇ° ¸í : " << p->getProductName() << " °¡°İ : " << p->getPrice() << endl;
-		});
+			cin >> customer_menu;
+			switch (customer_menu) 
+			{
+			case 1:		//ì…ë ¥
+				CM.add_Client();
+				break;
+			case 2:		//ì¡°íšŒ
+				CM.add_client_print();
+				break;
+			case 3:		//ê²€ìƒ‰
+				break;
+			case 4:		//ì‚­ì œ
+				break;
+			case 5:		//ë³€ê²½
+				CM.search_client();
+				break;
+			}
+			
+			break;
+
+		case 2:		//ìƒí’ˆ ì •ë³´ ê´€ë¦¬
+			system("cls");
+			
+			cout << "1. ì…ë ¥ / 2. ì¡°íšŒ / 3. ê²€ìƒ‰ / 4. ì‚­ì œ / 5. ë³€ê²½" << endl;
+			cin >> product_menu;
+			switch (product_menu)
+			{
+			case 1:		//ì…ë ¥
+				PM.add_Product();
+				break;
+			case 2:		//ì¡°íšŒ
+				PM.add_Product_print();
+				break;
+			case 3:		//ê²€ìƒ‰
+				break;
+			case 4:		//ì‚­ì œ
+				break;
+			case 5:		//ë³€ê²½
+				break;
+			}
+			break;
+		case 3:		//ì‡¼í•‘ ì •ë³´ ê´€ë¦¬
+
+			break;
+		}
+
+	}
+
+
 
 	return 0;
+}
+void showMenu() 
+{
+	cout << "========================================================================" << endl;
+	cout << "                           ìƒí’ˆ ê´€ë¦¬ í”„ë¡œê·¸ë¨                         " << endl;
+	cout << "                           1. ê³ ê° ì •ë³´ ê´€ë¦¬                         " << endl;
+	cout << "                           2. ìƒí’ˆ ì •ë³´ ê´€ë¦¬                         " << endl;
+	cout << "                           3. ì‡¼í•‘ ì •ë³´ ê´€ë¦¬                         " << endl;
+	cout << "                        ëª‡ë²ˆì„ ì…ë ¥ í•˜ì‹œê² ìŠµë‹ˆê¹Œ ?                       " << endl;
+	cout << "========================================================================" << endl;
 }

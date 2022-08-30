@@ -24,12 +24,21 @@
     <ClCompile Include="Product.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="ClientManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProductManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Product.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopInfo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
