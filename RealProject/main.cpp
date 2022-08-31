@@ -38,11 +38,13 @@ int main()
 				CM.add_client_print();
 				break;
 			case 3:		//검색
+				CM.search_client();
 				break;
 			case 4:		//삭제
+				CM.delete_client();
 				break;
 			case 5:		//변경
-				CM.search_client();
+				
 				break;
 			}
 			

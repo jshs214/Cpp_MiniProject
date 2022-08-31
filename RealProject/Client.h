@@ -10,10 +10,10 @@ class Client {
 public:
     Client(string = "", string ="", string = "", string = "");
 
-    string getName() const;     //고객 이름
-    void setName(string&);
     string getclientID() const;     // 고객 ID
     void setclientID(string&);
+    string getName() const;     //고객 이름
+    void setName(string&);
     string getPhoneNumber() const;  // 전화번호
     void setPhoneNumber(string&);
     string getAddress() const;      //주소
@@ -21,8 +21,8 @@ public:
 
 
 private:
-    string m_name;          // 고객 이름
     string m_clientID;      // 고객 ID
+    string m_name;          // 고객 이름
     string m_phoneNumber;   // 고객 전화번호
     string m_address;       // 고객 주소
     
