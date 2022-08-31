@@ -13,7 +13,9 @@ public:
 		string address;
 
 		system("cls");
-		cout << "[신규 고객 정보 입력]" << endl;
+		cout << "========================================================================" << endl;
+		cout << "                           신규 고객 정보등록                             " << endl;
+		cout << "========================================================================" << endl;
 		cout << "이름 : "; cin >> name;
 		cout << "고객 ID(PK) : "; cin >> clientid;
 		cout << "전화번호 : "; cin >> phonenumber;
@@ -60,64 +62,71 @@ public:
 	void search_client()		//검색
 	{
 		string input;
+		int sch_num;		//검색할 정보
+		string up_data;
+		system("cls");
+		cout << "========================================================================" << endl;
+		cout << "                             고객명 검색                             " << endl;
+		cout << "========================================================================" << endl;
+		cout << "고객명 검색 : "; cin >> input;
 
-		cout << "검색 : "; cin >> input;
-
+		cout << "========================================================================" << endl;
+		cout << "       이름      /     고객 ID     /     전화번호      /       주소" << endl;
+		cout << "========================================================================" << endl;
+		
 		for(auto it = clientList.begin(); it != clientList.end(); ++it)
 		{
 			auto sch_name = (*it)->getName();
 			if (sch_name == input) {
-				cout << "========================================================================" << endl;
-				cout << "                           고객명 검색결과                             " << endl;
-				cout << "========================================================================" << endl;
-				cout << "       이름      /     고객 ID     /     전화번호      /       주소" << endl;
-				cout << "========================================================================" << endl;
 				cout << (*it)->getName() << " / "
 					<< (*it)->getclientID() << " / "
 					<< (*it)->getPhoneNumber() << " / "
 					<< (*it)->getAddress() << endl;
 			}
-			else
-			{
-					cout << "탐색 실패"<<endl;
-			}
 		}
+
 	}
 
 	void delete_client()		//삭제 고객 ID는 pk키로
 	{
+		system("cls");
+		cout << "========================================================================" << endl;
+		cout << "                             고객 정보 삭제                              " << endl;
+		cout << "========================================================================" << endl;
 		string input;
-		cout << "삭제할 고객명 입력하세요 : "; cin >> input;		// 고객명 -> 고객 ID로 수정해야함
+		cout << "삭제할 고객 ID 입력하세요 : "; cin >> input;		// 고객명 -> 고객 ID로 수정해야함
 
 		for (auto it = clientList.begin(); it != clientList.end(); ++it)
 		{
-			auto sch_name = (*it)->getName();
+			auto sch_ID = (*it)->getclientID();
 
-			if (sch_name == input) {
+			if (sch_ID == input) {
 				clientList.erase(it);
-				cout << input <<"정보가 삭제되었습니다." << endl;
+				cout << input <<" 에 대한 정보가 삭제되었습니다." << endl;
 				break;
 			}
-
-			
 		}
 	}
 
 	void update_client()	//값 변경
 	{
-		string input;
-		int up_num;
-		string up_data;
+		cout << "========================================================================" << endl;
+		cout << "                             고객 정보 변경                              " << endl;
+		cout << "========================================================================" << endl;
+		string input;	//고객 ID 위한
+		int up_num;	// 업데이트정보 구분위한 변수
+		string up_data;	// 업데이트 할 데이터
 
-		cout << "정보 수정 할 고객명 : "; cin >> input;		// 고객 ID로 수정해야함
+		cout << "고객 ID 입력 : "; cin >> input;
 
 		for (auto it = clientList.begin(); it != clientList.end(); ++it)
 		{
-			auto sch_name = (*it)->getName();		//입력한 고객명 데이터가 있으면
+			auto sch_name = (*it)->getclientID();		//입력한 고객 ID 데이터가 있으면
 
 			if (sch_name == input) {
 				cout << "1. 이름 변경  2. 전화번호 변경 3. 주소 변경" << endl;
-				cin >> up_num;
+				cin >> up_num;	//변경할 정보
+
 				switch (up_num)
 				{
 				case 1:		//이름 변경
