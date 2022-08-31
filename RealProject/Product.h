@@ -2,7 +2,8 @@
 #define __PRODUCT_H__
 
 #include <iostream>
-
+#include "Line.h"
+#include <Windows.h>
 using namespace std;
 
 class Product{

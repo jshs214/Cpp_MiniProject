@@ -36,7 +36,7 @@ int main()
 				CM.add_Client();
 				break;
 			case 2:		//조회
-				CM.add_client_print();
+				CM.client_print();
 				cout << "종료 (0) "; cin >> back;
 				if(back==0)break;
 			case 3:		//검색
@@ -67,19 +67,26 @@ int main()
 			{
 			case 1:		//입력
 				PM.add_Product();
-				cout << "종료 (0) "; cin >> back;
-				if (back == 0)break;
 				break;
 			case 2:		//조회
-				PM.add_Product_print();
+				PM.Product_print();
 				cout << "종료 (0) "; cin >> back;
 				if (back == 0)break;
 				break;
 			case 3:		//검색
+				PM.search_Product();
+				cout << "종료 (0) "; cin >> back;
+				if (back == 0)break;
 				break;
 			case 4:		//삭제
+				PM.delete_Product();
+				cout << "종료 (0) "; cin >> back;
+				if (back == 0)break;
 				break;
 			case 5:		//변경
+				PM.update_product();
+				cout << "종료 (0) "; cin >> back;
+				if (back == 0)break;
 				break;
 			}
 			break;
@@ -94,9 +101,6 @@ int main()
 		}
 
 	}
-
-
-
 	return 0;
 }
 

@@ -5,13 +5,13 @@
 #include "Line.h"
 class ClientManager {
 public:
-	void add_Client()		// 입력
+	void add_Client()		// 고객 추가
 	{
 		string name;
 		string clientid;
 		string phonenumber;
 		string address;
-
+		
 		system("cls");
 		cout << LINE << endl;
 		cout << "                           신규 고객 정보등록                             " << endl;
@@ -21,21 +21,27 @@ public:
 		cout << "고객 ID(PK) : "; cin >> clientid;
 		cout << "전화번호 : "; cin >> phonenumber;
 		cout << "주소 : "; cin.ignore(); getline(cin, address);
+		
+		while (1) {
+			bool flag = false;
 
-		for (auto it = clientList.begin(); it != clientList.end(); ++it)
-		{
-			auto sch_PK = (*it)->getclientID();
-
-			if (sch_PK == clientid) {
-				while(1){
+			for (auto it = clientList.begin(); it != clientList.end(); ++it)
+			{
+				auto sch_PK = (*it)->getclientID();
+				if (sch_PK == clientid) {
+					flag = true;
+					break;
+				}
+			}
+			if (flag == false)	break;
+			else 
+			{
 				cout << " 중복 id 입니다. 다시 입력해 주세요 : ";
 				cin >> clientid;
-					if (sch_PK != clientid)	break;
-				}
 			}
 		}
 
-		Client* newClient = new Client(name, clientid ,phonenumber, address);
+		Client* newClient = new Client(name, clientid, phonenumber, address);
 		clientList.push_back(newClient);
 
 		cout << "[신규고객 등록 완료]" << endl;
@@ -43,7 +49,7 @@ public:
 		Sleep(1000);	//Delay 1초
 	}
 
-	void add_client_print()		//조회
+	void client_print()		//조회
 	{
 
 		system("cls");
@@ -59,7 +65,10 @@ public:
 				<<  c->getPhoneNumber() << " / "
 				<<  c->getAddress() << endl;
 			});
+		
 		cout << "[고객정보 조회 완료]" << endl;
+		cout << LINE << endl;
+		cout << "총 " << clientList.size() << "명의 정보가 있습니다" << endl;
 		cout << LINE << endl;
 	}
 
@@ -109,7 +118,7 @@ public:
 				}
 			}
 			if (flag == false)
-				cout << "입력하신 고객명이 없습니다" << endl;
+				cout << "입력하신 고객 ID가 없습니다" << endl;
 			cout << LINE << endl;
 			break;		// case 2 break;
 		}
@@ -187,6 +196,7 @@ public:
 			}
 			if (flag == false)
 				cout << "입력하신 고객 ID가 없습니다" << endl;
+
 			cout << LINE << endl;
 		}
 	}
