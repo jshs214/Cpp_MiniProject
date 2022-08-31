@@ -44,7 +44,7 @@ int main()
 				CM.delete_client();
 				break;
 			case 5:		//변경
-				
+				CM.update_client();
 				break;
 			}
 			
@@ -74,6 +74,9 @@ int main()
 		case 3:		//쇼핑 정보 관리
 
 			break;
+		case 4:
+			exit(0);
+			break;
 		}
 
 	}
@@ -89,6 +92,7 @@ void showMenu()
 	cout << "                           1. 고객 정보 관리                         " << endl;
 	cout << "                           2. 상품 정보 관리                         " << endl;
 	cout << "                           3. 쇼핑 정보 관리                         " << endl;
+	cout << "                           4. 프로그램 종료                         " << endl;
 	cout << "                        몇번을 입력 하시겠습니까 ?                       " << endl;
 	cout << "========================================================================" << endl;
 }
