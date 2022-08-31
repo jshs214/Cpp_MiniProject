@@ -4,16 +4,16 @@
 
 using namespace std;
 
-Product::Product(int productID, string productName, int price, int stock,string producttype)
+Product::Product(string productID, string productName, int price, int stock,string producttype)
 	: m_productID(productID), m_productName(productName), m_price(price), m_stock(stock), m_productType(producttype)
 {
 }
 
-int Product::getProductID() const
+string Product::getProductID() const
 {
 	return m_productID;
 }
-void Product::setProductID(int& productID)
+void Product::setProductID(string& productID)
 {
 	m_productID = productID;
 }

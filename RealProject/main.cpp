@@ -11,7 +11,7 @@ void showInfo();
 int main()
 {
 	int menu;	// 1. 고객 정보 관리 2. 상품 정보 관리 3. 쇼핑 정보 관리
-	int back = 0;
+	int back;
 	int customer_menu;
 	int product_menu;
 

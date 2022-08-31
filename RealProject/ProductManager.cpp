@@ -7,7 +7,7 @@ class ProductManager {
 public:
 	void add_Product()
 	{
-		int productID;
+		string productID;
 		string productName;
 		int price;
 		int stock;

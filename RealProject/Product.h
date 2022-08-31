@@ -7,10 +7,10 @@ using namespace std;
 
 class Product{
 public:
-    Product(int = 0, string = "", int = 0, int = 0, string="");
+    Product(string = 0, string = "", int = 0, int = 0, string="");
 
-    int getProductID() const; 
-    void setProductID(int&);
+    string getProductID() const;
+    void setProductID(string&);
     string getProductName() const;
     void setProductName(string&);
     int getPrice() const;
@@ -21,7 +21,7 @@ public:
     void setProductType(string &);
 
 private:
-    int m_productID;        // 力前 ID
+    string m_productID;        // 力前 ID
     string m_productName;   // 力前 疙
     int m_price;            // 力前 啊拜
     int m_stock;            // 力前 俺荐
