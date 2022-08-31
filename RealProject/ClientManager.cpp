@@ -13,14 +13,31 @@ public:
 		string address;
 
 		system("cls");
-		cout << " [신규 고객 정보 입력]" << endl;
+		cout << "[신규 고객 정보 입력]" << endl;
 		cout << "이름 : "; cin >> name;
 		cout << "고객 ID(PK) : "; cin >> clientid;
 		cout << "전화번호 : "; cin >> phonenumber;
 		cout << "주소 : "; cin.ignore(); getline(cin, address);
 
-		Client* newClient = new Client(name, clientid,phonenumber, address);
+		for (auto it = clientList.begin(); it != clientList.end(); ++it)
+		{
+			auto sch_PK = (*it)->getclientID();
+
+			if (sch_PK == clientid) {
+				while(1){
+				cout << " 중복 id 입니다. 다시 입력해 주세요 : ";
+				cin >> clientid;
+					if (sch_PK != clientid)	break;
+				}
+			}
+
+		}
+
+		Client* newClient = new Client(name, clientid ,phonenumber, address);
 		clientList.push_back(newClient);
+
+		cout << "[신규 고객 등록 완료]" << endl;
+
 	}
 
 	void add_client_print()		//조회
@@ -29,7 +46,7 @@ public:
 		cout << "========================================================================" << endl;
 		cout << "                               고객정보조회                             " << endl;
 		cout << "========================================================================" << endl;
-		cout << "       이름      /     고객 ID     /     전화번호      /       주소" << endl;
+		cout << "       이름     /   고객 ID (PK)   /     전화번호      /       주소" << endl;
 		cout << "========================================================================" << endl;
 	
 		for_each(clientList.begin(), clientList.end(), [](Client* c) {
@@ -51,18 +68,18 @@ public:
 			auto sch_name = (*it)->getName();
 			if (sch_name == input) {
 				cout << "========================================================================" << endl;
-				cout << "                               검색결과                             " << endl;
+				cout << "                           고객명 검색결과                             " << endl;
 				cout << "========================================================================" << endl;
 				cout << "       이름      /     고객 ID     /     전화번호      /       주소" << endl;
 				cout << "========================================================================" << endl;
-				cout << "이름 : " << (*it)->getName() << endl
-					<< "고객 ID(PK): " << (*it)->getclientID() << endl
-					<< "전화번호 :" << (*it)->getPhoneNumber() << endl
-					<< "주소 : " << (*it)->getAddress() << endl;
+				cout << (*it)->getName() << " / "
+					<< (*it)->getclientID() << " / "
+					<< (*it)->getPhoneNumber() << " / "
+					<< (*it)->getAddress() << endl;
 			}
-			else if(it == clientList.end())
+			else
 			{
-					cout << "탐색 실패";
+					cout << "탐색 실패"<<endl;
 			}
 		}
 	}
@@ -120,10 +137,6 @@ public:
 				}
 			}
 
-			/*else
-			{
-				cout << "탐색 실패";
-			}*/
 		}
 	}
 
