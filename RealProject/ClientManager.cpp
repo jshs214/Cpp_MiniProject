@@ -82,7 +82,7 @@ public:
 			for (auto it = clientList.begin(); it != clientList.end(); ++it)
 			{
 				auto sch_name = (*it)->getName();
-				if (sch_name == input) {
+				if (sch_name.find(input)!= -1) {
 					flag = true;
 					cout << (*it)->getName() << " / "
 						<< (*it)->getclientID() << " / "
@@ -100,7 +100,7 @@ public:
 			for (auto it = clientList.begin(); it != clientList.end(); ++it)
 			{
 				auto sch_id = (*it)->getclientID();
-				if (sch_id == input) {
+				if (sch_id.find(input) != -1) {
 					flag = true;
 					cout << (*it)->getName() << " / "
 						<< (*it)->getclientID() << " / "
