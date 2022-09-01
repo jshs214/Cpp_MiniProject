@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Product::Product(string productID, string productName, int price, int stock,string producttype)
-	: m_productID(productID), m_productName(productName), m_price(price), m_stock(stock), m_productType(producttype)
+Product::Product(string productID, string productName, int price, string producttype)
+	: m_productID(productID), m_productName(productName), m_price(price), m_productType(producttype)
 {
 }
 
@@ -32,14 +32,6 @@ int Product::getPrice() const
 void Product::setPrice(int& price)
 {
 	m_price = price;
-}
-int Product::getStock() const
-{
-	return m_stock;
-}
-void Product::setStock(int& stock)
-{
-	m_stock = stock;
 }
 string Product::getProductType() const
 {

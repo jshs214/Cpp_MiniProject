@@ -19,7 +19,7 @@ public:
     //        });
     //}
 
-    void add_Shoplist(vector<Client*>& clientList, vector<Product*>& productList)       //Client 벡터를 ShopInfo로
+    void add_Shoplist(vector<Client*>& clientList, vector<Product*>& productList)       // 주문하기
     {
         string cid, pid;
         int stock;
@@ -116,7 +116,7 @@ public:
          Sleep(1000);	//Delay 1초
     }
 
-    void shoplist_print(vector<Client*>& clientList, vector<Product*>& productList)     // 주문
+    void shoplist_print(vector<Client*>& clientList, vector<Product*>& productList)     // 조회
     {
         for_each(ShopInfolist.begin(), ShopInfolist.end(), [](ShopInfo* s) {
             cout << s->getshopID() << " / " << s->getProductID() << " / " << s->getStock() << endl;

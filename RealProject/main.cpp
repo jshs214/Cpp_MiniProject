@@ -111,11 +111,7 @@ int main()
 				SM.shoplist_print(CM.getClientList(), PM.getproductList());
 				cout << "종료 (0) "; cin >> back;
 				if (back == 0)break;
-			case 3:		//검색
-				CM.search_client();
-				cout << "종료 (0) "; cin >> back;
-				if (back == 0)break;
-				break;
+
 			}
 			
 			break;
