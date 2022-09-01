@@ -144,6 +144,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Product.cpp" />
     <ClCompile Include="ProductManager.cpp" />
+    <ClCompile Include="ShopInfo.cpp" />
+    <ClCompile Include="ShopInfoManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />

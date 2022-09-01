@@ -84,10 +84,16 @@ public:
 		cout << LINE << endl;
 		cout << "1. 고객명 검색 2. 고객 ID 검색 "; cin >> sch_num;
 
+
 		switch (sch_num)
 		{
 		case 1:
 			cout << "고객명 검색 : "; cin >> input;
+			cout << LINE << endl;
+			cout << "                             고객정보 검색결과                             " << endl;
+			cout << LINE << endl;
+			cout << "       이름     /   고객 ID (PK)   /     전화번호      /       주소" << endl;
+			cout << LINE << endl;
 			for (auto it = clientList.begin(); it != clientList.end(); ++it)
 			{
 				auto sch_name = (*it)->getName();
@@ -100,7 +106,7 @@ public:
 				}	
 			}
 			if (flag == false)
-				cout << "입력하신 고객명이 없습니다" << endl;
+				cout << "[입력하신 고객 ID가 없습니다]" << endl;
 			cout << LINE << endl;
 			break;		// case 1 break;
 
@@ -118,7 +124,7 @@ public:
 				}
 			}
 			if (flag == false)
-				cout << "입력하신 고객 ID가 없습니다" << endl;
+				cout << "[입력하신 고객 ID가 없습니다]" << endl;
 			cout << LINE << endl;
 			break;		// case 2 break;
 		}
@@ -148,7 +154,7 @@ public:
 			}
 		}
 		if (flag == false)
-			cout << "입력하신 고객 ID가 없습니다" << endl;
+			cout << "[입력하신 고객 ID가 없습니다]" << endl;
 		cout << LINE << endl;
 	}
 
@@ -195,10 +201,13 @@ public:
 				}
 			}
 			if (flag == false)
-				cout << "입력하신 고객 ID가 없습니다" << endl;
+				cout << "[입력하신 고객 ID가 없습니다]" << endl;
 
 			cout << LINE << endl;
 		}
+	}
+	vector<Client*>& getClientList() {
+		return clientList;
 	}
 
 private:

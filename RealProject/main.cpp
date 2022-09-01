@@ -1,10 +1,12 @@
 ﻿#include "Client.h"
 #include "Product.h"
+#include "ShopInfo.h"
 #include <vector>
 #include <algorithm>
 #include <windows.h>	//콘솔 지우기 위한 헤더
 #include "ClientManager.cpp"
 #include "ProductManager.cpp"
+#include "ShopInfoManager.cpp"
 
 void showMenu();
 void showInfo();
@@ -17,7 +19,7 @@ int main()
 
 	ClientManager CM;
 	ProductManager PM;
-
+	ShopInfoManager SM;
 	while (1) {
 		//system("cls");
 		showMenu();
@@ -26,7 +28,8 @@ int main()
 		{
 		case 1:		//고객 정보 관리
 			system("cls");
-
+			cout << LINE << endl;
+			cout << "                         고객 관리 프로그램                         " << endl;
 			showInfo();
 
 			cin >> customer_menu;
@@ -58,9 +61,10 @@ int main()
 			
 			break;
 
-		case 2:		//상품 정보 관리
+		case 2:		//제품 정보 관리
 			system("cls");
-			
+			cout << LINE << endl;
+			cout << "                         제품 관리 프로그램                         " << endl;
 			showInfo();
 			cin >> product_menu;
 			switch (product_menu)
@@ -92,7 +96,9 @@ int main()
 			break;
 
 		case 3:		//쇼핑 정보 관리
-
+			SM.getClient(CM.getClientList());
+			cout << "종료 (0) "; cin >> back;
+			if (back == 0)break;
 			break;
 
 		case 4:		// 종료
@@ -108,11 +114,10 @@ void showMenu()
 {
 	system("cls"); 
 	cout << LINE << endl;
-	cout << "                           상품 관리 프로그램                         " << endl;
-	cout << "                           1. 고객 정보 관리                         " << endl;
-	cout << "                           2. 상품 정보 관리                         " << endl;
-	cout << "                           3. 쇼핑 정보 관리                         " << endl;
-	cout << "                           4. 프로그램 종료                         " << endl;
+	cout << "                         고객 / 제품 관리 프로그램                         " << endl;
+	cout << LINE << endl;
+	cout << "1. 고객 정보 관리" << " / " << "2. 제품 정보 관리" << " / " << "3. 쇼핑 정보 관리" << " / " << "4. 프로그램 종료" << endl;
+	cout << LINE << endl;
 	cout << "                        몇번을 입력 하시겠습니까 ?                       " << endl;
 	cout << LINE << endl;
 }
@@ -120,10 +125,6 @@ void showMenu()
 void showInfo()
 {
 	cout << LINE << endl;
-	cout << "                           1. 입력                         " << endl;
-	cout << "                           2. 조회                         " << endl;
-	cout << "                           3. 검색                         " << endl;
-	cout << "                           4. 삭제                         " << endl;
-	cout << "                           5. 변경                         " << endl;
+	cout << "   1.입력   /   2. 조회   /   3. 검색   /   4. 삭제   /   5. 변경   " << endl;
 	cout << LINE << endl;
 }

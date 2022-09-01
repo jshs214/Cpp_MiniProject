@@ -68,7 +68,7 @@ public:
 			});
 		cout << "[제품정보 조회 완료]" << endl;
 		cout << LINE << endl;
-		cout << "총 " << productList.size() << "건의 제품정보가 있습니다" << endl;
+		cout << "[총 " << productList.size() << "건의 제품정보가 있습니다]" << endl;
 		cout << LINE << endl;
 	}
 
@@ -102,7 +102,7 @@ public:
 				}
 			}
 			if (flag == false)
-				cout << "입력하신 제품명이 없습니다" << endl;
+				cout << "[입력하신 제품명이 없습니다]" << endl;
 			cout << LINE << endl;
 			break;		// case 1 break;
 
@@ -121,7 +121,7 @@ public:
 				}
 			}
 			if (flag == false)
-				cout << "입력하신 제품의 종류가 없습니다" << endl;
+				cout << "[입력하신 제품의 종류가 없습니다]" << endl;
 			cout << LINE << endl;
 			break;		// case 2 break;
 		}
@@ -149,7 +149,7 @@ public:
 			}
 		}
 		if (flag == false)
-			cout << "입력하신 제품 ID가 없습니다" << endl;
+			cout << "[입력하신 제품 ID가 없습니다]" << endl;
 		cout << LINE << endl;
 	}
 
@@ -192,7 +192,7 @@ public:
 				}
 			}
 			if (flag == false)
-				cout << "입력하신 제품 ID가 없습니다" << endl;
+				cout << "[입력하신 제품 ID가 없습니다]" << endl;
 
 			cout << LINE << endl;
 		}
