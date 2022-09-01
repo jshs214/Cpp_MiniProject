@@ -111,9 +111,7 @@ int main()
 				SM.shoplist_print(CM.getClientList(), PM.getproductList());
 				cout << "종료 (0) "; cin >> back;
 				if (back == 0)break;
-
 			}
-			
 			break;
 
 		case 4:		// 종료

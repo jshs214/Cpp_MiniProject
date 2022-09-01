@@ -8,7 +8,7 @@ ShopInfo::ShopInfo(string shopcid, string shoppid, int sstock)
 {
 }
 
-string ShopInfo::getshopID() const
+string ShopInfo::getclientID() const
 {
     return m_shopcid;
 }

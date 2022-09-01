@@ -108,9 +108,6 @@ public:
         ShopInfolist.push_back(newShopC);
         }
 
-        for_each(ShopInfolist.begin(), ShopInfolist.end(), [](ShopInfo* s) {
-             cout << s->getshopID() <<" / " << s->getProductID()<< " / " << s->getStock() <<endl;
-        }); 
          cout << "[주문 완료]" << endl;
 
          Sleep(1000);	//Delay 1초
@@ -118,9 +115,44 @@ public:
 
     void shoplist_print(vector<Client*>& clientList, vector<Product*>& productList)     // 조회
     {
-        for_each(ShopInfolist.begin(), ShopInfolist.end(), [](ShopInfo* s) {
-            cout << s->getshopID() << " / " << s->getProductID() << " / " << s->getStock() << endl;
-            });
+        string name;            //Client 고객명
+        string phonenumber;     //  전화번호
+        string address;         //  주소
+        string productname;     //Product 제품명
+        string producttype;  // 종류
+        int price;           //  제품 가격
+        int sum = 0;   //총합
+        for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)    //Shoplist 벡터 검사
+        {
+
+            for (auto cit = clientList.begin(); cit != clientList.end(); ++cit)
+            {
+                if ((*it)->getclientID() == (*cit)->getclientID())
+                {
+                    name = (*cit)->getName();
+                    phonenumber = (*cit)->getPhoneNumber();
+                    address = (*cit)->getAddress();
+                    break;
+                }
+            }
+            for (auto pit = productList.begin(); pit != productList.end(); ++pit)
+            {
+                if ( (*it)->getProductID() == (*pit)->getProductID() )
+                {
+                    productname = (*pit)->getProductName();
+                    producttype = (*pit)->getProductType();
+                    price = (*pit)->getPrice();
+                    sum = price * (*it)->getStock();
+                    break;
+                }
+            }
+
+            cout << (*it)->getclientID()<< " / " << name << " / " << (*it)->getProductID() << " / "
+                <<productname << " / " << producttype << " / " << price << " / "
+                << (*it)->getStock() << " / " <<"결제가격 : "<<sum << " / "
+                <<phonenumber << " / " << address << endl;
+        }
+        cout << "[총 " << ShopInfolist.size() << "건의 주문이 있습니다.]" << endl;
     }
 
 

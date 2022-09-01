@@ -10,7 +10,7 @@ class ShopInfo {
 public:
     ShopInfo(string = "",string = "", int = 0);
 
-    string getshopID() const;     // 绊按 ID
+    string getclientID() const;     // 绊按 ID
     void setclientID(string&);
     string getProductID() const;    // 力前 ID
     void setProductID(string&);
