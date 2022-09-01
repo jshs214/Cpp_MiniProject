@@ -197,7 +197,10 @@ public:
 			cout << LINE << endl;
 		}
 	}
-
+	vector<Product*>& getproductList() {
+		return 	productList;
+		;
+	}
 private:
 	vector<Product*>productList;
 };

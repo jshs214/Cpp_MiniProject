@@ -10,13 +10,14 @@
 
 void showMenu();
 void showInfo();
+void showShopInfo();
 int main()
 {
 	int menu;	// 1. 고객 정보 관리 2. 상품 정보 관리 3. 쇼핑 정보 관리
 	int back;
 	int customer_menu;
 	int product_menu;
-
+	int shoping_menu;
 	ClientManager CM;
 	ProductManager PM;
 	ShopInfoManager SM;
@@ -96,9 +97,27 @@ int main()
 			break;
 
 		case 3:		//쇼핑 정보 관리
-			SM.getClient(CM.getClientList());
-			cout << "종료 (0) "; cin >> back;
-			if (back == 0)break;
+			system("cls");
+			cout << LINE << endl;
+			cout << "                         주문 프로그램                         " << endl;
+			showShopInfo();
+			cin >> shoping_menu;
+			switch (shoping_menu)
+			{
+			case 1:		// 주문
+				SM.add_Shoplist(CM.getClientList(), PM.getproductList());
+				break;
+			case 2:		//주문 현황 조회
+				SM.shoplist_print(CM.getClientList(), PM.getproductList());
+				cout << "종료 (0) "; cin >> back;
+				if (back == 0)break;
+			case 3:		//검색
+				CM.search_client();
+				cout << "종료 (0) "; cin >> back;
+				if (back == 0)break;
+				break;
+			}
+			
 			break;
 
 		case 4:		// 종료
@@ -126,5 +145,11 @@ void showInfo()
 {
 	cout << LINE << endl;
 	cout << "   1.입력   /   2. 조회   /   3. 검색   /   4. 삭제   /   5. 변경   " << endl;
+	cout << LINE << endl;
+}
+void showShopInfo()
+{
+	cout << LINE << endl;
+	cout << "   1. 주문  /   2. 주문내역조회   /     " << endl;
 	cout << LINE << endl;
 }

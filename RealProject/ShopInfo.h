@@ -8,15 +8,19 @@ using namespace std;
 
 class ShopInfo {
 public:
-    ShopInfo(string = "");
+    ShopInfo(string = "",string = "", int = 0);
 
     string getshopID() const;     // °í°´ ID
     void setclientID(string&);
-    
+    string getProductID() const;    // Á¦Ç° ID
+    void setProductID(string&);
+    int getStock() const;
+    void setStock(int& );
 private:
-    //void getClient(vector<Client*>);
+    void add_Shoplist(vector<Client*>, vector<Product*>);
 
     string m_shopcid;
-
+    string m_shoppid;
+    int m_sstock;
 };
 #endif          // __CLIENT_H__
