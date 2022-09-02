@@ -50,7 +50,7 @@ void ClientManager::add_Client()		// 고객 추가
 	cout << "[신규고객 등록 완료]" << endl;
 
 	Sleep(1000);	//Delay 1초
-}
+}// void ClientManager::add_Client()		// 고객 추가함수 종료
 
 void ClientManager::client_print()		//조회
 {
@@ -73,7 +73,7 @@ void ClientManager::client_print()		//조회
 	cout << LINE << endl;
 	cout << "총 " << clientList.size() << "명의 정보가 있습니다" << endl;
 	cout << LINE << endl;
-}// void ClientManager::add_Client()		// 고객 추가함수 종료
+}// void ClientManager::client_print()		// 고객 조회함수 종료
 
 void ClientManager::search_client()		//검색
 {

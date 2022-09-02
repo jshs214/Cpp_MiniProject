@@ -7,11 +7,14 @@
 void showMenu();
 void showInfo();
 void showShopInfo();
+int cinmenu();
+int cpmenu();
+
 int main()
 {
-	int menu;	// 1. 고객 정보 관리 2. 상품 정보 관리 3. 쇼핑 정보 관리
+	int menu=0;	// 1. 고객 정보 관리 p2. 상품 정보 관리 3. 쇼핑 정보 관리
 	int back;
-	int customer_menu;
+	int Client_menu;
 	int product_menu;
 	int shoping_menu;
 
@@ -20,12 +23,11 @@ int main()
 	ShopInfoManager SM;
 
 	while (1) {
-		//system("cls");
-		showMenu();
-		cin >> menu;
 
-		//if(menu>0 && menu<4){
-		//}
+		showMenu();
+		//cin >> menu;
+
+		menu = cinmenu();
 		switch (menu)
 		{
 		case 1:		//고객 정보 관리
@@ -34,16 +36,19 @@ int main()
 			cout << "                         고객 관리 프로그램                         " << endl;
 			showInfo();
 
-			cin >> customer_menu;
-			switch (customer_menu) 
+			//cin >> Client_menu;
+			Client_menu = cpmenu();
+			switch (Client_menu)
 			{
+			case 0:	//메인화면으로
+				break;
 			case 1:		//입력
 				CM.add_Client();
 				break;
 			case 2:		//조회
 				CM.client_print();
 				cout << "종료 (0) "; cin >> back;
-				if(back==0)break;
+				if (back == 0)break;
 			case 3:		//검색
 				CM.search_client();
 				cout << "종료 (0) "; cin >> back;
@@ -59,18 +64,21 @@ int main()
 				cout << "종료 (0) "; cin >> back;
 				if (back == 0)break;
 				break;
-			}
-			
-			break;
+			}	//고객 관리 프로그램 switch case문 종료
+
+			break;	//case 1 break;
 
 		case 2:		//제품 정보 관리
 			system("cls");
 			cout << LINE << endl;
 			cout << "                         제품 관리 프로그램                         " << endl;
 			showInfo();
-			cin >> product_menu;
+			//cin >> product_menu;
+			product_menu = cpmenu();
 			switch (product_menu)
 			{
+			case 0:	//메인화면으로
+				break;
 			case 1:		//입력
 				PM.add_Product();
 				break;
@@ -119,8 +127,7 @@ int main()
 			exit(0);
 			break;
 		}
-
-	}
+	}	//while 종료
 	return 0;
 }
 
@@ -128,7 +135,7 @@ void showMenu()
 {
 	system("cls"); 
 	cout << LINE << endl;
-	cout << "                         고객 / 제품 관리 프로그램                         " << endl;
+	cout << "──────────────────────────────────고객 / 제품 관리 프로그램───────────────────────────────" << endl;
 	cout << LINE << endl;
 	cout << "1. 고객 정보 관리" << " / " << "2. 제품 정보 관리" << " / " << "3. 쇼핑 정보 관리" << " / " << "4. 프로그램 종료" << endl;
 	cout << LINE << endl;
@@ -139,7 +146,7 @@ void showMenu()
 void showInfo()
 {
 	cout << LINE << endl;
-	cout << "   1.입력   /   2. 조회   /   3. 검색   /   4. 삭제   /   5. 변경   " << endl;
+	cout << "   1.입력   /   2. 조회   /   3. 검색   /   4. 삭제   /   5. 변경   / (메인화면가기 0)" << endl;
 	cout << LINE << endl;
 }
 void showShopInfo()
@@ -147,4 +154,40 @@ void showShopInfo()
 	cout << LINE << endl;
 	cout << "   1. 주문  /   2. 주문내역조회   /     " << endl;
 	cout << LINE << endl;
+}
+
+int cinmenu()
+{
+	int menu;
+	cin >> menu;
+	if (!cin) {		// cin menu 에 숫자만 입력 받도록
+		cout << "[메뉴 번호만 입력해주세요]";
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+		Sleep(1000);
+	}
+	else if (menu > 0 && menu < 5)
+		return menu;
+	else {
+	cout << "[메뉴 번호만 입력해주세요]" << endl;
+	Sleep(1000);
+	}
+}
+
+int cpmenu()
+{
+	int menu;
+	cin >> menu;
+	if (!cin) {		// cin menu 에 숫자만 입력 받도록
+		cout << "[메뉴 번호만 입력해주세요]";
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+		Sleep(1000);
+	}
+	else if (menu >= 0 && menu < 6)
+		return menu;
+	else {
+		cout << "[메뉴 번호만 입력해주세요]" << endl;
+		Sleep(1000);
+	}
 }
