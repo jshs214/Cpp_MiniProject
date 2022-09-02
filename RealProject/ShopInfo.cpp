@@ -3,11 +3,18 @@
 
 #include <iostream>
 
-ShopInfo::ShopInfo(string shopcid, string shoppid, int sstock)
-    :m_shopcid(shopcid), m_shoppid(shoppid), m_sstock(sstock)
+ShopInfo::ShopInfo(int shopkey,string shopcid, string shoppid, int sstock)
+    :m_shopkey(shopkey) ,m_shopcid(shopcid), m_shoppid(shoppid), m_sstock(sstock)
 {
 }
-
+int ShopInfo::getShopkey() const
+{
+    return m_shopkey;
+}
+void ShopInfo::setShopkey(int& shopkey)
+{
+    m_shopkey=shopkey;
+}
 string ShopInfo::getclientID() const
 {
     return m_shopcid;

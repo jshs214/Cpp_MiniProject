@@ -8,19 +8,9 @@
 class ShopInfoManager {
 public:
 
-    //void add()
-    //{
-    //    string shopcid;
-    //    cout << "고객 ID : "; cin >> shopcid;
-    //    ShopInfo* newShopC = new ShopInfo(shopcid);
-    //    ShopInfolist.push_back(newShopC);
-    //    for_each(ShopInfolist.begin(), ShopInfolist.end(), [](ShopInfo* s) {
-    //        cout << s->getshopID() << endl;
-    //        });
-    //}
-
     void add_Shoplist(vector<Client*>& clientList, vector<Product*>& productList)       // 주문하기
     {
+        int shopkey;
         string cid, pid;
         int stock;
         int cinput = 0; //일치하는지 flag
@@ -32,10 +22,13 @@ public:
         cout << LINE << endl;
         cout << "                           주문                             " << endl;
         cout << LINE << endl;
-
+        
+        
+        shopkey = 1000;
         cout << "고객 ID : "; cin >> cid;   // ClientID PK검사를 위한 cin
         cout << "제품 ID : "; cin >> pid;   // ProductID PK검사를 위한 pin
         cout << "구매할 제품 개수 : "; cin >> stock;
+
         while (1) {
             cflag = false;
             cinput = 0;
@@ -80,7 +73,7 @@ public:
             }
             if(pid == "0") return;
         }
-
+        
 
         /*for (auto it = clientList.begin(); it != clientList.end(); ++it)
         {
@@ -103,15 +96,28 @@ public:
         //            << (*it)->getStock() << " / "<< endl;
         //    }
         //}
+
+        for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)
+        {
+            auto sch_shopkey = (*it)->getShopkey();
+            if (sch_shopkey == shopkey) {
+                shopkey++;
+                //cout << "[고객 ID 입력완료]"<<endl;
+                break;
+            }
+        }
+
         if(cinput > 0 && pinput> 0){
-        ShopInfo* newShopC = new ShopInfo(cid, pid,stock);
+        ShopInfo* newShopC = new ShopInfo(shopkey,cid, pid,stock);
         ShopInfolist.push_back(newShopC);
         }
 
+        
          cout << "[주문 완료]" << endl;
 
          Sleep(1000);	//Delay 1초
-    }
+    }//void add_Shoplist(vector<Client*>& clientList, vector<Product*>& productList)       // 주문하기 함수 종료
+    
 
     void shoplist_print(vector<Client*>& clientList, vector<Product*>& productList)     // 조회
     {
@@ -124,7 +130,7 @@ public:
         int sum = 0;   //총합
 
         cout << LINE << endl;
-        cout << " 고객 ID / 이름 / 제품코드 / 제품명 / 종류 / 가격 / 수량 / 결제가격 / 전화번호 / 주소" << endl;
+        cout << "PK/ 고객 ID / 이름 / 제품코드 / 제품명 / 종류 / 가격 / 수량 / 결제가격 / 전화번호 / 주소" << endl;
         cout << LINE << endl;
 
         for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)    //Shoplist 벡터 검사
@@ -152,13 +158,13 @@ public:
                 }
             }
            
-            cout << (*it)->getclientID()<< " / " << name << " / " << (*it)->getProductID() << " / "
+            cout << "NO." << (*it)->getShopkey() << " / " << (*it)->getclientID() << " / " << name << " / " << (*it)->getProductID() << " / "
                 <<productname << " / " << producttype << " / " << price << " / "
                 << (*it)->getStock() << " / " <<"결제가격 : "<<sum << " / "
                 <<phonenumber << " / " << address << endl;
         }
         cout << "[총 " << ShopInfolist.size() << "건의 주문이 있습니다.]" << endl;
-    }
+    }//void shoplist_print(vector<Client*>& clientList, vector<Product*>& productList)     // 조회하기 함수 종료
 
 
 private:

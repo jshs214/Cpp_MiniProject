@@ -8,8 +8,10 @@ using namespace std;
 
 class ShopInfo {
 public:
-    ShopInfo(string = "",string = "", int = 0);
+    ShopInfo(int = 1001, string = "",string = "", int = 0);
 
+    int getShopkey() const;
+    void setShopkey(int&);
     string getclientID() const;     // °í°´ ID
     void setclientID(string&);
     string getProductID() const;    // Á¦Ç° ID
@@ -17,8 +19,9 @@ public:
     int getStock() const;
     void setStock(int& );
 private:
-    void add_Shoplist(vector<Client*>, vector<Product*>);
+    //void add_Shoplist(vector<Client*>, vector<Product*>);
 
+    int m_shopkey;
     string m_shopcid;
     string m_shoppid;
     int m_sstock;

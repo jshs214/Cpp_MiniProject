@@ -18,7 +18,7 @@ public:
     string getName() const;     //고객 이름
     void setName(string&);
     string getPhoneNumber() const;  // 전화번호
-    void setPhoneNumber(string&);
+    void setPhoneNumber(int&);
     string getAddress() const;      //주소
     void setAddress(string&);  
 

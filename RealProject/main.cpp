@@ -172,6 +172,7 @@ int cinmenu()
 	cout << "[메뉴 번호만 입력해주세요]" << endl;
 	Sleep(1000);
 	}
+	return 0;
 }
 
 int cpmenu()
@@ -190,4 +191,5 @@ int cpmenu()
 		cout << "[메뉴 번호만 입력해주세요]" << endl;
 		Sleep(1000);
 	}
+	return 0;
 }

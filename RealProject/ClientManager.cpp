@@ -1,5 +1,8 @@
 #include "ClientManager.h"
 
+int csearach_menu();	//검색 예외값 입력 처리
+int cupdate_menu();	//변경 예외값 입력 처리
+
 ClientManager::ClientManager()
 {
 }
@@ -22,7 +25,7 @@ void ClientManager::add_Client()		// 고객 추가
 
 	cout << "이름 : "; cin >> name;
 	cout << "고객 ID(PK) : "; cin >> clientid;
-	cout << "전화번호 : "; cin >> phonenumber;
+	cout << "전화번호 (-구분없이 입력) : "; cin >> phonenumber;
 	cout << "주소 : "; cin.ignore(); getline(cin, address);
 
 	while (1) {
@@ -84,8 +87,9 @@ void ClientManager::search_client()		//검색
 	cout << LINE << endl;
 	cout << "                             고객명 검색                             " << endl;
 	cout << LINE << endl;
-	cout << "1. 고객명 검색 2. 고객 ID 검색 "; cin >> num;
+	cout << "1. 고객명 검색 2. 고객 ID 검색 "; //cin >> num;
 	
+	num=csearach_menu();
 	switch (num)
 	{
 	case 1:
@@ -167,6 +171,7 @@ void ClientManager::update_client()	//정보 변경
 	int num = 0;
 	bool flag = false;
 	string up_data;	// 업데이트 시 변경 할 데이터
+	int up_phonenumber;
 	string input;	//변경 시 수정할 데이터와 매칭하기 위해 입력받는 지역변수
 	system("cls");
 	cout << LINE << endl;
@@ -181,9 +186,8 @@ void ClientManager::update_client()	//정보 변경
 
 		if (sch_name == input) {
 			flag = true;
-			cout << "1. 이름 변경  2. 전화번호 변경 3. 주소 변경" << endl;
-			cin >> num;	//변경할 정보
-
+			cout << "1. 이름 변경  2. 전화번호 변경 3. 주소 변경" << endl;		//cin >> num;	//변경할 정보
+			num = cupdate_menu();
 			switch (num)
 			{
 			case 1:		//이름 변경
@@ -193,8 +197,8 @@ void ClientManager::update_client()	//정보 변경
 				break;
 
 			case 2:		//전화번호 변경
-				cout << "변경할 전화번호 입력" << endl;	cin >> up_data;
-				(*it)->setPhoneNumber(up_data);
+				cout << "변경할 전화번호 입력" << endl;	cin >> up_phonenumber;
+				(*it)->setPhoneNumber(up_phonenumber);
 				cout << "[전화번호 변경 완료]" << endl;
 				break;
 
@@ -211,3 +215,40 @@ void ClientManager::update_client()	//정보 변경
 		cout << LINE << endl;
 	}
 }// void ClientManager::update_client()	//정보 변경
+
+int csearach_menu()		// 검색 메뉴 입력 예외처리
+{
+	int menu;
+	cin >> menu;
+	if (!cin) {		// cin menu 에 숫자만 입력 받도록
+		cout << "[메뉴 번호만 입력해주세요]"<<endl;
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+		Sleep(1000);
+	}
+	else if (menu > 0 && menu < 3)
+		return menu;
+	else {
+		cout << "[메뉴 번호만 입력해주세요]" << endl;
+		Sleep(1000);
+	}
+	return 0;
+}
+int cupdate_menu()	// 변경 메뉴 입력 예외 처리
+{
+	int menu;
+	cin >> menu;
+	if (!cin) {		// cin menu 에 숫자만 입력 받도록
+		cout << "[메뉴 번호만 입력해주세요]" << endl;
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+		Sleep(1000);
+	}
+	else if (menu > 0 && menu < 4)
+		return menu;
+	else {
+		cout << "[메뉴 번호만 입력해주세요]" << endl;
+		Sleep(1000);
+	}
+	return 0;
+}
