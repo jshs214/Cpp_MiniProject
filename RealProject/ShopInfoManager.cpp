@@ -122,6 +122,11 @@ public:
         string producttype;  // 종류
         int price;           //  제품 가격
         int sum = 0;   //총합
+
+        cout << LINE << endl;
+        cout << " 고객 ID / 이름 / 제품코드 / 제품명 / 종류 / 가격 / 수량 / 결제가격 / 전화번호 / 주소" << endl;
+        cout << LINE << endl;
+
         for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)    //Shoplist 벡터 검사
         {
 
@@ -146,7 +151,7 @@ public:
                     break;
                 }
             }
-
+           
             cout << (*it)->getclientID()<< " / " << name << " / " << (*it)->getProductID() << " / "
                 <<productname << " / " << producttype << " / " << price << " / "
                 << (*it)->getStock() << " / " <<"결제가격 : "<<sum << " / "

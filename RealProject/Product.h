@@ -4,6 +4,10 @@
 #include <iostream>
 #include "Line.h"
 #include <Windows.h>
+#include <iostream>
+#include<vector>
+#include <algorithm>
+
 using namespace std;
 
 class Product{

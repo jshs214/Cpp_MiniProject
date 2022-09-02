@@ -149,8 +149,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
+    <ClInclude Include="ClientManager.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="Product.h" />
+    <ClInclude Include="ProductManager.h" />
     <ClInclude Include="ShopInfo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,11 +1,7 @@
-﻿#include "Client.h"
-#include "Product.h"
+﻿#include "Product.h"
 #include "ShopInfo.h"
-#include <vector>
-#include <algorithm>
-#include <windows.h>	//콘솔 지우기 위한 헤더
-#include "ClientManager.cpp"
-#include "ProductManager.cpp"
+#include "ClientManager.h"
+#include"ProductManager.h"
 #include "ShopInfoManager.cpp"
 
 void showMenu();
@@ -18,13 +14,18 @@ int main()
 	int customer_menu;
 	int product_menu;
 	int shoping_menu;
+
 	ClientManager CM;
 	ProductManager PM;
 	ShopInfoManager SM;
+
 	while (1) {
 		//system("cls");
 		showMenu();
 		cin >> menu;
+
+		//if(menu>0 && menu<4){
+		//}
 		switch (menu)
 		{
 		case 1:		//고객 정보 관리
