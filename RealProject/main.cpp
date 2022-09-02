@@ -116,11 +116,16 @@ int main()
 			case 1:		// 주문
 				SM.add_Shoplist(CM.getClientList(), PM.getproductList());
 				break;
-			case 2:		//주문 현황 조회
+			case 2:		//주문 내역 조회
 				SM.shoplist_print(CM.getClientList(), PM.getproductList());
 				cout << "종료 (0) "; cin >> back;
 				if (back == 0)break;
+			case 3:		//주문 내역 검색
+				SM.search_shoplist(CM.getClientList(), PM.getproductList());
+				cout << "종료 (0) "; cin >> back;
+				if (back == 0)break;
 			}
+
 			break;
 
 		case 4:		// 종료
@@ -152,7 +157,7 @@ void showInfo()
 void showShopInfo()
 {
 	cout << LINE << endl;
-	cout << "   1. 주문  /   2. 주문내역조회   /     " << endl;
+	cout << "   1. 주문  /   2. 주문내역조회   /   3. 주문내역검색  " << endl;
 	cout << LINE << endl;
 }
 
