@@ -8,6 +8,15 @@ int cupdate_menu();	//변경 예외값 입력 처리
 
 ClientManager::ClientManager()
 {
+	cout << "ClientManager 생성자"<<endl ;
+
+
+	Sleep(1000);
+}
+ClientManager::~ClientManager()
+{
+	cout << "ClientManager 소멸자"<<endl;
+	Sleep(1000);
 }
 
 vector<Client*>& ClientManager::getClientList()

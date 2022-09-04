@@ -17,6 +17,7 @@ int main()
 	int Client_menu;
 	int product_menu;
 	int shoping_menu;
+	bool whileflag = false;
 
 	ClientManager CM;
 	ProductManager PM;
@@ -131,10 +132,13 @@ int main()
 			break;
 
 		case 4:		// 종료
-			exit(0);
+			whileflag = true;
 			break;
 		}
+		if (whileflag == true)	break;	// while 종료조건
 	}	//while 종료
+
+	cout << "[프로그램이 정상 종료 되었습니다.]" << endl;
 	return 0;
 }
 

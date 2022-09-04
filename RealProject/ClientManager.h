@@ -14,6 +14,7 @@ public:
 	void delete_client();	// 삭제
 	void update_client();	// 정보 변경
 
+	~ClientManager();
 
 	vector<Client*>& getClientList();
 
