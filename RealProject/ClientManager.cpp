@@ -9,6 +9,7 @@ int cupdate_menu();	//변경 예외값 입력 처리
 ClientManager::ClientManager()
 {
 }
+
 vector<Client*>& ClientManager::getClientList()
 {
 	return clientList;

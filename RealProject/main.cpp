@@ -5,8 +5,10 @@
 void showMenu();
 void showInfo();
 void showShopInfo();
-int cinmenu();
-int cpmenu();
+
+int inmenu();	// 메인에서 정해진 범위만 받도록
+int cpmenu();	// 고객,제품관리 메뉴에서 정해진 범위만 받도록
+int smenu();	// 쇼핑정보 관리 메뉴에서 정해진 범위만 받도록
 
 int main()
 {
@@ -25,7 +27,7 @@ int main()
 		showMenu();
 		//cin >> menu;
 
-		menu = cinmenu();
+		menu = inmenu();
 		switch (menu)
 		{
 		case 1:		//고객 정보 관리
@@ -35,7 +37,7 @@ int main()
 			showInfo();
 
 			//cin >> Client_menu;
-			Client_menu = cpmenu();
+			Client_menu = cpmenu();		//고객관리메뉴에서 정해진 범위만 받도록
 			switch (Client_menu)
 			{
 			case 0:	//메인화면으로
@@ -71,8 +73,9 @@ int main()
 			cout << LINE << endl;
 			cout << "                         제품 관리 프로그램                         " << endl;
 			showInfo();
-			//cin >> product_menu;
-			product_menu = cpmenu();
+
+			product_menu = cpmenu();	//제품관리메뉴에서 정해진 범위만 받도록
+
 			switch (product_menu)
 			{
 			case 0:	//메인화면으로
@@ -108,7 +111,8 @@ int main()
 			cout << LINE << endl;
 			cout << "                         주문 프로그램                         " << endl;
 			showShopInfo();
-			cin >> shoping_menu;
+
+			shoping_menu = smenu();	//쇼핑정보메뉴에서 정해진 범위만 받도록
 			switch (shoping_menu)
 			{
 			case 1:		// 주문
@@ -159,7 +163,7 @@ void showShopInfo()
 	cout << LINE << endl;
 }
 
-int cinmenu()
+int inmenu() //메인에서 정해진 범위만 받도록
 {
 	int menu;
 	cin >> menu;
@@ -178,7 +182,25 @@ int cinmenu()
 	return 0;
 }
 
-int cpmenu()
+int cpmenu()	// 고객,제품 관리 메뉴에서 정해진 범위만 받도록
+{
+	int menu;
+	cin >> menu;
+	if (!cin) {		// cin menu 에 숫자만 입력 받도록
+		cout << "[메뉴 번호만 입력해주세요]";
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+		Sleep(1000);
+	}
+	else if (menu >= 0 && menu < 6)
+		return menu;
+	else {
+		cout << "[메뉴 번호만 입력해주세요]" << endl;
+		Sleep(1000);
+	}
+	return 0;
+}
+int smenu()	// 쇼핑정보 메뉴에서 정해진 범위만 받도록
 {
 	int menu;
 	cin >> menu;

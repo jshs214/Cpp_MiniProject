@@ -3,7 +3,7 @@
 #include <vector>
 #include <algorithm>
 
-
+int ssearach_menu();		// ShopInfo 검색 메뉴 입력 예외처리
 vector<ShopInfo*> ShopInfoManager::getShopInfolist()
 {
 	return ShopInfolist;
@@ -169,7 +169,10 @@ void ShopInfoManager::search_shoplist(vector<Client*>& clientList, vector<Produc
 	cout << LINE << endl;
 	cout << "                             주문내역 검색                             " << endl;
 	cout << LINE << endl;
-	cout << "1. 고객 ID 검색 2. 제품코드 검색"; cin >> num;
+	cout << "1. 고객 ID 검색 2. 제품코드 검색 ";
+
+	num = ssearach_menu();		// 검색 메뉴 입력 예외처리
+
 	switch (num) {
 	case 1:
 		cout << "검색할 고객 ID를 입력하세요 : ";
@@ -269,7 +272,24 @@ void ShopInfoManager::search_shoplist(vector<Client*>& clientList, vector<Produc
 		cout << LINE << endl;
 		break;
 	}
-
 }//void search_shoplist(vector<Client*>& clientList, vector<Product*>& productList) 검색하기 함수
 
 
+int ssearach_menu()		// 검색 메뉴 입력 예외처리
+{
+	int menu;
+	cin >> menu;
+	if (!cin) {		// cin menu 에 숫자만 입력 받도록
+		cout << "[메뉴 번호만 입력해주세요]" << endl;
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+		Sleep(1000);
+	}
+	else if (menu > 0 && menu < 3)
+		return menu;
+	else {
+		cout << "[메뉴 번호만 입력해주세요]" << endl;
+		Sleep(1000);
+	}
+	return 0;
+}

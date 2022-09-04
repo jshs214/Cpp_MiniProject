@@ -226,7 +226,6 @@ int psearach_menu()		// 검색 메뉴 입력 예외처리
 		cin.clear();
 		cin.ignore(INT_MAX, '\n');
 		Sleep(1000);
-
 	}
 	else if (menu > 0 && menu < 3)
 		return menu;
