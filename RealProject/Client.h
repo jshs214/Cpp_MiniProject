@@ -11,7 +11,7 @@ class Client {
 public:
     Client(string = "", string ="", string = "", string = "");
 
-    string getclientID() const;     // ∞Ì∞¥ ID
+    string getclientID()const;     // ∞Ì∞¥ ID
     void setclientID(string&);
     string getName() const;     //∞Ì∞¥ ¿Ã∏ß
     void setName(string&);

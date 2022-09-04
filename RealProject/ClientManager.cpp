@@ -1,22 +1,60 @@
 #include "ClientManager.h"
 
+#include<iostream>
 #include <vector>
 #include <algorithm>
-
+#include <fstream>
+#include <string>
 int csearach_menu();	//검색 예외값 입력 처리
 int cupdate_menu();	//변경 예외값 입력 처리
 
 ClientManager::ClientManager()
 {
-	cout << "ClientManager 생성자"<<endl ;
+	/*ifstream fs("Client.csv");
+	
+	if (!fs) {
+		cout << "입력할 파일을 열 수 없습니다.";
+		Sleep(1000);
+	}
+	for (auto it = clientList.begin(); it != clientList.end(); ++it)
+	{
+		fs >> (*it)->getName() >> " / "
+			>> (*it)->getclientID() >> " / "
+			>> (*it)->getPhoneNumber() >> " / "
+			>> (*it)->getAddress() >> endl;
+	}
+	fs.close();*/
 
+	ifstream fs("Client.csv");
 
-	Sleep(1000);
+	if (fs.is_open()) {
+		while(!fs.eof())
+		{
+			string str;
+			getline(fs, str);
+			cout << str << endl;
+			Sleep(1000);
+		}
+	}
+
+	fs.close();
 }
 ClientManager::~ClientManager()
 {
-	cout << "ClientManager 소멸자"<<endl;
-	Sleep(1000);
+	ofstream fs("Client.csv");
+	if (!fs) {
+		cout << "출력할 파일을 열 수 없습니다.";
+		Sleep(1000);
+	}
+
+	for (auto it = clientList.begin(); it != clientList.end(); ++it)
+	{
+		fs << (*it)->getName() << " / "
+			<< (*it)->getclientID() << " / "
+			<< (*it)->getPhoneNumber() << " / "
+			<< (*it)->getAddress() << endl;
+	}
+	fs.close();
 }
 
 vector<Client*>& ClientManager::getClientList()
@@ -225,7 +263,7 @@ void ClientManager::update_client()	//정보 변경
 				break;
 
 			case 3:		//주소 변경
-				cout << "변경할 주소 입력 : ";	cin >> up_data;
+				cout << "변경할 주소 입력 : ";	cin.ignore(); getline(cin, up_data);
 				(*it)->setAddress(up_data);
 				cout << "[주소 변경 완료]" << endl;
 				break;
@@ -274,3 +312,5 @@ int cupdate_menu()	// 변경 메뉴 입력 예외 처리
 	}
 	return 0;
 }
+
+

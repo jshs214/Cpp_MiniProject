@@ -9,7 +9,7 @@ Client::Client(string name, string clientID, string phoneNumber, string address)
 {
 }
 
-string Client::getName() const
+string Client::getName()const
 {
     return m_name;
 }

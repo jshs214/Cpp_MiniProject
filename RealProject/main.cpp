@@ -2,6 +2,8 @@
 #include"ProductManager.h"
 #include "ShopInfoManager.h"
 
+#include<iostream>
+
 void showMenu();
 void showInfo();
 void showShopInfo();
@@ -22,6 +24,9 @@ int main()
 	ClientManager CM;
 	ProductManager PM;
 	ShopInfoManager SM;
+
+
+
 
 	while (1) {
 
