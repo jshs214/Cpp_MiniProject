@@ -1,5 +1,7 @@
 #include "ProductManager.h"
 
+#include<vector>
+#include <algorithm>
 int psearach_menu();		// 검색 메뉴 입력 예외처리
 ProductManager::ProductManager()
 {
@@ -103,6 +105,14 @@ void ProductManager::search_Product()		// 검색
 	{
 	case 1:
 		cout << "제품명 검색 : "; cin >> input;
+
+		system("cls");
+		cout << LINE << endl;
+		cout << "                             제품명 검색결과                             " << endl;
+		cout << LINE << endl;
+		cout << "      제품코드(PK)     /   제품명    /    가격    /    종류" << endl;
+		cout << LINE << endl;
+
 		for (auto it = productList.begin(); it != productList.end(); ++it)
 		{
 			auto sch_name = (*it)->getProductName();
@@ -121,6 +131,14 @@ void ProductManager::search_Product()		// 검색
 
 	case 2:
 		cout << "종류 검색 : "; cin >> input;
+
+		system("cls");
+		cout << LINE << endl;
+		cout << "                             종류 검색결과                             " << endl;
+		cout << LINE << endl;
+		cout << "      제품코드(PK)     /   제품명    /    가격    /    종류" << endl;
+		cout << LINE << endl;
+
 		for (auto it = productList.begin(); it != productList.end(); ++it)
 		{
 			auto sch_type = (*it)->getProductType();

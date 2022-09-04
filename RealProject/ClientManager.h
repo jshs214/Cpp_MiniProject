@@ -2,7 +2,7 @@
 #define __CLIENTMANAGER_H__
 
 #include "Client.h"
-
+#include <vector>
 
 class ClientManager {
 

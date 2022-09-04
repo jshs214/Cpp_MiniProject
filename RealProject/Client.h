@@ -2,9 +2,7 @@
 #define __CLIENT_H__
 
 #include <iostream>
-#include<vector>
 #include<string>
-#include <algorithm>
 #include<Windows.h>
 #include "Line.h"
 using namespace std;
@@ -18,7 +16,7 @@ public:
     string getName() const;     //고객 이름
     void setName(string&);
     string getPhoneNumber() const;  // 전화번호
-    void setPhoneNumber(int&);
+    void setPhoneNumber(string &);
     string getAddress() const;      //주소
     void setAddress(string&);  
 

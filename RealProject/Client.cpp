@@ -34,7 +34,7 @@ string Client::getPhoneNumber() const
     return m_phoneNumber;
 }
 
-void Client::setPhoneNumber(int& phoneNumber)
+void Client::setPhoneNumber(string& phoneNumber)
 {
     m_phoneNumber = phoneNumber;
 }

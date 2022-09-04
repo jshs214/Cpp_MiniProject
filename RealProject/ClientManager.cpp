@@ -1,5 +1,8 @@
 #include "ClientManager.h"
 
+#include <vector>
+#include <algorithm>
+
 int csearach_menu();	//검색 예외값 입력 처리
 int cupdate_menu();	//변경 예외값 입력 처리
 
@@ -74,7 +77,7 @@ void ClientManager::client_print()		//조회
 
 	cout << "[고객정보 조회 완료]" << endl;
 	cout << LINE << endl;
-	cout << "총 " << clientList.size() << "명의 정보가 있습니다" << endl;
+	cout << "[총 " << clientList.size() << "명의 정보가 있습니다]" << endl;
 	cout << LINE << endl;
 }// void ClientManager::client_print()		// 고객 조회함수 종료
 
@@ -94,6 +97,8 @@ void ClientManager::search_client()		//검색
 	{
 	case 1:
 		cout << "고객명 검색 : "; cin >> input;
+
+		system("cls");
 		cout << LINE << endl;
 		cout << "                             고객정보 검색결과                             " << endl;
 		cout << LINE << endl;
@@ -111,12 +116,19 @@ void ClientManager::search_client()		//검색
 			}
 		}
 		if (flag == false)
-			cout << "[입력하신 고객 ID가 없습니다]" << endl;
+			cout << "[입력하신 고객명이 없습니다]" << endl;
 		cout << LINE << endl;
 		break;		// case 1 break;
 
 	case 2:
 		cout << "고객 ID : "; cin >> input;
+
+		system("cls");
+		cout << LINE << endl;
+		cout << "                             고객정보 검색결과                             " << endl;
+		cout << LINE << endl;
+		cout << "       이름     /   고객 ID (PK)   /     전화번호      /       주소" << endl;
+		cout << LINE << endl;
 		for (auto it = clientList.begin(); it != clientList.end(); ++it)
 		{
 			auto sch_id = (*it)->getclientID();
@@ -171,7 +183,7 @@ void ClientManager::update_client()	//정보 변경
 	int num = 0;
 	bool flag = false;
 	string up_data;	// 업데이트 시 변경 할 데이터
-	int up_phonenumber;
+	string up_phonenumber;
 	string input;	//변경 시 수정할 데이터와 매칭하기 위해 입력받는 지역변수
 	system("cls");
 	cout << LINE << endl;

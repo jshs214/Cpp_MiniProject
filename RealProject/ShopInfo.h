@@ -1,7 +1,6 @@
 #ifndef __SHOPINFO_H__
 #define __SHOPINFO_H__
-#include "Client.h"
-#include "Product.h"
+
 #include <iostream>
 
 using namespace std;
@@ -19,7 +18,6 @@ public:
     int getStock() const;
     void setStock(int& );
 private:
-    //void add_Shoplist(vector<Client*>, vector<Product*>);
 
     int m_shopkey;
     string m_shopcid;

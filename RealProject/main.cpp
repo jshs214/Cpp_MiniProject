@@ -1,8 +1,6 @@
-﻿#include "Product.h"
-#include "ShopInfo.h"
-#include "ClientManager.h"
+﻿#include "ClientManager.h"
 #include"ProductManager.h"
-#include "ShopInfoManager.cpp"
+#include "ShopInfoManager.h"
 
 void showMenu();
 void showInfo();
@@ -13,7 +11,7 @@ int cpmenu();
 int main()
 {
 	int menu=0;	// 1. 고객 정보 관리 p2. 상품 정보 관리 3. 쇼핑 정보 관리
-	int back;
+	int back;	// 각 메뉴에서 빠져나오기 위한 입력값(0) 받는 변수
 	int Client_menu;
 	int product_menu;
 	int shoping_menu;
