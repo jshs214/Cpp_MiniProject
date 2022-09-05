@@ -60,6 +60,7 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 	int cinput = 0; //일치하는지 flag
 	int pinput = 0; //일치하는지 flag
 	int sinput = 0;	//일치하는지 flag
+
 	bool cflag = false;
 	bool pflag = false;
 
@@ -165,8 +166,8 @@ void ShopInfoManager::shoplist_print(vector<Client*>& clientList, vector<Product
 	string phonenumber;     //  전화번호
 	string address;         //  주소
 	string productname;     //Product 제품명
-	string producttype;  // 종류
-	int price;           //  제품 가격
+	string producttype="";  // 종류
+	int price=0;           //  제품 가격
 	int sum = 0;   //총합
 
 	system("cls");
@@ -186,6 +187,7 @@ void ShopInfoManager::shoplist_print(vector<Client*>& clientList, vector<Product
 
 	for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)    //Shoplist 벡터 검사
 	{
+
 		for (auto cit = clientList.begin(); cit != clientList.end(); ++cit)
 		{
 			if ((*it)->getclientID() == (*cit)->getclientID())
@@ -207,6 +209,7 @@ void ShopInfoManager::shoplist_print(vector<Client*>& clientList, vector<Product
 				break;
 			}
 		}
+
 		cout.setf(ios::left); //좌측 정렬
 		cout << " #" << setw(27) <<(*it)->getShopkey()<<setw(15) << (*it)->getProductID() << setw(15) << productname  << setw(15)
 			<< producttype << setw(11) << price
