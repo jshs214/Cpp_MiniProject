@@ -1,5 +1,4 @@
 #include "ProductManager.h"
-
 #include<vector>
 #include <algorithm>
 #include<fstream>
@@ -17,7 +16,9 @@ ProductManager::ProductManager()
 			vector<string> row = parseCSV(file, ',');
 			if (row.size()) {
 				int price = atoi(row[2].c_str());
-				Product* p = new Product(row[0], row[1], price, row[3]);
+				int stock = atoi(row[4].c_str());
+
+				Product* p = new Product(row[0], row[1], price, row[3],stock);
 				productList.push_back(p);
 
 			}
@@ -38,7 +39,8 @@ ProductManager::~ProductManager()
 		fs << (*it)->getProductID() << ", "
 			<< (*it)->getProductName() << ", "
 			<< (*it)->getPrice() << ", "
-			<< (*it)->getProductType() << endl;
+			<< (*it)->getProductType() << ", "
+			<< (*it)->getStock()<<endl;
 	}
 	fs.close();
 }
@@ -54,6 +56,7 @@ void ProductManager::add_Product()		// 제품 추가
 	string productName;	// 제품 명
 	int price = 0;			// 가격
 	string productType;		//제품 종류
+	int stock = 0;
 
 	system("cls");
 	cout << LINE << endl;
@@ -73,6 +76,7 @@ void ProductManager::add_Product()		// 제품 추가
 		else break;
 	}
 	cout << "종류 : "; cin >> productType;
+	cout << "재고 : "; cin >> stock;
 
 	while (1) {
 		bool flag = false;
@@ -93,7 +97,7 @@ void ProductManager::add_Product()		// 제품 추가
 		}
 	}
 
-	Product* newProduct = new Product(productID, productName, price, productType);
+	Product* newProduct = new Product(productID, productName, price, productType,stock);
 	productList.push_back(newProduct);
 
 	cout << "[제품 등록 완료]" << endl;
@@ -104,23 +108,26 @@ void ProductManager::add_Product()		// 제품 추가
 void ProductManager::Product_print()		// 조회
 {
 	system("cls");
+
 	cout << LINE << endl;
 	cout << "                                            제품정보조회                             " << endl;
 	cout << LINE << endl;
-	cout << "    제품코드 (PK)     /   제품명   /   가격     /    종류" << endl;
+	cout << "    제품코드 (PK)     /   제품명   /   가격     /    종류   /   재고" << endl;
 	cout << LINE << endl;
 
 	sort(productList.begin(), productList.end(), [](Product* a, Product* b) {		//제품ID 기준으로 정렬
 		return a->getProductID() < b->getProductID();
 		});
 
-	for_each(productList.begin(), productList.end(), [](Product* p) {
-		cout << "(PK)" << p->getProductID() << "-> "
-			 << p->getProductName() << " / "
-			 << p->getPrice() << " / "
-			 << p->getProductType() << endl;
-		});
-
+	for (auto it = productList.begin(); it != productList.end(); ++it)
+	{
+		
+		cout << "(PK)" << (*it)->getProductID() << "-> "
+			<< (*it)->getProductName() << " / "
+			<< (*it)->getPrice() << " / "
+			<< (*it)->getProductType() << " / "
+			<< (*it)->getStock() << "개" << endl;
+	}
 
 	cout << "[제품정보 조회 완료]" << endl;
 	cout << LINE << endl;
@@ -162,7 +169,8 @@ void ProductManager::search_Product()		// 검색
 				cout << (*it)->getProductID() << " : "
 					<< (*it)->getProductName() << " / "
 					<< (*it)->getPrice() << " / "
-					<< (*it)->getProductType() << endl;
+					<< (*it)->getProductType() << " / " 
+					<< (*it)->getStock()<< endl;
 			}
 		}
 		if (flag == false)
@@ -177,7 +185,7 @@ void ProductManager::search_Product()		// 검색
 		cout << LINE << endl;
 		cout << "                                            종류 검색결과                             " << endl;
 		cout << LINE << endl;
-		cout << "      제품코드(PK)     /   제품명    /    가격    /    종류" << endl;
+		cout << "      제품코드(PK)     /   제품명    /    가격    /    종류   /   재고" << endl;
 		cout << LINE << endl;
 
 		for (auto it = productList.begin(); it != productList.end(); ++it)
@@ -188,7 +196,8 @@ void ProductManager::search_Product()		// 검색
 				cout << (*it)->getProductID() << " : "
 					<< (*it)->getProductName() << " / "
 					<< (*it)->getPrice() << " / "
-					<< (*it)->getProductType() << endl;
+					<< (*it)->getProductType() << " / "
+					<< (*it)->getStock() << endl;
 			}
 		}
 		if (flag == false)
@@ -257,7 +266,7 @@ void ProductManager::update_product()	//정보 변경
 
 		cout << LINE << endl;
 	
-}
+}// void ProductManager::update_product()	//정보 변경 함수 종료
 
 int psearach_menu()		// 검색 메뉴 입력 예외처리
 {

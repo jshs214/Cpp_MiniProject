@@ -11,7 +11,7 @@ using namespace std;
 
 class Product{
 public:
-    Product(string = 0, string = "", int = 0,  string="");
+    Product(string = 0, string = "", int = 0,  string="", int = 0);
 
     string getProductID() const;
     void setProductID(string&);
@@ -21,11 +21,14 @@ public:
     void setPrice(int&);
     string getProductType() const;
     void setProductType(string &);
+    int getStock() const;
+    void setStock(int&);
 
 private:
     string m_productID;        // 力前 ID
     string m_productName;   // 力前 疙
     int m_price;            // 力前 啊拜
     string m_productType;   // 力前 辆幅
+    int m_stock; //力前 俺荐
 };
 #endif          // __CLIENT_H__

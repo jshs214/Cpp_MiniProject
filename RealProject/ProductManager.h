@@ -1,6 +1,7 @@
 #ifndef __PRODUCTMANAGER_H__
 #define __PRODUCTMANAGER_H__
 #include "Product.h"
+#include "ShopInfoManager.h"
 
 class ProductManager {
 public:

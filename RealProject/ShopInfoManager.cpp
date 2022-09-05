@@ -46,7 +46,7 @@ ShopInfoManager::~ShopInfoManager()
 	fs.close();
 }
 
-vector<ShopInfo*> ShopInfoManager::getShopInfolist()
+vector<ShopInfo*> &ShopInfoManager::getShopInfolist()
 {
 	return ShopInfolist;
 }
@@ -55,10 +55,11 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 {
 	int shopkey;	//ShopInfo의 PK키
 	string cid, pid;	// 입력받을 ClientID와 ProductID 변수
-	int stock;		//수량
+	int stock;		// 주문 할 개수
+	int up_stock;	// 재고반영에 필요한 변수
 	int cinput = 0; //일치하는지 flag
 	int pinput = 0; //일치하는지 flag
-
+	int sinput = 0;	//일치하는지 flag
 	bool cflag = false;
 	bool pflag = false;
 
@@ -73,7 +74,7 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 	cout << "제품 ID : "; cin >> pid;   // ProductID PK검사를 위한 pin
 	cout << "구매할 제품 개수 : "; cin >> stock;
 
-	while (1) {
+	while (1) {					//Client ID 중복검사 ( 같아야 진행 )
 		cflag = false;
 		cinput = 0;
 		for (auto it = clientList.begin(); it != clientList.end(); ++it)
@@ -95,7 +96,7 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 		if (cid == "0")    return;
 	}
 
-	while (1) {
+	while (1) {					//Product ID 중복검사 ( 같아야 진행 )
 		pflag = false;
 		pinput = 0;
 		for (auto it = productList.begin(); it != productList.end(); ++it)
@@ -125,13 +126,34 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 		}
 	}
 
-	if (cinput > 0 && pinput > 0) {
+	
+	for (auto pit = productList.begin(); pit != productList.end(); ++pit) {				// 주문 할 때 Product의 재고가 빠지는 동작
+		auto id = (*pit)->getProductID();	////Product에 있는 고객ID
+		if (pid == id) {			//pid는 주문 할 때 입력한 고객 id
+			while (1) {
+				sinput = 0;
+
+				if (((*pit)->getStock() - stock) < 0) {
+					cout << "[주문 수량이 재고보다 많습니다. " << (*pit)->getStock() << "개 남았습니다.]" << endl;
+					cout << "주문 수량을 재입력 해주세요 (종료 0) :";
+					cin >> stock;
+					if (stock == 0)	break;
+				}
+				else {
+					sinput++;
+					up_stock = (*pit)->getStock() - stock;
+					(*pit)->setStock(up_stock);
+					cout << "[주문 완료]" << endl;
+					break;
+				}
+			}
+		}
+	}
+	
+	if (cinput > 0 && pinput > 0&& sinput > 0) {			// Client, Product가 정상적으로 생성되고, 재고가 정상적이면 주문리스트 추가
 		ShopInfo* newShopC = new ShopInfo(shopkey, cid, pid, stock);
 		ShopInfolist.push_back(newShopC);
 	}
-
-
-	cout << "[주문 완료]" << endl;
 
 	Sleep(1000);	//Delay 1초
 }//void add_Shoplist(vector<Client*>& clientList, vector<Product*>& productList)       // 주문하기 함수 종료

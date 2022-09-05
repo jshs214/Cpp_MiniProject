@@ -15,7 +15,7 @@ public:
 	~ShopInfoManager();
 
 	vector<string> parseCSV(istream&, char);
-	vector<ShopInfo*> getShopInfolist();
+	vector<ShopInfo*> &getShopInfolist();
 
 private:
 	vector<ShopInfo*> ShopInfolist;     // ShopInfo¿« ∫§≈Õ
