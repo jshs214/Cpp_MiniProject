@@ -18,8 +18,9 @@ ShopInfoManager::ShopInfoManager()
 			vector<string> row = parseCSV(file, ',');
 			if (row.size()) {
 				int shopkey = atoi(row[0].c_str());		//PK키
-				int stock = atoi(row[3].c_str());
-				ShopInfo* s = new ShopInfo(shopkey, row[1], row[2], stock);
+				int price = atoi(row[4].c_str());
+				int stock = atoi(row[5].c_str());
+				ShopInfo* s = new ShopInfo(shopkey, row[1], row[2], row[3], price, stock, row[6], row[7], row[8], row[9]);
 				ShopInfolist.push_back(s);
 			}
 		}
@@ -38,10 +39,15 @@ ShopInfoManager::~ShopInfoManager()
 	for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)
 	{
 		fs << (*it)->getShopkey() << ", "
-			<< (*it)->getclientID() << ", "
 			<< (*it)->getProductID() << ", "
-			<< (*it)->getStock() << endl;
-
+			<< (*it)->getproductName() << ", "
+			<< (*it)->getproductType() << ", "
+			<< (*it)->getPrice() << ", "
+			<< (*it)->getStock() << ", "
+			<< (*it)->getname() << ", "
+			<< (*it)->getclientID() << ", " 
+			<< (*it)->getphoneNumber() << ", "
+			<<(*it)->getaddress() << ", "<<endl;
 	}
 	fs.close();
 }
@@ -55,11 +61,14 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 {
 	int shopkey;	//ShopInfo의 PK키
 	string cid, pid;	// 입력받을 ClientID와 ProductID 변수
-	int stock;		// 주문 할 개수
+	int stock=0;		// 주문 할 개수
 	int up_stock;	// 재고반영에 필요한 변수
 	int cinput = 0; //일치하는지 flag
 	int pinput = 0; //일치하는지 flag
 	int sinput = 0;	//일치하는지 flag
+
+	string productid, productname, producttype, name, clientid, phonenumber, address;
+	int price=0;
 
 	bool cflag = false;
 	bool pflag = false;
@@ -116,8 +125,30 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 			cin >> pid;
 		}
 		if (pid == "0") return;
-	}
+		}
 
+		for (auto cit = clientList.begin(); cit != clientList.end(); ++cit)
+		{
+			auto sch_cid = (*cit)->getclientID();
+			if (sch_cid == cid) {           // ClientID와 입력한 id가 같으면
+				name = (*cit)->getName();
+				clientid = (*cit)->getclientID();
+				phonenumber = (*cit)->getPhoneNumber();
+				address = (*cit)->getAddress();
+			}
+		}
+
+		for (auto pit = productList.begin(); pit != productList.end(); ++pit)
+		{
+			auto sch_PK = (*pit)->getProductID();
+			if (sch_PK == pid) {
+				productid = (*pit)->getProductID();
+				productname = (*pit)->getProductName();
+				price = (*pit)->getPrice();
+				producttype = (*pit)->getProductType();
+			}
+		}
+	
 
 	for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)    //주문내역 PK 중복검사
 	{
@@ -152,7 +183,7 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 	}
 	
 	if (cinput > 0 && pinput > 0&& sinput > 0) {			// Client, Product가 정상적으로 생성되고, 재고가 정상적이면 주문리스트 추가
-		ShopInfo* newShopC = new ShopInfo(shopkey, cid, pid, stock);
+		ShopInfo* newShopC = new ShopInfo(shopkey, productid, productname, producttype, price, stock, name, clientid, phonenumber, address);
 		ShopInfolist.push_back(newShopC);
 	}
 
@@ -162,12 +193,7 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 
 void ShopInfoManager::shoplist_print(vector<Client*>& clientList, vector<Product*>& productList)     // 조회
 {
-	string name;            //Client 고객명
-	string phonenumber;     //  전화번호
-	string address;         //  주소
-	string productname;     //Product 제품명
-	string producttype="";  // 종류
-	int price=0;           //  제품 가격
+
 	int sum = 0;   //총합
 
 	system("cls");
@@ -187,35 +213,14 @@ void ShopInfoManager::shoplist_print(vector<Client*>& clientList, vector<Product
 
 	for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)    //Shoplist 벡터 검사
 	{
-
-		for (auto cit = clientList.begin(); cit != clientList.end(); ++cit)
-		{
-			if ((*it)->getclientID() == (*cit)->getclientID())
-			{
-				name = (*cit)->getName();
-				phonenumber = (*cit)->getPhoneNumber();
-				address = (*cit)->getAddress();
-				break;
-			}
-		}
-		for (auto pit = productList.begin(); pit != productList.end(); ++pit)
-		{
-			if ((*it)->getProductID() == (*pit)->getProductID())
-			{
-				productname = (*pit)->getProductName();
-				producttype = (*pit)->getProductType();
-				price = (*pit)->getPrice();
-				sum = price * (*it)->getStock();
-				break;
-			}
-		}
+		sum = (*it)->getPrice() * (*it)->getStock();
 
 		cout.setf(ios::left); //좌측 정렬
-		cout << " #" << setw(27) <<(*it)->getShopkey()<<setw(15) << (*it)->getProductID() << setw(15) << productname  << setw(15)
-			<< producttype << setw(11) << price
+		cout << " #" << setw(27) <<(*it)->getShopkey()<<setw(15) << (*it)->getProductID() << setw(15) << (*it)->getproductName()<< setw(15)
+			<< (*it)->getproductType()<< setw(11) << (*it)->getPrice()
 			<< setw(11) << (*it)->getStock() <<setw(15) << sum << endl;
-		cout <<"  " << setw(27) << name << setw(15) << (*it)->getclientID() << setw(15) << phonenumber
-			 << address << endl << endl;
+		cout <<"  " << setw(27) << (*it)->getname() << setw(15) << (*it)->getclientID() << setw(15) << (*it)->getphoneNumber()
+			 << (*it)->getaddress() << endl << endl;
 
 	}
 
@@ -287,10 +292,10 @@ void ShopInfoManager::search_shoplist(vector<Client*>& clientList, vector<Produc
 						sum = price * (*it)->getStock();
 					}
 				}
-				cout << "NO." << (*it)->getShopkey() << " / " << (*it)->getclientID() << " / " << name << " / " << (*it)->getProductID() << " / "
-					<< productname << " / " << producttype << " / " << price << " / "
+				cout << "NO." << (*it)->getShopkey() << " / " << (*it)->getclientID() << " / " << (*it)->getname() << " / " << (*it)->getProductID() << " / "
+					<< (*it)->getproductName()<< " / " << (*it)->getproductType()<< " / " << (*it)->getPrice()<< " / "
 					<< (*it)->getStock() << " / " << "결제가격 : " << sum << " / "
-					<< phonenumber << " / " << address << endl;
+					<< (*it)->getphoneNumber()<< " / " << (*it)->getaddress()<< endl;
 			}
 		}
 		if (flag == false)
@@ -337,10 +342,10 @@ void ShopInfoManager::search_shoplist(vector<Client*>& clientList, vector<Produc
 					}
 				}
 
-				cout << "NO." << (*it)->getShopkey() << " / " << (*it)->getclientID() << " / " << name << " / " << (*it)->getProductID() << " / "
-					<< productname << " / " << producttype << " / " << price << " / "
+				cout << "NO." << (*it)->getShopkey() << " / " << (*it)->getclientID() << " / " << (*it)->getname() << " / " << (*it)->getProductID() << " / "
+					<< (*it)->getproductName() << " / " << (*it)->getproductType() << " / " << (*it)->getPrice() << " / "
 					<< (*it)->getStock() << " / " << "결제가격 : " << sum << " / "
-					<< phonenumber << " / " << address << endl;
+					<< (*it)->getphoneNumber() << " / " << (*it)->getaddress() << endl;
 			}
 		}
 		if (flag == false)
