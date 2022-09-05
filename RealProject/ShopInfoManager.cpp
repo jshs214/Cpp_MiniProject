@@ -5,6 +5,7 @@
 #include<fstream>
 #include<string>
 #include<sstream>
+#include <iomanip>
 
 int ssearach_menu();		// ShopInfo 검색 메뉴 입력 예외처리
 
@@ -63,7 +64,7 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 
 	system("cls");
 	cout << LINE << endl;
-	cout << "                           주문                             " << endl;
+	cout << "                                            주문                             " << endl;
 	cout << LINE << endl;
 
 
@@ -148,14 +149,21 @@ void ShopInfoManager::shoplist_print(vector<Client*>& clientList, vector<Product
 
 	system("cls");
 	cout << LINE << endl;
-	cout << "                               제품정보조회                             " << endl;
+	cout << "                                            제품정보조회                             " << endl;
 	cout << LINE << endl;
-	cout << " 주문번호(PK)  /  고객ID  /  고객명  /  제품코드  /  제품명  /  종류  /  가격  /  주문가격  /  전화번호  /  주소" << endl;
+
+	cout.setf(ios::left); //좌측 정렬
+	cout <<  setw(29)<<" 주문번호(PK)" << setw(15) << "제품코드" << setw(15) << "제품명" << setw(15) << "제품종류" << setw(11) << "가격"
+		<< setw(11)<<"주문수량"<< setw(11)<< "주문가격" << endl;
+	cout << setw(29) << " 고객명" << setw(15) << "고객ID" << setw(15) << "전화번호" << "주소" <<   endl;
 	cout << LINE << endl;
+
+	sort(ShopInfolist.begin(), ShopInfolist.end(), [](ShopInfo* a, ShopInfo* b) {		//주문번호 기준으로 정렬
+		return a->getShopkey() < b->getShopkey();
+		});
 
 	for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)    //Shoplist 벡터 검사
 	{
-
 		for (auto cit = clientList.begin(); cit != clientList.end(); ++cit)
 		{
 			if ((*it)->getclientID() == (*cit)->getclientID())
@@ -177,11 +185,13 @@ void ShopInfoManager::shoplist_print(vector<Client*>& clientList, vector<Product
 				break;
 			}
 		}
+		cout.setf(ios::left); //좌측 정렬
+		cout << " #" << setw(27) <<(*it)->getShopkey()<<setw(15) << (*it)->getProductID() << setw(15) << productname  << setw(15)
+			<< producttype << setw(11) << price
+			<< setw(11) << (*it)->getStock() <<setw(15) << sum << endl;
+		cout <<"  " << setw(27) << name << setw(15) << (*it)->getclientID() << setw(15) << phonenumber
+			 << address << endl << endl;
 
-		cout << "NO." << (*it)->getShopkey() << " / " << (*it)->getclientID() << " / " << name << " / " << (*it)->getProductID() << " / "
-			<< productname << " / " << producttype << " / " << price << " / "
-			<< (*it)->getStock() << " / " << "주문합 : " << sum << " / "
-			<< phonenumber << " / " << address << endl;
 	}
 
 	cout << "[주문내역 조회 완료]" << endl;
@@ -208,7 +218,7 @@ void ShopInfoManager::search_shoplist(vector<Client*>& clientList, vector<Produc
 
 	system("cls");
 	cout << LINE << endl;
-	cout << "                             주문내역 검색                             " << endl;
+	cout << "                                            주문내역 검색                             " << endl;
 	cout << LINE << endl;
 	cout << "1. 고객 ID 검색 2. 제품코드 검색 ";
 
@@ -221,7 +231,7 @@ void ShopInfoManager::search_shoplist(vector<Client*>& clientList, vector<Produc
 		
 		system("cls");
 		cout << LINE << endl;
-		cout << "                             고객 ID 검색결과                             " << endl;
+		cout << "                                             고객 ID 검색결과                             " << endl;
 		cout << LINE << endl;
 		cout << " 주문번호(PK)  /  고객ID  /  고객명  /  제품코드  /  제품명  /  종류  /  가격  /  결제가격  /  전화번호  /  주소" << endl;
 		cout << LINE << endl;
@@ -271,7 +281,7 @@ void ShopInfoManager::search_shoplist(vector<Client*>& clientList, vector<Produc
 
 		system("cls");
 		cout << LINE << endl;
-		cout << "                             제품 코드 검색결과                             " << endl;
+		cout << "                                            제품 코드 검색결과                             " << endl;
 		cout << LINE << endl;
 		cout << " 주문번호(PK)  /  고객ID  /  고객명  /  제품코드  /  제품명  /  종류  /  가격  /  결제가격  /  전화번호  /  주소" << endl;
 		cout << LINE << endl;

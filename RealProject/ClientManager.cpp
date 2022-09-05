@@ -59,7 +59,7 @@ void ClientManager::add_Client()		// 고객 추가
 
 	system("cls");
 	cout << LINE << endl;
-	cout << "                           신규 고객 정보등록                             " << endl;
+	cout << "                                            신규 고객 정보등록                             " << endl;
 	cout << LINE << endl;
 
 	cout << "이름 : "; cin >> name;
@@ -99,10 +99,16 @@ void ClientManager::client_print()		//조회
 
 	system("cls");
 	cout << LINE << endl;
-	cout << "                               고객정보조회                             " << endl;
+	cout << "                                            고객정보조회                                            " << endl;
 	cout << LINE << endl;
 	cout << "       이름     /   고객 ID (PK)   /     전화번호      /       주소" << endl;
 	cout << LINE << endl;
+
+
+	sort(clientList.begin(), clientList.end(), [](Client* a, Client* b) {		//이름 기준으로 정렬
+		return a->getName() < b->getName();
+		});
+
 
 	for_each(clientList.begin(), clientList.end(), [](Client* c) {
 		cout << c->getName() << " / "
@@ -124,7 +130,7 @@ void ClientManager::search_client()		//검색
 	string input;	//검색 시 수정할 데이터와 매칭하기 위해 입력받는 지역변수
 	system("cls");
 	cout << LINE << endl;
-	cout << "                             고객명 검색                             " << endl;
+	cout << "                                            고객명 검색                             " << endl;
 	cout << LINE << endl;
 	cout << "1. 고객명 검색 2. 고객 ID 검색 "; //cin >> num;
 	
@@ -136,7 +142,7 @@ void ClientManager::search_client()		//검색
 
 		system("cls");
 		cout << LINE << endl;
-		cout << "                             고객정보 검색결과                             " << endl;
+		cout << "                                            고객정보 검색결과                             " << endl;
 		cout << LINE << endl;
 		cout << "       이름     /   고객 ID (PK)   /     전화번호      /       주소" << endl;
 		cout << LINE << endl;
@@ -161,7 +167,7 @@ void ClientManager::search_client()		//검색
 
 		system("cls");
 		cout << LINE << endl;
-		cout << "                             고객정보 검색결과                             " << endl;
+		cout << "                                            고객정보 검색결과                             " << endl;
 		cout << LINE << endl;
 		cout << "       이름     /   고객 ID (PK)   /     전화번호      /       주소" << endl;
 		cout << LINE << endl;
@@ -192,7 +198,7 @@ void ClientManager::delete_client()		//삭제
 	system("cls");
 
 	cout << LINE << endl;
-	cout << "                             고객 정보 삭제                              " << endl;
+	cout << "                                            고객 정보 삭제                              " << endl;
 	cout << LINE << endl;
 
 	
@@ -223,7 +229,7 @@ void ClientManager::update_client()	//정보 변경
 	string input;	//변경 시 수정할 데이터와 매칭하기 위해 입력받는 지역변수
 	system("cls");
 	cout << LINE << endl;
-	cout << "                             고객 정보 변경                              " << endl;
+	cout << "                                            고객 정보 변경                              " << endl;
 	cout << LINE << endl;
 
 	cout << "고객 ID 입력 : "; cin >> input;

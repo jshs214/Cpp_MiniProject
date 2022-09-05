@@ -7,6 +7,7 @@
 #include<sstream>
 
 int psearach_menu();		// 검색 메뉴 입력 예외처리
+
 ProductManager::ProductManager()
 {
 	ifstream file;
@@ -56,7 +57,7 @@ void ProductManager::add_Product()		// 제품 추가
 
 	system("cls");
 	cout << LINE << endl;
-	cout << "                           신규 제품 등록                             " << endl;
+	cout << "                                            신규 제품 등록                             " << endl;
 	cout << LINE << endl;
 
 	cout << "제품코드 (PK) : "; cin >> productID;
@@ -104,10 +105,14 @@ void ProductManager::Product_print()		// 조회
 {
 	system("cls");
 	cout << LINE << endl;
-	cout << "                               제품정보조회                             " << endl;
+	cout << "                                            제품정보조회                             " << endl;
 	cout << LINE << endl;
 	cout << "    제품코드 (PK)     /   제품명   /   가격     /    종류" << endl;
 	cout << LINE << endl;
+
+	sort(productList.begin(), productList.end(), [](Product* a, Product* b) {		//제품ID 기준으로 정렬
+		return a->getProductID() < b->getProductID();
+		});
 
 	for_each(productList.begin(), productList.end(), [](Product* p) {
 		cout << "(PK)" << p->getProductID() << "-> "
@@ -115,6 +120,7 @@ void ProductManager::Product_print()		// 조회
 			 << p->getPrice() << " / "
 			 << p->getProductType() << endl;
 		});
+
 
 	cout << "[제품정보 조회 완료]" << endl;
 	cout << LINE << endl;
@@ -131,7 +137,7 @@ void ProductManager::search_Product()		// 검색
 
 	system("cls");
 	cout << LINE << endl;
-	cout << "                             제품 검색                             " << endl;
+	cout << "                                            제품 검색                             " << endl;
 	cout << LINE << endl;
 	cout << "1. 제품명 검색 2. 종류 검색 "; //cin >> num;
 
@@ -143,7 +149,7 @@ void ProductManager::search_Product()		// 검색
 
 		system("cls");
 		cout << LINE << endl;
-		cout << "                             제품명 검색결과                             " << endl;
+		cout << "                                            제품명 검색결과                             " << endl;
 		cout << LINE << endl;
 		cout << "      제품코드(PK)     /   제품명    /    가격    /    종류" << endl;
 		cout << LINE << endl;
@@ -169,7 +175,7 @@ void ProductManager::search_Product()		// 검색
 
 		system("cls");
 		cout << LINE << endl;
-		cout << "                             종류 검색결과                             " << endl;
+		cout << "                                            종류 검색결과                             " << endl;
 		cout << LINE << endl;
 		cout << "      제품코드(PK)     /   제품명    /    가격    /    종류" << endl;
 		cout << LINE << endl;
@@ -198,7 +204,7 @@ void ProductManager::delete_Product()		//삭제
 	bool flag = false;
 	system("cls");
 	cout << LINE << endl;
-	cout << "                             제품 정보 삭제                              " << endl;
+	cout << "                                            제품 정보 삭제                              " << endl;
 	cout << LINE << endl;
 
 	cout << "삭제할 제품 ID 입력하세요 : "; cin >> input;
@@ -227,7 +233,7 @@ void ProductManager::update_product()	//정보 변경
 
 	system("cls");
 	cout << LINE << endl;
-	cout << "                             제품 정보 변경                              " << endl;
+	cout << "                                            제품 정보 변경                              " << endl;
 	cout << LINE << endl;
 
 	cout << "변경할 제품 코드 입력 : "; cin >> input;
@@ -245,11 +251,12 @@ void ProductManager::update_product()	//정보 변경
 			break;
 
 		}
+	}
 		if (flag == false)
 			cout << "[입력하신 제품 코드가 없습니다]" << endl;
 
 		cout << LINE << endl;
-	}
+	
 }
 
 int psearach_menu()		// 검색 메뉴 입력 예외처리

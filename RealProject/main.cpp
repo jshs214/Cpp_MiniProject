@@ -16,6 +16,7 @@ int main()
 {
 	int menu=0;	// 1. 고객 정보 관리 p2. 상품 정보 관리 3. 쇼핑 정보 관리
 	int back;	// 각 메뉴에서 빠져나오기 위한 입력값(0) 받는 변수
+
 	int Client_menu;
 	int product_menu;
 	int shoping_menu;
@@ -24,9 +25,6 @@ int main()
 	ClientManager CM;
 	ProductManager PM;
 	ShopInfoManager SM;
-
-
-
 
 	while (1) {
 
@@ -39,7 +37,7 @@ int main()
 		case 1:		//고객 정보 관리
 			system("cls");
 			cout << LINE << endl;
-			cout << "                         고객 관리 프로그램                         " << endl;
+			cout << "                                            고객 관리 프로그램                         " << endl;
 			showInfo();
 
 			//cin >> Client_menu;
@@ -77,7 +75,7 @@ int main()
 		case 2:		//제품 정보 관리
 			system("cls");
 			cout << LINE << endl;
-			cout << "                         제품 관리 프로그램                         " << endl;
+			cout << "                                            제품 관리 프로그램                         " << endl;
 			showInfo();
 
 			product_menu = cpmenu();	//제품관리메뉴에서 정해진 범위만 받도록
@@ -115,7 +113,7 @@ int main()
 		case 3:		//쇼핑 정보 관리
 			system("cls");
 			cout << LINE << endl;
-			cout << "                         주문 프로그램                         " << endl;
+			cout << "                                            주문 프로그램                         " << endl;
 			showShopInfo();
 
 			shoping_menu = smenu();	//쇼핑정보메뉴에서 정해진 범위만 받도록
@@ -151,11 +149,11 @@ void showMenu()
 {
 	system("cls"); 
 	cout << LINE << endl;
-	cout << "──────────────────────────────────고객 / 제품 관리 프로그램───────────────────────────────" << endl;
+	cout << "                                            고객 / 제품 관리 프로그램                              " << endl;
 	cout << LINE << endl;
-	cout << "1. 고객 정보 관리" << " / " << "2. 제품 정보 관리" << " / " << "3. 쇼핑 정보 관리" << " / " << "4. 프로그램 종료" << endl;
+	cout << "1. 고객 정보 관리" << "   /   " << "2. 제품 정보 관리" << "   /   " << "3. 쇼핑 정보 관리" << "   /   " << "4. 프로그램 저장 및 종료" << endl;
 	cout << LINE << endl;
-	cout << "                        몇번을 입력 하시겠습니까 ?                       " << endl;
+	cout << "                                            몇번을 입력 하시겠습니까 ?                       " << endl;
 	cout << LINE << endl;
 }
 
