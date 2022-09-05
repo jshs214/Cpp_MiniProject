@@ -12,6 +12,9 @@ public:
 	void delete_Product();	// 삭제
 	void update_product();	// 정보 변경
 
+	~ProductManager();
+
+	vector<string> parseCSV(istream&, char);
 	vector<Product*>& getproductList();
 
 private:

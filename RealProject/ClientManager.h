@@ -16,7 +16,9 @@ public:
 
 	~ClientManager();
 
+	vector<string> parseCSV(istream&, char);
 	vector<Client*>& getClientList();
+
 
 private:
 	vector<Client*>clientList;

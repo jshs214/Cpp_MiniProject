@@ -2,11 +2,46 @@
 
 #include<vector>
 #include <algorithm>
+#include<fstream>
+#include<string>
+#include<sstream>
+
 int psearach_menu();		// 검색 메뉴 입력 예외처리
 ProductManager::ProductManager()
 {
+	ifstream file;
+	file.open("Product.txt");
+	if (!file.fail()) {
+		while (!file.eof()) {
+			vector<string> row = parseCSV(file, ',');
+			if (row.size()) {
+				int price = atoi(row[2].c_str());
+				Product* p = new Product(row[0], row[1], price, row[3]);
+				productList.push_back(p);
 
+			}
+		}
+	}
+	file.close();
 }
+ProductManager::~ProductManager()
+{
+	ofstream fs("Product.txt");
+	if (!fs) {
+		cout << "출력할 파일을 열 수 없습니다.";
+		Sleep(1000);
+	}
+
+	for (auto it = productList.begin(); it != productList.end(); ++it)
+	{
+		fs << (*it)->getProductID() << ", "
+			<< (*it)->getProductName() << ", "
+			<< (*it)->getPrice() << ", "
+			<< (*it)->getProductType() << endl;
+	}
+	fs.close();
+}
+
 vector<Product*>& ProductManager::getproductList()
 {
 	return productList;
@@ -75,10 +110,10 @@ void ProductManager::Product_print()		// 조회
 	cout << LINE << endl;
 
 	for_each(productList.begin(), productList.end(), [](Product* p) {
-		cout << "제품코드 : " << p->getProductID() << " / "
-			<< "제품명 : " << p->getProductName() << " / "
-			<< "가격 : " << p->getPrice() << " / "
-			<< "종류 : " << p->getProductType() << endl;
+		cout << "(PK)" << p->getProductID() << "-> "
+			 << p->getProductName() << " / "
+			 << p->getPrice() << " / "
+			 << p->getProductType() << endl;
 		});
 
 	cout << "[제품정보 조회 완료]" << endl;
@@ -234,4 +269,28 @@ int psearach_menu()		// 검색 메뉴 입력 예외처리
 		Sleep(1000);
 	}
 	return 0;
+}
+
+vector<string> ProductManager::parseCSV(istream& file, char delimiter)
+{
+	stringstream ss;
+	vector<string> row;
+	string t = " \n\r\t";
+
+	while (!file.eof()) {
+		char c = file.get();
+		if (c == delimiter || c == '\r' || c == '\n') {
+			if (file.peek() == '\n') file.get();
+			string s = ss.str();
+			s.erase(0, s.find_first_not_of(t));
+			s.erase(s.find_last_not_of(t) + 1);
+			row.push_back(s);
+			ss.str("");
+			if (c != delimiter) break;
+		}
+		else {
+			ss << c;
+		}
+	}
+	return row;
 }
