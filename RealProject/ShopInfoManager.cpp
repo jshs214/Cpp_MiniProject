@@ -2,8 +2,49 @@
 
 #include <vector>
 #include <algorithm>
+#include<fstream>
+#include<string>
+#include<sstream>
 
 int ssearach_menu();		// ShopInfo 검색 메뉴 입력 예외처리
+
+ShopInfoManager::ShopInfoManager()
+{
+	ifstream file;
+	file.open("ShopInfo.txt");
+	if (!file.fail()) {
+		while (!file.eof()) {
+			vector<string> row = parseCSV(file, ',');
+			if (row.size()) {
+				int shopkey = atoi(row[0].c_str());		//PK키
+				int stock = atoi(row[3].c_str());
+				ShopInfo* s = new ShopInfo(shopkey, row[1], row[2], stock);
+				ShopInfolist.push_back(s);
+			}
+		}
+	}
+	file.close();
+}
+
+ShopInfoManager::~ShopInfoManager()
+{
+	ofstream fs("ShopInfo.txt");
+	if (!fs) {
+		cout << "출력할 파일을 열 수 없습니다.";
+		Sleep(1000);
+	}
+
+	for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)
+	{
+		fs << (*it)->getShopkey() << ", "
+			<< (*it)->getclientID() << ", "
+			<< (*it)->getProductID() << ", "
+			<< (*it)->getStock() << endl;
+
+	}
+	fs.close();
+}
+
 vector<ShopInfo*> ShopInfoManager::getShopInfolist()
 {
 	return ShopInfolist;
@@ -109,7 +150,7 @@ void ShopInfoManager::shoplist_print(vector<Client*>& clientList, vector<Product
 	cout << LINE << endl;
 	cout << "                               제품정보조회                             " << endl;
 	cout << LINE << endl;
-	cout << " 주문번호(PK)  /  고객ID  /  고객명  /  제품코드  /  제품명  /  종류  /  가격  /  결제가격  /  전화번호  /  주소" << endl;
+	cout << " 주문번호(PK)  /  고객ID  /  고객명  /  제품코드  /  제품명  /  종류  /  가격  /  주문가격  /  전화번호  /  주소" << endl;
 	cout << LINE << endl;
 
 	for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)    //Shoplist 벡터 검사
@@ -139,7 +180,7 @@ void ShopInfoManager::shoplist_print(vector<Client*>& clientList, vector<Product
 
 		cout << "NO." << (*it)->getShopkey() << " / " << (*it)->getclientID() << " / " << name << " / " << (*it)->getProductID() << " / "
 			<< productname << " / " << producttype << " / " << price << " / "
-			<< (*it)->getStock() << " / " << "총 합 : " << sum << " / "
+			<< (*it)->getStock() << " / " << "주문합 : " << sum << " / "
 			<< phonenumber << " / " << address << endl;
 	}
 
@@ -292,4 +333,28 @@ int ssearach_menu()		// 검색 메뉴 입력 예외처리
 		Sleep(1000);
 	}
 	return 0;
+}
+
+vector<string> ShopInfoManager::parseCSV(istream& file, char delimiter)
+{
+	stringstream ss;
+	vector<string> row;
+	string t = " \n\r\t";
+
+	while (!file.eof()) {
+		char c = file.get();
+		if (c == delimiter || c == '\r' || c == '\n') {
+			if (file.peek() == '\n') file.get();
+			string s = ss.str();
+			s.erase(0, s.find_first_not_of(t));
+			s.erase(s.find_last_not_of(t) + 1);
+			row.push_back(s);
+			ss.str("");
+			if (c != delimiter) break;
+		}
+		else {
+			ss << c;
+		}
+	}
+	return row;
 }

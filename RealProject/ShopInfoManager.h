@@ -8,10 +8,13 @@
 
 class ShopInfoManager {
 public:
+	ShopInfoManager();
 	void add_Shoplist(vector<Client*>& clientList, vector<Product*>& productList);       // 주문하기
 	void shoplist_print(vector<Client*>& clientList, vector<Product*>& productList);     // 조회
 	void search_shoplist(vector<Client*>& clientList, vector<Product*>& productList);    //검색
+	~ShopInfoManager();
 
+	vector<string> parseCSV(istream&, char);
 	vector<ShopInfo*> getShopInfolist();
 
 private:
