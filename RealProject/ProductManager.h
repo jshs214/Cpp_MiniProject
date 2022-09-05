@@ -13,6 +13,8 @@ public:
 	void delete_Product();	// 삭제
 	void update_product();	// 정보 변경
 
+	int psearach_menu();		// 검색 메뉴 입력 예외처리
+	int pupdate_menu();	// 변경 메뉴 입력 예외 처리
 	~ProductManager();
 
 	vector<string> parseCSV(istream&, char);

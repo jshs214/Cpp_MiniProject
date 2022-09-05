@@ -14,6 +14,9 @@ public:
 	void delete_client();	// 삭제
 	void update_client();	// 정보 변경
 
+	int csearach_menu();	//검색 예외값 입력 처리
+	int cupdate_menu();	//변경 예외값 입력 처리
+
 	~ClientManager();
 
 	vector<string> parseCSV(istream&, char);

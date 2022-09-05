@@ -6,9 +6,6 @@
 #include <string>
 #include <sstream>
 
-int csearach_menu();	//검색 예외값 입력 처리
-int cupdate_menu();	//변경 예외값 입력 처리
-
 ClientManager::ClientManager()
 {
 	ifstream file;
@@ -52,10 +49,7 @@ vector<Client*>& ClientManager::getClientList()
 
 void ClientManager::add_Client()		// 고객 추가
 {
-	string name;		// 입력할 고객 명
-	string clientid;	// id
-	string phonenumber;	// 전화번호
-	string address;		// 주소 추가를 위한 지역변수
+	string name, clientid, phonenumber, address;		// 입력할 고객 명 , 고객id, 전화번호, 주소
 
 	system("cls");
 	cout << LINE << endl;
@@ -67,7 +61,7 @@ void ClientManager::add_Client()		// 고객 추가
 	cout << "전화번호 (-구분없이 입력) : "; cin >> phonenumber;
 	cout << "주소 : "; cin.ignore(); getline(cin, address);
 
-	while (1) {
+	while (1) {			// PK(고객ID) 중복검사
 		bool flag = false;
 
 		for (auto it = clientList.begin(); it != clientList.end(); ++it)
@@ -81,8 +75,9 @@ void ClientManager::add_Client()		// 고객 추가
 		if (flag == false)	break;
 		else
 		{
-			cout << " 중복 id 입니다. 다시 입력해 주세요 : ";
+			cout << " 중복 id 입니다. 다시 입력해 주세요 (종료 0): ";
 			cin >> clientid;
+			if (clientid == "0")	return;		//종료조건
 		}
 	}
 
@@ -109,14 +104,14 @@ void ClientManager::client_print()		//조회
 		return a->getName() < b->getName();
 		});
 
-
-	for_each(clientList.begin(), clientList.end(), [](Client* c) {
-		cout << c->getName() << " / "
-			<< c->getclientID() << " / "
-			<< c->getPhoneNumber() << " / "
-			<< c->getAddress() << endl;
-		});
-
+	for (auto it = clientList.begin(); it != clientList.end(); ++it)
+	{
+		cout << (*it)->getName() << " / "
+			<< (*it)->getclientID() << " / "
+			<< (*it)->getPhoneNumber() << " / "
+			<< (*it)->getAddress() << endl;
+		
+	}
 	cout << "[고객정보 조회 완료]" << endl;
 	cout << LINE << endl;
 	cout << "[총 " << clientList.size() << "명의 정보가 있습니다]" << endl;
@@ -224,9 +219,8 @@ void ClientManager::update_client()	//정보 변경
 {
 	int num = 0;
 	bool flag = false;
-	string up_data;	// 업데이트 시 변경 할 데이터
-	string up_phonenumber;
-	string input;	//변경 시 수정할 데이터와 매칭하기 위해 입력받는 지역변수
+	string up_data ,input;	// 업데이트 시 변경 할 데이터, //변경 시 수정할 데이터와 매칭하기 위해 입력받는 지역변수
+
 	system("cls");
 	cout << LINE << endl;
 	cout << "                                            고객 정보 변경                              " << endl;
@@ -240,7 +234,7 @@ void ClientManager::update_client()	//정보 변경
 
 		if (sch_name == input) {
 			flag = true;
-			cout << "1. 이름 변경  2. 전화번호 변경 3. 주소 변경" << endl;		//cin >> num;	//변경할 정보
+			cout << "1. 이름 변경  2. 전화번호 변경 3. 주소 변경" << endl;	
 			num = cupdate_menu();
 			switch (num)
 			{
@@ -251,8 +245,8 @@ void ClientManager::update_client()	//정보 변경
 				break;
 
 			case 2:		//전화번호 변경
-				cout << "변경할 전화번호 입력" << endl;	cin >> up_phonenumber;
-				(*it)->setPhoneNumber(up_phonenumber);
+				cout << "변경할 전화번호 입력" << endl;	cin >> up_data;
+				(*it)->setPhoneNumber(up_data);
 				cout << "[전화번호 변경 완료]" << endl;
 				break;
 
@@ -271,7 +265,7 @@ void ClientManager::update_client()	//정보 변경
 	
 }// void ClientManager::update_client()	//정보 변경
 
-int csearach_menu()		// 검색 메뉴 입력 예외처리
+int ClientManager::csearach_menu()		// 검색 메뉴 입력 예외처리
 {
 	int menu;
 	cin >> menu;
@@ -289,7 +283,7 @@ int csearach_menu()		// 검색 메뉴 입력 예외처리
 	}
 	return 0;
 }
-int cupdate_menu()	// 변경 메뉴 입력 예외 처리
+int ClientManager::cupdate_menu()	// 변경 메뉴 입력 예외 처리
 {
 	int menu;
 	cin >> menu;

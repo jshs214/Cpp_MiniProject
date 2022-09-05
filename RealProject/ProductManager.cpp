@@ -5,8 +5,6 @@
 #include<string>
 #include<sstream>
 
-int psearach_menu();		// 검색 메뉴 입력 예외처리
-
 ProductManager::ProductManager()
 {
 	ifstream file;
@@ -20,7 +18,6 @@ ProductManager::ProductManager()
 
 				Product* p = new Product(row[0], row[1], price, row[3],stock);
 				productList.push_back(p);
-
 			}
 		}
 	}
@@ -52,11 +49,8 @@ vector<Product*>& ProductManager::getproductList()
 
 void ProductManager::add_Product()		// 제품 추가
 {
-	string productID;	// 입력할 제품코드
-	string productName;	// 제품 명
-	int price = 0;			// 가격
-	string productType;		//제품 종류
-	int stock = 0;
+	string productID, productName, productType;	// 입력할 제품코드, 제품명, 제품종류
+	int price = 0, stock=0;			// 가격, 재고수량
 
 	system("cls");
 	cout << LINE << endl;
@@ -65,7 +59,7 @@ void ProductManager::add_Product()		// 제품 추가
 
 	cout << "제품코드 (PK) : "; cin >> productID;
 	cout << "제품명 : "; cin >> productName;
-	while (1) {
+	while (1) {		// 가격 입력칸에 숫자만 들어가는지 검사
 		cout << "가격 : "; cin >> price;
 		if (!cin) {		// cin menu 에 숫자만 입력 받도록
 			cout << "[숫자만 입력해주세요]"<<endl;
@@ -78,7 +72,7 @@ void ProductManager::add_Product()		// 제품 추가
 	cout << "종류 : "; cin >> productType;
 	cout << "재고 : "; cin >> stock;
 
-	while (1) {
+	while (1) {	// PK(제품ID) 중복검사
 		bool flag = false;
 
 		for (auto it = productList.begin(); it != productList.end(); ++it)
@@ -92,8 +86,9 @@ void ProductManager::add_Product()		// 제품 추가
 		if (flag == false)	break;
 		else
 		{
-			cout << " 중복되는 제품 ID 입니다. 다시 입력해 주세요 : ";
+			cout << " 중복되는 제품 ID 입니다. 다시 입력해 주세요 (종료 0): ";
 			cin >> productID;
+			if (productID == "0")return;	//종료조건
 		}
 	}
 
@@ -121,7 +116,6 @@ void ProductManager::Product_print()		// 조회
 
 	for (auto it = productList.begin(); it != productList.end(); ++it)
 	{
-		
 		cout << "(PK)" << (*it)->getProductID() << "-> "
 			<< (*it)->getProductName() << " / "
 			<< (*it)->getPrice() << " / "
@@ -253,12 +247,23 @@ void ProductManager::update_product()	//정보 변경
 
 		if (sch_name == input) {
 			flag = true;
+			cout << "1. 가격 변경  2. 재고 변경 " << endl;		//cin >> num;	//변경할 정보
+			int num = pupdate_menu();
+			switch (num)
+			{
+			case 1:		//이름 변경
+				cout << "변경할 가격 입력" << endl;		cin >> up_data;
+				(*it)->setPrice(up_data);
+				cout << "[가격 변경 완료]" << endl;
+				break;
 
-			cout << "변경 가격 입력 : ";		cin >> up_data;
-			(*it)->setPrice(up_data);
-			cout << "[가격 변경 완료]" << endl;
-			break;
+			case 2:		//재고 변경
+				cout << "변경할 재고 수량 입력" << endl;	cin >> up_data;
+				(*it)->setStock(up_data);
+				cout << "[재고 변경 완료]" << endl;
+				break;
 
+			}
 		}
 	}
 		if (flag == false)
@@ -268,7 +273,7 @@ void ProductManager::update_product()	//정보 변경
 	
 }// void ProductManager::update_product()	//정보 변경 함수 종료
 
-int psearach_menu()		// 검색 메뉴 입력 예외처리
+int ProductManager::psearach_menu()		// 검색 메뉴 입력 예외처리
 {
 	int menu;
 	cin >> menu;
@@ -287,6 +292,24 @@ int psearach_menu()		// 검색 메뉴 입력 예외처리
 	return 0;
 }
 
+int ProductManager::pupdate_menu()	// 변경 메뉴 입력 예외 처리
+{
+	int menu;
+	cin >> menu;
+	if (!cin) {		// cin menu 에 숫자만 입력 받도록
+		cout << "[메뉴 번호만 입력해주세요]" << endl;
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+		Sleep(1000);
+	}
+	else if (menu > 0 && menu < 3)
+		return menu;
+	else {
+		cout << "[메뉴 번호만 입력해주세요]" << endl;
+		Sleep(1000);
+	}
+	return 0;
+}
 vector<string> ProductManager::parseCSV(istream& file, char delimiter)
 {
 	stringstream ss;

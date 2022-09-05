@@ -17,18 +17,13 @@ public:
     void setProductID(string&);
     int getStock() const;
     void setStock(int& );
+
     string getproductName() const;    // Á¦Ç° ID
-    void setproductName(string&);
     string getproductType() const;
-    void setproductType(string&);
     int getPrice() const;
-    void setPrice(int &);
     string getname() const;
-    void setname(string &);
     string getphoneNumber() const;
-    void setphoneNumber(string&); 
     string getaddress() const;
-    void setaddress(string&);
 private:
     int m_shopkey;
     string m_shopcid;

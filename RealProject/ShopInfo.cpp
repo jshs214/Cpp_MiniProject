@@ -1,4 +1,3 @@
-
 #include "ShopInfo.h"
 
 #include <iostream>
@@ -56,10 +55,6 @@ string ShopInfo::getproductType() const
 int ShopInfo::getPrice() const
 {
     return m_price;
-}
-void ShopInfo::setPrice(int& price)
-{
-    m_price = price;
 }
 string ShopInfo::getname() const
 {
