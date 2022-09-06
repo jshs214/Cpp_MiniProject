@@ -1,7 +1,5 @@
 #include "client.h"
 
-#include <iostream>
-
 using namespace std;
 
 Client::Client(string name, string clientID, string phoneNumber, string address)

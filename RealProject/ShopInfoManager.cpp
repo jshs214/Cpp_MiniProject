@@ -213,7 +213,7 @@ void ShopInfoManager::add_Shoplist()       // ShopInfolist벡터에 데이터를 push_b
 	Sleep(1000);
 }
 
-void ShopInfoManager::shoplist_print()     // ShopInfolist 벡터 조회
+void ShopInfoManager::shoplist_print()     // ShopInfolist 주문정보조회
 {
 	int sum = 0;
 

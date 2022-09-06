@@ -37,10 +37,6 @@ string Product::getProductType() const
 {
 	return m_productType;
 }
-void Product::setProductType(string& productType)
-{
-	m_productType=productType;
-}
 int Product::getStock() const
 {
 	return m_stock;

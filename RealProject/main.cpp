@@ -4,11 +4,11 @@
 
 #include<iostream>
 
-void showMenu();
-void showInfo();
-void showShopInfo();
+void showMenu();	//디자인을위한 메뉴 출력 함수 
+void showInfo();	//디자인을 위한 메뉴 선택창 함수
+void showShopInfo(); //ShopInfo 디자인을 위한 함수
 
-int inmenu();	// 메인에서 정해진 범위만 받도록
+int inmenu();	// 1 ~ 4 정해진 입력 범위만 받도록
 
 
 int main()
@@ -26,29 +26,29 @@ int main()
 		menu = inmenu();
 		switch (menu)
 		{
-		case 1:		//고객 정보 관리
+		case 1:		//고객정보 관리
 			system("cls");
 			cout << LINE << endl;
 			cout << "                                            고객 관리 프로그램" << endl;
-			showInfo();
-			CM.ClientMainMenu();
-			break;	//case 1 break;
-		case 2:		//제품 정보 관리
+			showInfo();		//디자인을 위한 메뉴 선택창 함수
+			CM.ClientMainMenu();	//고객관리 동작함수 
+			break;
+		case 2:		//제품정보 관리
 			system("cls");
 			cout << LINE << endl;
 			cout << "                                            제품 관리 프로그램" << endl;
-			showInfo();
-			PM.ProductMainMenu();
+			showInfo();		//디자인을 위한 메뉴 선택창 함수
+			PM.ProductMainMenu();	//제품관리 동작함수
 			break;
-		case 3:		//쇼핑 정보 관리
+		case 3:		//주문정보 관리
 			system("cls");
 			cout << LINE << endl;
 			cout << "                                            주문 프로그램" << endl;
-			showShopInfo();
-			SM.ShopMainMenu();
+			showShopInfo();		//디자인을 위한 메뉴 선택창 함수
+			SM.ShopMainMenu();	//주문정보관리 동작함수
 			break;
 		case 4:		// 종료
-			whileflag = true;
+			whileflag = true;	// 정상종료 조건
 			break;
 		}
 		if (whileflag == true)	break;	// while 종료조건
@@ -58,7 +58,7 @@ int main()
 	return 0;
 }
 
-void showMenu()
+void showMenu()		// 디자인을위한 메뉴 출력 함수
 {
 	system("cls"); 
 	cout << LINE << endl;
@@ -70,20 +70,20 @@ void showMenu()
 	cout << LINE << endl;
 }
 
-void showInfo()
+void showInfo()		// 디자인을 위한 1 ~ 5 메뉴선택 함수
 {
 	cout << LINE << endl;
 	cout << "   1.입력   /   2. 조회   /   3. 검색   /   4. 삭제   /   5. 변경   / (메인화면가기 0)" << endl;
 	cout << LINE << endl;
 }
-void showShopInfo()
+void showShopInfo()		//ShopInfo 디자인을 위한 함수
 {
 	cout << LINE << endl;
 	cout << "   1. 주문  /   2. 주문내역조회   /   3. 주문내역검색   /   4. 주문정보 변경   /   5. 주문내역삭제" << endl;
 	cout << LINE << endl;
 }
 
-int inmenu() //메인에서 정해진 범위만 받도록
+int inmenu() //1 ~ 4 정해진 입력 범위만 받도록
 {
 	int menu;
 	cin >> menu;

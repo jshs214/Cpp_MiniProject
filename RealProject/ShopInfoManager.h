@@ -4,7 +4,6 @@
 #include "Client.h"
 #include "Product.h"
 #include "ShopInfo.h"
-
 #include "ClientManager.h"
 #include "ProductManager.h"
 
@@ -18,6 +17,7 @@ public:
 	void search_shoplist();		// 주문검색
 	void update_shop();			// 주문변경
 	void delete_shoplist();		// 주문내역 삭제
+
 	int smenu();				// 정해진 범위 외 입력 예외처리
 	int ssearach_menu();		// 정해진 범위 외 입력 예외처리
 

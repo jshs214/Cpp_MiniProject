@@ -1,23 +1,25 @@
 #ifndef __CLIENT_H__
 #define __CLIENT_H__
-
 #include <iostream>
 #include<string>
 #include<Windows.h>
 #include "Line.h"
+
 using namespace std;
 
 class Client {
 public:
+    
     Client(string = "", string ="", string = "", string = "");
+    // name, clientID, phoneNumber, address
 
-    string getclientID()const;     // 고객 ID
+    string getclientID()const;
     void setclientID(string&);
-    string getName() const;     //고객 이름
+    string getName() const;
     void setName(string&);
-    string getPhoneNumber() const;  // 전화번호
+    string getPhoneNumber() const;
     void setPhoneNumber(string &);
-    string getAddress() const;      //주소
+    string getAddress() const;
     void setAddress(string&);  
 
 

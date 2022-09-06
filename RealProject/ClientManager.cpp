@@ -17,7 +17,6 @@ ClientManager::ClientManager()		//ClientManager 생성자에서 파일 load
 
 				Client* c = new Client(row[0], row[1], row[2], row[3]);
 				clientList.push_back(c);
-
 			}
 		}
 	}
@@ -54,8 +53,8 @@ vector<Client*>& ClientManager::getClientList()
 void ClientManager::ClientMainMenu()	//고객 메인 화면
 {
 	int back = 0;
-	int Client_menu;
-	Client_menu = cpmenu();		//고객관리메뉴에서 정해진 범위만 받도록
+	int Client_menu;	//1. 입력 2. 조회 3. 검색 4. 삭제 5. 변경
+	Client_menu = cpmenu();		//고객메뉴에서 정해진 범위만 입력 받는 함수
 	switch (Client_menu)
 	{
 	case 0:	//메인화면으로
@@ -82,17 +81,16 @@ void ClientManager::ClientMainMenu()	//고객 메인 화면
 		cout << "종료 (0) "; cin >> back;
 		if (back == 0)break;
 		break;
-	}	//고객 관리 프로그램 switch case문 종료
-
+	}
 }
 
-void ClientManager::add_Client()		// 고객 추가
+void ClientManager::add_Client()		 // clientList 벡터에 데이터를 push_back 하는 고객추가 함수
 {
-	string name, clientid, phonenumber, address;		// 입력할 고객 명 , 고객id, 전화번호, 주소
+	string name, clientid, phonenumber, address;
 
 	system("cls");
 	cout << LINE << endl;
-	cout << "                                            신규 고객 정보등록                             " << endl;
+	cout << "                                            신규 고객 정보등록" << endl;
 	cout << LINE << endl;
 
 	cout << "이름 : "; cin >> name;
@@ -100,7 +98,7 @@ void ClientManager::add_Client()		// 고객 추가
 	cout << "전화번호 (-구분없이 입력) : "; cin >> phonenumber;
 	cout << "주소 : "; cin.ignore(); getline(cin, address);
 
-	while (1) {			// PK(고객ID) 중복검사
+	while (1) {			//clientID (PK) 중복검사 (같으면 재입력)
 		bool flag = false;
 
 		for (auto it = clientList.begin(); it != clientList.end(); ++it)
@@ -124,11 +122,10 @@ void ClientManager::add_Client()		// 고객 추가
 	clientList.push_back(newClient);
 
 	cout << "[신규고객 등록 완료]" << endl;
-
 	Sleep(1000);	//Delay 1초
-}// void ClientManager::add_Client()		// 고객 추가함수 종료
+}
 
-void ClientManager::client_print()		//조회
+void ClientManager::client_print()		// clientList 고객정보조회
 {
 
 	system("cls");
@@ -137,7 +134,6 @@ void ClientManager::client_print()		//조회
 	cout << LINE << endl;
 	cout << "       이름     /   고객 ID (PK)   /     전화번호      /       주소" << endl;
 	cout << LINE << endl;
-
 
 	sort(clientList.begin(), clientList.end(), [](Client* a, Client* b) {		//이름 기준으로 정렬
 		return a->getName() < b->getName();
@@ -151,9 +147,9 @@ void ClientManager::client_print()		//조회
 	cout << LINE << endl;
 	cout << "[총 " << clientList.size() << "명의 정보가 있습니다]" << endl;
 	cout << LINE << endl;
-}// void ClientManager::client_print()		// 고객 조회함수 종료
+}
 
-void ClientManager::search_client()		//검색
+void ClientManager::search_client()		// 고객정보검색함수
 {
 	bool flag = false;
 	int num = 0;
@@ -164,7 +160,7 @@ void ClientManager::search_client()		//검색
 	cout << LINE << endl;
 	cout << "1. 고객명 검색 2. 고객 ID 검색 "; //cin >> num;
 	
-	num=csearach_menu();
+	num=csearach_menu();	//1. 고객명 검색 2. 고객ID 검색
 	switch (num)
 	{
 	case 1:
@@ -179,7 +175,7 @@ void ClientManager::search_client()		//검색
 		for (auto it = clientList.begin(); it != clientList.end(); ++it)
 		{
 			auto sch_name = (*it)->getName();
-			if (sch_name.find(input) != -1) {
+			if (sch_name.find(input) != -1) {	//clientList의 name에 입력한 문자열이 찾아지면 관련정보 출력
 				flag = true;
 				showClientlist(*it);		//clientList 출력
 			}
@@ -201,7 +197,7 @@ void ClientManager::search_client()		//검색
 		for (auto it = clientList.begin(); it != clientList.end(); ++it)
 		{
 			auto sch_id = (*it)->getclientID();
-			if (sch_id.find(input) != -1) {
+			if (sch_id.find(input) != -1) {		//clientList의 clientID에 입력한 문자열이 찾아지면 관련정보 출력
 				flag = true;
 				showClientlist(*it);		//clientList 출력
 			}
@@ -209,20 +205,18 @@ void ClientManager::search_client()		//검색
 		if (flag == false)
 			cout << "[입력하신 고객 ID가 없습니다]" << endl;
 		cout << LINE << endl;
-		break;		// case 2 break;
+		break;
 	}
+}
 
-}// void ClientManager::search_client()		//검색함수 종료
-
-
-void ClientManager::delete_client()		//삭제
+void ClientManager::delete_client()		//고객정보삭제 함수
 {
 	bool flag = false;
 	string input;	//삭제 시 수정할 데이터와 매칭하기 위해 입력받는 지역변수
 	system("cls");
 
 	cout << LINE << endl;
-	cout << "                                            고객 정보 삭제                              " << endl;
+	cout << "                                            고객 정보 삭제" << endl;
 	cout << LINE << endl;
 	for (auto it = clientList.begin(); it != clientList.end(); ++it)
 	{
@@ -234,7 +228,7 @@ void ClientManager::delete_client()		//삭제
 	for (auto it = clientList.begin(); it != clientList.end(); ++it)
 	{
 		auto sch_ID = (*it)->getclientID();
-		if (sch_ID == input) {
+		if (sch_ID == input) {		//clientList의 id와 입력한 문자열이 같으면 삭제
 			flag = true;
 			clientList.erase(it);
 			cout << input << " 에 대한 정보가 삭제되었습니다." << endl;
@@ -245,9 +239,9 @@ void ClientManager::delete_client()		//삭제
 	if (flag == false)
 		cout << "[입력하신 고객 ID가 없습니다]" << endl;
 	cout << LINE << endl;
-}// void ClientManager::delete_client()		//삭제함수 종료
+}
 
-void ClientManager::update_client()	//정보 변경
+void ClientManager::update_client()	// 고객정보변경
 {
 	int num = 0;
 	bool flag = false;
@@ -266,12 +260,11 @@ void ClientManager::update_client()	//정보 변경
 
 	for (auto it = clientList.begin(); it != clientList.end(); ++it)
 	{
-		auto sch_name = (*it)->getclientID();		//입력한 고객 ID 데이터가 있으면
-
-		if (sch_name == input) {
+		auto sch_name = (*it)->getclientID();
+		if (sch_name == input) {	//clientList의 id와 입력한 문자열이 같으면 정보변경
 			flag = true;
 			cout << "1. 이름 변경  2. 전화번호 변경 3. 주소 변경" << endl;	
-			num = cupdate_menu();
+			num = cupdate_menu();	// 1 ~ 3 이외 예외값 입력 처리함수
 			switch (num)
 			{
 			case 1:		//이름 변경
@@ -299,15 +292,15 @@ void ClientManager::update_client()	//정보 변경
 
 		cout << LINE << endl;
 	
-}// 정보 변경 함수 끝
-void ClientManager::showClientlist(Client* clientinfo)		//clientList 출력
+}
+void ClientManager::showClientlist(Client* clientinfo)		//clientList 출력함수
 {
 	cout << clientinfo->getName() << " / "
 		<< clientinfo->getclientID() << " / "
 		<< clientinfo->getPhoneNumber() << " / "
 		<< clientinfo->getAddress() << endl;
 }
-int ClientManager::csearach_menu()		// 검색 메뉴 입력 예외처리
+int ClientManager::csearach_menu()		// 검색메뉴입력 예외처리함수
 {
 	int menu;
 	cin >> menu;
@@ -325,11 +318,11 @@ int ClientManager::csearach_menu()		// 검색 메뉴 입력 예외처리
 	}
 	return 0;
 }
-int ClientManager::cupdate_menu()	// 변경 메뉴 입력 예외 처리
+int ClientManager::cupdate_menu()	// 변경메뉴입력 예외처리함수
 {
 	int menu;
 	cin >> menu;
-	if (!cin) {		// cin menu 에 숫자만 입력 받도록
+	if (!cin) {		// cin에 숫자만 입력 받도록
 		cout << "[메뉴 번호만 입력해주세요]" << endl;
 		cin.clear();
 		cin.ignore(INT_MAX, '\n');
@@ -344,11 +337,11 @@ int ClientManager::cupdate_menu()	// 변경 메뉴 입력 예외 처리
 	return 0;
 }
 
-int ClientManager::cpmenu()	// 고객,제품 관리 메뉴에서 정해진 범위만 받도록
+int ClientManager::cpmenu()	// 고객,제품 관리 메뉴에서 입력 예외처리함수
 {
 	int menu;
 	cin >> menu;
-	if (!cin) {		// cin menu 에 숫자만 입력 받도록
+	if (!cin) {		// cin에 숫자만 입력 받도록
 		cout << "[메뉴 번호만 입력해주세요]";
 		cin.clear();
 		cin.ignore(INT_MAX, '\n');

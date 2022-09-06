@@ -1,17 +1,16 @@
 #ifndef __PRODUCT_H__
 #define __PRODUCT_H__
-
 #include <iostream>
+#include<string>
+#include<Windows.h>
 #include "Line.h"
-#include <Windows.h>
-#include <iostream>
-#include<vector>
-#include<algorithm>
+
 using namespace std;
 
 class Product{
 public:
     Product(string = 0, string = "", int = 0,  string="", int = 0);
+    // productID, productName, price, producttype, stock
 
     string getProductID() const;
     void setProductID(string&);
@@ -20,7 +19,6 @@ public:
     int getPrice() const;
     void setPrice(int&);
     string getProductType() const;
-    void setProductType(string &);
     int getStock() const;
     void setStock(int&);
 
@@ -31,4 +29,4 @@ private:
     string m_productType;   // 力前 辆幅
     int m_stock; //力前 俺荐
 };
-#endif          // __CLIENT_H__
+#endif          // __PRODUCT_H__
