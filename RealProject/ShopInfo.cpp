@@ -3,9 +3,12 @@
 #include <iostream>
 
 ShopInfo::ShopInfo(int shopkey, string shoppid, string productName, string productType, int price,
-    int sstock, string name, string shopcid, string phonenumber, string address)
-    : m_shopkey(shopkey), m_productID(shoppid), m_productname(productName), m_producttype(productType), m_price(price),
-    m_sstock(sstock), m_name(name), m_shopcid(shopcid), m_phonenumber(phonenumber), m_address(address)
+    int sstock, string name, string shopcid, string phonenumber, string address,
+    int year, int mon, int mday)
+    : m_shopkey(shopkey), m_productID(shoppid), m_productname(productName),
+    m_producttype(productType), m_price(price), m_sstock(sstock), m_name(name), 
+    m_shopcid(shopcid), m_phonenumber(phonenumber), m_address(address),
+    m_year(year),m_mon(mon),m_mday(mday)
 {
 }
 int ShopInfo::getShopkey() const
@@ -68,4 +71,14 @@ string ShopInfo::getphoneNumber() const
 string ShopInfo::getaddress() const
 {
     return m_address;
+}
+int ShopInfo::getyear() const      //³¯Â¥
+{
+    return m_year;
+}int ShopInfo::getmonth() const
+{
+    return m_mon;
+}int ShopInfo::getday() const
+{
+    return m_mday;
 }

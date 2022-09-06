@@ -6,7 +6,7 @@
 #include <string>
 #include <sstream>
 
-ClientManager::ClientManager()
+ClientManager::ClientManager()		//ClientManager 생성자에서 파일 load
 {
 	ifstream file;
 	file.open("Client.txt");
@@ -23,7 +23,7 @@ ClientManager::ClientManager()
 	}
 	file.close();
 }
-ClientManager::~ClientManager()
+ClientManager::~ClientManager()		//ClientManager 소멸자에서 파일 입력
 {
 	ofstream fs("Client.txt");
 	if (!fs) {
@@ -172,7 +172,7 @@ void ClientManager::search_client()		//검색
 
 		system("cls");
 		cout << LINE << endl;
-		cout << "                                            고객정보 검색결과                             " << endl;
+		cout << "                                       [입력한 고객명 : " << input << " 검색결과]" << endl;
 		cout << LINE << endl;
 		cout << "       이름     /   고객 ID (PK)   /     전화번호      /       주소" << endl;
 		cout << LINE << endl;
@@ -197,7 +197,7 @@ void ClientManager::search_client()		//검색
 
 		system("cls");
 		cout << LINE << endl;
-		cout << "                                            고객정보 검색결과                             " << endl;
+		cout << "                                       [입력한 고객 ID : " << input << " 검색결과]" << endl;
 		cout << LINE << endl;
 		cout << "       이름     /   고객 ID (PK)   /     전화번호      /       주소" << endl;
 		cout << LINE << endl;

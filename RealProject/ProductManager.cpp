@@ -5,7 +5,7 @@
 #include<string>
 #include<sstream>
 
-ProductManager::ProductManager()
+ProductManager::ProductManager()		//ProductManager 생성자에서 파일 load
 {
 	ifstream file;
 	file.open("Product.txt");
@@ -23,7 +23,7 @@ ProductManager::ProductManager()
 	}
 	file.close();
 }
-ProductManager::~ProductManager()
+ProductManager::~ProductManager()		//ProductManager 소멸자에서 파일 입력
 {
 	ofstream fs("Product.txt");
 	if (!fs) {
@@ -89,7 +89,7 @@ void ProductManager::add_Product()		// 제품 추가
 
 	system("cls");
 	cout << LINE << endl;
-	cout << "                                            신규 제품 등록                             " << endl;
+	cout << "                                            신규 제품 등록" << endl;
 	cout << LINE << endl;
 
 	cout << "제품코드 (PK) : "; cin >> productID;
@@ -173,7 +173,7 @@ void ProductManager::search_Product()		// 검색
 
 	system("cls");
 	cout << LINE << endl;
-	cout << "                                            제품 검색                             " << endl;
+	cout << "                                            제품 검색" << endl;
 	cout << LINE << endl;
 	cout << "1. 제품명 검색 2. 종류 검색 "; //cin >> num;
 
@@ -185,7 +185,7 @@ void ProductManager::search_Product()		// 검색
 
 		system("cls");
 		cout << LINE << endl;
-		cout << "                                            제품명 검색결과                             " << endl;
+		cout << "                                       [입력한 제품명 : " << input << " 검색결과]" << endl;
 		cout << LINE << endl;
 		cout << "      제품코드(PK)     /   제품명    /    가격    /    종류" << endl;
 		cout << LINE << endl;
@@ -212,7 +212,7 @@ void ProductManager::search_Product()		// 검색
 
 		system("cls");
 		cout << LINE << endl;
-		cout << "                                            종류 검색결과                             " << endl;
+		cout << "                                       [입력한 제품종류 : " << input << " 검색결과]" << endl;
 		cout << LINE << endl;
 		cout << "      제품코드(PK)     /   제품명    /    가격    /    종류   /   재고" << endl;
 		cout << LINE << endl;
@@ -297,7 +297,6 @@ void ProductManager::update_product()	//정보 변경
 				(*it)->setStock(up_data);
 				cout << "[재고 변경 완료]" << endl;
 				break;
-
 			}
 		}
 	}

@@ -7,13 +7,15 @@ using namespace std;
 
 class ShopInfo {
 public:
-    ShopInfo(int = 0, string = "", string = "", string = "", int = 0, int = 0, string = "", string = "", string = "", string = "");
+    ShopInfo(int = 0, string = "", string = "", string = "",
+        int = 0, int = 0, string = "", string = "",
+        string = "", string = "",int =0,int =0,int =0);
 
     int getShopkey() const;
     void setShopkey(int&);
     string getclientID() const;     // 绊按 ID
     void setclientID(string&);
-    string getProductID() const;    // 力前 ID
+    string getProductID() const;    
     void setProductID(string&);
     int getStock() const;
     void setStock(int& );
@@ -24,6 +26,9 @@ public:
     string getname() const;
     string getphoneNumber() const;
     string getaddress() const;
+    int getyear() const;
+    int getmonth() const;
+    int getday() const;
 private:
     int m_shopkey;
     string m_shopcid;
@@ -39,5 +44,6 @@ private:
     int m_price;            // 力前 啊拜
     string m_producttype;   // 力前 辆幅
     string m_phonenumber;
+    int m_year, m_mon, m_mday;
 };
 #endif          // __CLIENT_H__

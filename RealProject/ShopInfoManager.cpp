@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "ShopInfoManager.h"
 
 #include <vector>
@@ -5,10 +6,10 @@
 #include<fstream>
 #include<string>
 #include<sstream>
-#include <iomanip>
+#include <iomanip>	//setw
+#include <ctime>
 
-
-ShopInfoManager::ShopInfoManager(ClientManager& cm,ProductManager& pm)
+ShopInfoManager::ShopInfoManager(ClientManager& cm,ProductManager& pm)		//ShopInfoManager 생성자에서 파일 load
 	:CM(cm), PM(pm)
 {
 	ifstream file;
@@ -20,7 +21,11 @@ ShopInfoManager::ShopInfoManager(ClientManager& cm,ProductManager& pm)
 				int shopkey = atoi(row[0].c_str());		// int형 ShopInfo의 PK키 형변환
 				int price = atoi(row[4].c_str());		// int형 가격 형변환
 				int stock = atoi(row[5].c_str());		// int형 수량 형변환
-				ShopInfo* s = new ShopInfo(shopkey, row[1], row[2], row[3], price, stock, row[6], row[7], row[8], row[9]);
+				int year = atoi(row[10].c_str());
+				int month = atoi(row[11].c_str());
+				int day = atoi(row[12].c_str());
+				ShopInfo* s = new ShopInfo(shopkey, row[1], row[2], row[3], price, stock, 
+											row[6], row[7], row[8], row[9],year,month,day);
 				ShopInfolist.push_back(s);
 			}
 		}
@@ -28,7 +33,7 @@ ShopInfoManager::ShopInfoManager(ClientManager& cm,ProductManager& pm)
 	file.close();
 }
 
-ShopInfoManager::~ShopInfoManager()
+ShopInfoManager::~ShopInfoManager()			//ShopInfoManager 소멸자에서 파일 입력
 {
 	ofstream fs("ShopInfo.txt");
 	if (!fs) {
@@ -41,7 +46,7 @@ ShopInfoManager::~ShopInfoManager()
 		fs << (*it)->getShopkey() << ", " << (*it)->getProductID() << ", " << (*it)->getproductName() << ", " 
 			<< (*it)->getproductType() << ", " << (*it)->getPrice() << ", " << (*it)->getStock() << ", "
 			<< (*it)->getname() << ", " << (*it)->getclientID() << ", " << (*it)->getphoneNumber() << ", "
-			<<(*it)->getaddress() << ", "<<endl;
+			<<(*it)->getaddress() << ", " << (*it)->getyear() << ", " << (*it)->getmonth() << ", " << (*it)->getday()  << ", " <<endl;
 	}
 	fs.close();
 }
@@ -72,9 +77,14 @@ void ShopInfoManager::add_Shoplist()       // 주문하기
 	string cid, pid;	// 입력받을 ClientID와 ProductID 변수
 	int up_stock;	// 재고반영에 필요한 변수
 	int cinput = 0, pinput=0, sinput=0; //일치하는지 flag
-
 	string productid, productname, producttype, name, clientid, phonenumber, address;
-
+	
+	time_t timer;			// 시간을 위한 변수
+	struct tm* t;
+	timer = time(NULL); // 1970년 1월 1일 0시 0분 0초부터 시작하여 현재까지의 초
+	t = localtime(&timer); // 포맷팅을 위해 구조체에 넣기
+	int tm_year, tm_mon, tm_mday;
+	tm_year = t->tm_year + 1900;	tm_mon = t->tm_mon + 1;	tm_mday = t->tm_mday;	// 연, 월, 일
 	bool cflag = false, pflag=false;	//경계검사를위한 변수
 	
 	system("cls");
@@ -185,7 +195,8 @@ void ShopInfoManager::add_Shoplist()       // 주문하기
 	}
 	
 	if (cinput > 0 && pinput > 0&& sinput > 0) {			// Client, Product가 정상적으로 생성되고, 재고가 정상적이면 주문리스트 추가
-		ShopInfo* newShopC = new ShopInfo(shopkey, productid, productname, producttype, price, stock, name, clientid, phonenumber, address);
+		ShopInfo* newShopC = new ShopInfo(shopkey, productid, productname, producttype, 
+											price, stock, name, clientid, phonenumber, address,tm_year,tm_mon,tm_mday);
 		ShopInfolist.push_back(newShopC);
 	}
 	Sleep(1000);	//Delay 1초
@@ -210,11 +221,13 @@ void ShopInfoManager::shoplist_print()     // 조회
 	for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)    //Shoplist 벡터 출력
 	{
 		sum = (*it)->getPrice() * (*it)->getStock();
+
 		cout.setf(ios::left); //좌측 정렬 후 출력
 		cout << " #" << setw(27) << (*it)->getShopkey() << setw(15) << (*it)->getProductID() << setw(15) << (*it)->getproductName() << setw(15)
 			<< (*it)->getproductType() << setw(11) << (*it)->getPrice()
 			<< setw(11) << (*it)->getStock() << setw(15) << sum << endl;
-		cout << "  " << setw(27) << (*it)->getname() << setw(15) << (*it)->getclientID() << setw(15) << (*it)->getphoneNumber()
+		cout << "  "  << (*it)->getyear()<<"." << (*it)->getmonth()<<"." << setw(10) <<(*it)->getday() << setw(10) <<
+			(*it)->getname() << setw(15) << (*it)->getclientID() << setw(15) << (*it)->getphoneNumber()
 			<< (*it)->getaddress() << endl << endl;
 	}
 
@@ -250,7 +263,7 @@ void ShopInfoManager::search_shoplist()    //검색
 		
 		system("cls");
 		cout << LINE << endl;
-		cout << "                                             고객 ID 검색결과                             " << endl;
+		cout << "                                       [입력한 고객 ID : "<<input<<" 검색결과]"  << endl;
 		cout << LINE << endl;
 		print_Shopmenu();		//주문내역 테이블 메뉴
 
@@ -284,7 +297,8 @@ void ShopInfoManager::search_shoplist()    //검색
 				cout << " #" << setw(27) << (*it)->getShopkey() << setw(15) << (*it)->getProductID() << setw(15) << (*it)->getproductName() << setw(15)
 					<< (*it)->getproductType() << setw(11) << (*it)->getPrice()
 					<< setw(11) << (*it)->getStock() << setw(15) << sum << endl;
-				cout << "  " << setw(27) << (*it)->getname() << setw(15) << (*it)->getclientID() << setw(15) << (*it)->getphoneNumber()
+				cout << "  " << (*it)->getyear() << "." << (*it)->getmonth() << "." << setw(10) << (*it)->getday() << setw(10) <<
+					(*it)->getname() << setw(15) << (*it)->getclientID() << setw(15) << (*it)->getphoneNumber()
 					<< (*it)->getaddress() << endl << endl;
 			}
 		}
@@ -298,10 +312,9 @@ void ShopInfoManager::search_shoplist()    //검색
 		cout << "검색할 제품코드를 입력하세요 : ";
 		cin >> input;
 
-
 		system("cls");
 		cout << LINE << endl;
-		cout << "                                            제품 코드 검색결과                             " << endl;
+		cout << "                                       [입력한 제품코드 : " << input << " 검색결과]" << endl;
 		cout << LINE << endl;
 		print_Shopmenu();		//주문내역 테이블 메뉴
 
@@ -336,7 +349,8 @@ void ShopInfoManager::search_shoplist()    //검색
 				cout << " #" << setw(27) << (*it)->getShopkey() << setw(15) << (*it)->getProductID() << setw(15) << (*it)->getproductName() << setw(15)
 					<< (*it)->getproductType() << setw(11) << (*it)->getPrice()
 					<< setw(11) << (*it)->getStock() << setw(15) << sum << endl;
-				cout << "  " << setw(27) << (*it)->getname() << setw(15) << (*it)->getclientID() << setw(15) << (*it)->getphoneNumber()
+				cout << "  " << (*it)->getyear() << "." << (*it)->getmonth() << "." << setw(10) << (*it)->getday() << setw(10) <<
+					(*it)->getname() << setw(15) << (*it)->getclientID() << setw(15) << (*it)->getphoneNumber()
 					<< (*it)->getaddress() << endl << endl;
 			}
 		}
@@ -390,7 +404,7 @@ void ShopInfoManager::print_Shopmenu()		//주문내역 테이블 메뉴
 	cout.setf(ios::left); //좌측 정렬 후 출력
 	cout << setw(29) << " 주문번호(PK)" << setw(15) << "제품코드" << setw(15) << "제품명" << setw(15) << "제품종류" << setw(11) << "가격"
 		<< setw(11) << "주문수량" << setw(11) << "주문가격" << endl;
-	cout << setw(29) << " 고객명" << setw(15) << "고객ID" << setw(15) << "전화번호" << "주소" << endl;
+	cout << setw(19) << "  날짜"<<setw(10) << "고객명" << setw(15) << "고객ID" << setw(15) << "전화번호" << "주소" << endl;
 	cout << LINE << endl;
 }
 
