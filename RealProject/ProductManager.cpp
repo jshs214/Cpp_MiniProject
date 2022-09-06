@@ -23,6 +23,7 @@ ProductManager::ProductManager()		//ProductManager 생성자에서 파일 load
 	}
 	file.close();
 }
+
 ProductManager::~ProductManager()		//ProductManager 소멸자에서 파일 입력
 {
 	ofstream fs("Product.txt");
@@ -232,7 +233,11 @@ void ProductManager::delete_Product()		//삭제
 	cout << LINE << endl;
 	cout << "                                            제품 정보 삭제                              " << endl;
 	cout << LINE << endl;
-
+	for (auto it = productList.begin(); it != productList.end(); ++it)
+	{
+		showProductlist(*it);
+	}
+	cout << LINE << endl;
 	cout << "삭제할 제품 ID 입력하세요 : "; cin >> input;
 
 	for (auto it = productList.begin(); it != productList.end(); ++it)
@@ -261,7 +266,11 @@ void ProductManager::update_product()	//정보 변경
 	cout << LINE << endl;
 	cout << "                                            제품 정보 변경                              " << endl;
 	cout << LINE << endl;
-
+	for (auto it = productList.begin(); it != productList.end(); ++it)
+	{
+		showProductlist(*it);
+	}
+	cout << LINE << endl;
 	cout << "변경할 제품 코드 입력 : "; cin >> input;
 
 	for (auto it = productList.begin(); it != productList.end(); ++it)

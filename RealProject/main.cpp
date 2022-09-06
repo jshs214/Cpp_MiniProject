@@ -79,7 +79,7 @@ void showInfo()
 void showShopInfo()
 {
 	cout << LINE << endl;
-	cout << "   1. 주문  /   2. 주문내역조회   /   3. 주문내역검색  " << endl;
+	cout << "   1. 주문  /   2. 주문내역조회   /   3. 주문내역검색   /   4. 주문정보 변경   /   5. 주문내역삭제" << endl;
 	cout << LINE << endl;
 }
 

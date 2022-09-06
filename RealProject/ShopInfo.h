@@ -14,9 +14,7 @@ public:
     int getShopkey() const;
     void setShopkey(int&);
     string getclientID() const;     // °í°´ ID
-    void setclientID(string&);
     string getProductID() const;    
-    void setProductID(string&);
     int getStock() const;
     void setStock(int& );
 
@@ -25,7 +23,9 @@ public:
     int getPrice() const;
     string getname() const;
     string getphoneNumber() const;
+    void setphoneNumber(string&);
     string getaddress() const;
+    void setaddress(string&);
     int getyear() const;
     int getmonth() const;
     int getday() const;

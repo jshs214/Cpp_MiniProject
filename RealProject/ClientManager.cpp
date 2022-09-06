@@ -220,8 +220,11 @@ void ClientManager::delete_client()		//삭제
 	cout << LINE << endl;
 	cout << "                                            고객 정보 삭제                              " << endl;
 	cout << LINE << endl;
-
-	
+	for (auto it = clientList.begin(); it != clientList.end(); ++it)
+	{
+		showClientlist(*it);		//clientList 출력
+	}
+	cout << LINE << endl;
 	cout << "삭제할 고객 ID 입력하세요 : "; cin >> input;
 
 	for (auto it = clientList.begin(); it != clientList.end(); ++it)
@@ -250,7 +253,11 @@ void ClientManager::update_client()	//정보 변경
 	cout << LINE << endl;
 	cout << "                                            고객 정보 변경                              " << endl;
 	cout << LINE << endl;
-
+	for (auto it = clientList.begin(); it != clientList.end(); ++it)
+	{
+		showClientlist(*it);		//clientList 출력
+	}
+	cout << LINE << endl;
 	cout << "고객 ID 입력 : "; cin >> input;
 
 	for (auto it = clientList.begin(); it != clientList.end(); ++it)

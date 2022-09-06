@@ -16,7 +16,8 @@ public:
 	void add_Shoplist();       // 주문하기
 	void shoplist_print();     // 조회
 	void search_shoplist();    //검색
-
+	void update_shop();		//재고 변경
+	void delete_shoplist();		//주문내역 삭제
 	int smenu();
 	int ssearach_menu();		// ShopInfo 검색 메뉴 입력 예외처리
 

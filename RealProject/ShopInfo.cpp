@@ -24,19 +24,11 @@ string ShopInfo::getclientID() const
     return m_shopcid;
 }
 
-void ShopInfo::setclientID(string& shopcid)
-{
-    m_shopcid = shopcid;
-}
-
 string ShopInfo::getProductID() const
 {
     return m_productID;
 }
-void ShopInfo::setProductID(string& shoppid)
-{
-    m_productID = shoppid;
-}
+
 int ShopInfo::getStock() const
 {
     return m_sstock;
@@ -67,18 +59,27 @@ string ShopInfo::getphoneNumber() const
 {
     return m_phonenumber;
 }
-
+void ShopInfo::setphoneNumber(string& phonenumber)
+{
+    m_phonenumber = phonenumber;
+}
 string ShopInfo::getaddress() const
 {
     return m_address;
 }
+void ShopInfo::setaddress(string& address)
+{
+    m_address = address;
+}
 int ShopInfo::getyear() const      //³¯Â¥
 {
     return m_year;
-}int ShopInfo::getmonth() const
+}
+int ShopInfo::getmonth() const
 {
     return m_mon;
-}int ShopInfo::getday() const
+}
+int ShopInfo::getday() const
 {
     return m_mday;
 }
