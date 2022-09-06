@@ -7,19 +7,16 @@ using namespace std;
 
 class ShopInfo {
 public:
-    ShopInfo(int = 0, string = "", string = "", string = "",
-        int = 0, int = 0, string = "", string = "",
-        string = "", string = "",int =0,int =0,int =0);
+    ShopInfo(int = 0, string = "", string = "", string = "", int = 0, int = 0, string = "",
+             string = "", string = "", string = "",int =0,int =0,int =0);
 
     int getShopkey() const;
     void setShopkey(int&);
-    string getclientID() const;     // 고객 ID
+    string getclientID() const;
     string getProductID() const;   
-
     int getStock() const;
     void setStock(int& );
-
-    string getproductName() const;    // 제품 ID
+    string getproductName() const; 
     string getproductType() const;
     int getPrice() const;
     string getname() const;
@@ -30,21 +27,20 @@ public:
     int getyear() const;
     int getmonth() const;
     int getday() const;
-private:
-    int m_shopkey;
-    string m_shopcid;
-    string m_shoppid;
-    int m_sstock;
 
+private:
+    int m_shopkey;          // 주문번호(PK)
     string m_clientID;      // 고객 ID
+    string m_productID;     // 제품 ID
+    int m_sstock;           // 수량
+
+
     string m_name;          // 고객 이름
-    string m_phoneNumber;   // 고객 전화번호
+    string m_phonenumber;   // 고객 전화번호
     string m_address;       // 고객 주소
-    string m_productID;        // 제품 ID
     string m_productname;   // 제품 명
     int m_price;            // 제품 가격
     string m_producttype;   // 제품 종류
-    string m_phonenumber;
-    int m_year, m_mon, m_mday;
+    int m_year, m_mon, m_mday;      //연, 월, 일
 };
 #endif          // __CLIENT_H__

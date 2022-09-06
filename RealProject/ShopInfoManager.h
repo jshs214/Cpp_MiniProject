@@ -12,11 +12,11 @@ class ShopInfoManager {
 public:
 	ShopInfoManager(ClientManager&, ProductManager&);
 
-	void ShopMainMenu();		// 주문내역메인메뉴
+	void ShopMainMenu();		// 주문메인메뉴
 	void add_Shoplist();		// 주문하기
-	void shoplist_print();		// 조회
-	void search_shoplist();		// 검색
-	void update_shop();			// 재고 변경
+	void shoplist_print();		// 주문조회
+	void search_shoplist();		// 주문검색
+	void update_shop();			// 주문변경
 	void delete_shoplist();		// 주문내역 삭제
 	int smenu();				// 정해진 범위 외 입력 예외처리
 	int ssearach_menu();		// 정해진 범위 외 입력 예외처리

@@ -259,12 +259,12 @@ void ProductManager::delete_Product()		//삭제
 void ProductManager::update_product()	//정보 변경
 {
 	string input;	//정보 변경 시 입력받는 제품 ID 변수
-	int up_data;	//업데이트 시 변경 할 데이터
 	bool flag = false;
+	int data;		//업데이트 시 변경할 데이터
 
 	system("cls");
 	cout << LINE << endl;
-	cout << "                                            제품 정보 변경                              " << endl;
+	cout << "                                            제품 정보 변경" << endl;
 	cout << LINE << endl;
 	for (auto it = productList.begin(); it != productList.end(); ++it)
 	{
@@ -283,16 +283,30 @@ void ProductManager::update_product()	//정보 변경
 			int num = pupdate_menu();
 			switch (num)
 			{
-			case 1:		//이름 변경
-				cout << "변경할 가격 입력" << endl;		cin >> up_data;
-				(*it)->setPrice(up_data);
-				cout << "[가격 변경 완료]" << endl;
+			case 1:		//가격 변경
+				cout << "변경할 가격 입력" << endl;
+				data=update_data();
+				if (data != 0) {
+					(*it)->setPrice(data);
+					cout << "[가격 변경 완료]" << endl;
+				}
+				else if (data == 0) {
+					(*it)->setPrice(data);
+					cout << "[가격 변경 완료]" << endl;
+				}
 				break;
 
 			case 2:		//재고 변경
-				cout << "변경할 재고 수량 입력" << endl;	cin >> up_data;
-				(*it)->setStock(up_data);
-				cout << "[재고 변경 완료]" << endl;
+				cout << "변경할 재고 수량 입력" << endl;
+				data = update_data();
+				if (data != 0) {
+					(*it)->setStock(data);
+					cout << "[재고 변경 완료]" << endl;
+				}
+				else if (data == 0) {
+					(*it)->setStock(data);
+					cout << "[재고 변경 완료]" << endl;
+				}
 				break;
 			}
 		}
@@ -364,6 +378,24 @@ int ProductManager::pupdate_menu()	// 변경 메뉴 입력 예외 처리
 		return menu;
 	else {
 		cout << "[메뉴 번호만 입력해주세요]" << endl;
+		Sleep(1000);
+	}
+	return 0;
+}
+int ProductManager::update_data() // 예외 처리
+{
+	int data;
+	cin >> data;
+	if (!cin) {		// cin 에 숫자만 입력 받도록
+		cout << "[범위가 벗어났습니다. 999999999 이하의 양수만 입력해주세요]";
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+		Sleep(1000);
+	}
+	else if (data >= 0 && data < 999999999)
+		return data;
+	else {
+		cout << "[범위가 벗어났습니다. 999999999 이하의 양수만 입력해주세요]" << endl;
 		Sleep(1000);
 	}
 	return 0;

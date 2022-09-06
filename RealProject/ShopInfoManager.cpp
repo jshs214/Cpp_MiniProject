@@ -5,9 +5,8 @@
 #include <vector>
 #include <algorithm>
 #include<fstream>
-#include<string>
 #include<sstream>
-#include <iomanip>	//setw
+#include <iomanip>
 #include <ctime>
 
 
@@ -378,22 +377,31 @@ void ShopInfoManager::update_shop()	//주문정보 변경 함수
 		for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)
 		{
 			if ((*it)->getShopkey() == input) {		//ShopInfo PK키와 입력값이 같으면 재고 변경 동작
+				flag = true;
 				for (auto pit = PM.getproductList().begin(); pit != PM.getproductList().end(); ++pit) {
 					auto sid = (*it)->getProductID();
 					auto pid = (*pit)->getProductID();
 					if (sid == pid) {	//가져온 ShopInfo의 제품코드를 Product에있는 제품코드와 매칭
-						flag = true;
 						cout << "변경 수량 입력 : ";	cin >> up_stock;
+
 						if (up_stock <= 0) {
 							cout << "[변경 수량이 0보다 같거나 작습니다]" << endl;
 						}
 						else {
-							int stock = (*pit)->getStock() + (*it)->getStock();		// 재고를 변경 전 제품의 재고 + 기존 주문내역 재고로 변경
-							(*pit)->setStock(stock);		//product에 있는 재고에 수정한 재고를
-							(*it)->setStock(up_stock);		//Shoplist 주문수량으로 변경
-							int up_stock = (*pit)->getStock() - (*it)->getStock();	// 제품재고 - 변경한 주문수량 
-							(*pit)->setStock(up_stock);
-							cout << endl << "[수량이 변경되었습니다.]" << endl;
+							if (up_stock > (*pit)->getStock() + (*it)->getStock()) {	// 변경할 수량이 Product의 재고 + 현재 주문재고 보다 크면
+								cout << "[현재 재고보다 주문하신 수량이 더 많습니다. " 
+									<<"변경가능 최대 수량 : "<<(*pit)->getStock() + (*it)->getStock() <<"]" << endl;
+							}
+							else {
+								int stock = (*pit)->getStock() + (*it)->getStock();		// 재고를 변경 전 제품의 재고 + 기존 주문내역 재고로 변경
+								(*pit)->setStock(stock);		//product에 있는 재고에 수정한 재고를
+								(*it)->setStock(up_stock);		//Shoplist 주문수량으로 변경
+
+								int up_stock = (*pit)->getStock() - (*it)->getStock();	// 제품재고 - 변경한 주문수량 
+								(*pit)->setStock(up_stock);
+								cout << endl << "[수량이 변경되었습니다.]" << endl;
+							}
+							break;
 						}
 					}
 				}

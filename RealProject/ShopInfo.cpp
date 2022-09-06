@@ -7,7 +7,7 @@ ShopInfo::ShopInfo(int shopkey, string shoppid, string productName, string produ
     int year, int mon, int mday)
     : m_shopkey(shopkey), m_productID(shoppid), m_productname(productName),
     m_producttype(productType), m_price(price), m_sstock(sstock), m_name(name), 
-    m_shopcid(shopcid), m_phonenumber(phonenumber), m_address(address),
+    m_clientID(shopcid), m_phonenumber(phonenumber), m_address(address),
     m_year(year),m_mon(mon),m_mday(mday)
 {
 }
@@ -21,9 +21,8 @@ void ShopInfo::setShopkey(int& shopkey)
 }
 string ShopInfo::getclientID() const
 {
-    return m_shopcid;
+    return m_clientID;
 }
-
 string ShopInfo::getProductID() const
 {
     return m_productID;
@@ -71,7 +70,7 @@ void ShopInfo::setaddress(string& address)
 {
     m_address = address;
 }
-int ShopInfo::getyear() const      //³¯Â¥
+int ShopInfo::getyear() const
 {
     return m_year;
 }

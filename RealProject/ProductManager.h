@@ -16,7 +16,7 @@ public:
 	int cpmenu();			// 제품 관리 메뉴에서 정해진 범위만 받도록
 	int psearach_menu();		// 검색 메뉴 입력 예외처리
 	int pupdate_menu();	// 변경 메뉴 입력 예외 처리
-
+	int update_data(); // 예외 처리
 	void showProductlist(Product* productinfo);
 	~ProductManager();
 
