@@ -8,7 +8,8 @@
 #include<sstream>
 #include <iomanip>
 #include <ctime>
-
+#define C_YLLW "\033[33m"
+#define C_NRML "\033[0m"
 
 ShopInfoManager::ShopInfoManager(ClientManager& cm,ProductManager& pm)		//ShopInfoManager 생성자에서 파일 load
 	:CM(cm), PM(pm)
@@ -262,6 +263,11 @@ void ShopInfoManager::search_shoplist()    // ShopInfolist 검색
 	cout << LINE << endl;
 	cout << "                                            주문내역 검색" << endl;
 	cout << LINE << endl;
+	for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)
+	{
+		showShoplist(*it);	//productList 벡터출력
+	}
+	cout << LINE << endl;
 	cout << "1. 고객 ID 검색 2. 제품코드 검색 ";
 
 	num = ssearach_menu();		// 검색 메뉴 입력 예외처리
@@ -302,7 +308,9 @@ void ShopInfoManager::search_shoplist()    // ShopInfolist 검색
 						sum = price * (*it)->getStock();
 					}
 				}
+				printf("%s", C_YLLW);		//글자색 찾은 데이터 노란색
 				showShoplist(*it);	//ShopInfolist 벡터 출력
+				printf("%s", C_NRML);		//글자 색 복귀
 			}
 		}
 		if (flag == false)
@@ -345,8 +353,9 @@ void ShopInfoManager::search_shoplist()    // ShopInfolist 검색
 						address = (*cit)->getAddress();
 					}
 				}
-
+				printf("%s", C_YLLW);		//글자색 찾은 데이터 노란색
 				showShoplist(*it);	//ShopInfolist 벡터 출력
+				printf("%s", C_NRML);		//글자 색 복귀
 			}
 		}
 		if (flag == false)

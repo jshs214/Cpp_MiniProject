@@ -5,6 +5,8 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#define C_YLLW "\033[33m"
+#define C_NRML "\033[0m"
 
 ClientManager::ClientManager()		//ClientManager 생성자에서 파일 load
 {
@@ -156,17 +158,22 @@ void ClientManager::search_client()		// 고객정보검색함수
 	string input;	//검색 시 수정할 데이터와 매칭하기 위해 입력받는 지역변수
 	system("cls");
 	cout << LINE << endl;
-	cout << "                                            고객명 검색                             " << endl;
+	cout << "                                            고객명 검색" << endl;
 	cout << LINE << endl;
-	cout << "1. 고객명 검색 2. 고객 ID 검색 "; //cin >> num;
-	
+	for (auto it = clientList.begin(); it != clientList.end(); ++it)
+	{
+			showClientlist(*it);		//clientList 출력
+	}
+	cout << LINE << endl;
+	cout << "1. 고객명 검색 2. 고객 ID 검색 "<<endl;
+	cout << LINE << endl;
+
 	num=csearach_menu();	//1. 고객명 검색 2. 고객ID 검색
 	switch (num)
 	{
 	case 1:
 		cout << "고객명 검색 : "; cin >> input;
 
-		system("cls");
 		cout << LINE << endl;
 		cout << "                                       [입력한 고객명 : " << input << " 검색결과]" << endl;
 		cout << LINE << endl;
@@ -177,7 +184,9 @@ void ClientManager::search_client()		// 고객정보검색함수
 			auto sch_name = (*it)->getName();
 			if (sch_name.find(input) != -1) {	//clientList의 name에 입력한 문자열이 찾아지면 관련정보 출력
 				flag = true;
+				printf("%s", C_YLLW);		//글자색 찾은 데이터 노란색
 				showClientlist(*it);		//clientList 출력
+				printf("%s", C_NRML);		//글자 색 복귀
 			}
 		}
 		if (flag == false)
@@ -188,7 +197,6 @@ void ClientManager::search_client()		// 고객정보검색함수
 	case 2:
 		cout << "고객 ID : "; cin >> input;
 
-		system("cls");
 		cout << LINE << endl;
 		cout << "                                       [입력한 고객 ID : " << input << " 검색결과]" << endl;
 		cout << LINE << endl;
@@ -199,7 +207,9 @@ void ClientManager::search_client()		// 고객정보검색함수
 			auto sch_id = (*it)->getclientID();
 			if (sch_id.find(input) != -1) {		//clientList의 clientID에 입력한 문자열이 찾아지면 관련정보 출력
 				flag = true;
+				printf("%s", C_YLLW);
 				showClientlist(*it);		//clientList 출력
+				printf("%s", C_NRML);
 			}
 		}
 		if (flag == false)

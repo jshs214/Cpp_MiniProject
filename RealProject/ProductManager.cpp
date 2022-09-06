@@ -5,6 +5,8 @@
 #include<fstream>
 #include<string>
 #include<sstream>
+#define C_YLLW "\033[33m"
+#define C_NRML "\033[0m"
 
 ProductManager::ProductManager()		//ProductManager 생성자에서 파일 load
 {
@@ -197,6 +199,11 @@ void ProductManager::search_Product()		// 제품정보검색
 	cout << LINE << endl;
 	cout << "                                            제품 검색" << endl;
 	cout << LINE << endl;
+	for (auto it = productList.begin(); it != productList.end(); ++it)
+	{
+		showProductlist(*it);	//productList 벡터출력
+	}
+	cout << LINE << endl;
 	cout << "1. 제품명 검색 2. 종류 검색 "; //cin >> num;
 
 	num = pupdate_menu();	// 1. 제품명 검색 2. 종류 검색
@@ -205,7 +212,6 @@ void ProductManager::search_Product()		// 제품정보검색
 	case 1:
 		cout << "제품명 검색 : "; cin >> input;
 
-		system("cls");
 		cout << LINE << endl;
 		cout << "                                       [입력한 제품명 : " << input << " 검색결과]" << endl;
 		cout << LINE << endl;
@@ -217,7 +223,9 @@ void ProductManager::search_Product()		// 제품정보검색
 			auto sch_name = (*it)->getProductName();
 			if (sch_name.find(input) != -1) {	//productList의 name에 입력한 문자열이 찾아지면 관련정보 출력
 				flag = true;
-				showProductlist(*it);	//productList 벡터출력
+				printf("%s", C_YLLW);		//글자색 찾은 데이터 노란색
+				showProductlist(*it);		//productList 벡터출력
+				printf("%s", C_NRML);		//글자 색 복귀
 			}
 		}
 		if (flag == false)
@@ -228,7 +236,6 @@ void ProductManager::search_Product()		// 제품정보검색
 	case 2:
 		cout << "종류 검색 : "; cin >> input;
 
-		system("cls");
 		cout << LINE << endl;
 		cout << "                                       [입력한 제품종류 : " << input << " 검색결과]" << endl;
 		cout << LINE << endl;
@@ -240,7 +247,9 @@ void ProductManager::search_Product()		// 제품정보검색
 			auto sch_type = (*it)->getProductType();
 			if (sch_type.find(input) != -1) {	//productList의 producttype에 입력한 문자열이 찾아지면 관련정보 출력
 				flag = true;
-				showProductlist(*it);
+				printf("%s", C_YLLW);		//글자색 찾은 데이터 노란색
+				showProductlist(*it);		//productList 벡터출력
+				printf("%s", C_NRML);		//글자 색 복귀
 			}
 		}
 		if (flag == false)
