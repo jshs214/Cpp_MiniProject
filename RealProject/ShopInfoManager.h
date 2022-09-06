@@ -13,16 +13,15 @@ public:
 	ShopInfoManager(ClientManager&, ProductManager&);
 
 	void ShopMainMenu();	// 주문내역메인메뉴
-	void add_Shoplist(vector<Client*>& clientList, vector<Product*>& productList);       // 주문하기
-	void shoplist_print(vector<Client*>& clientList, vector<Product*>& productList);     // 조회
-	void search_shoplist(vector<Client*>& clientList, vector<Product*>& productList);    //검색
+	void add_Shoplist();       // 주문하기
+	void shoplist_print();     // 조회
+	void search_shoplist();    //검색
 
 	int smenu();
 	int ssearach_menu();		// ShopInfo 검색 메뉴 입력 예외처리
 	~ShopInfoManager();
 
 	vector<string> parseCSV(istream&, char);
-	vector<ShopInfo*>& getShopInfolist();
 	void print_Shopmenu();
 private:
 	vector<ShopInfo*> ShopInfolist;     // ShopInfo의 벡터

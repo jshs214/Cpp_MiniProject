@@ -46,11 +46,6 @@ ShopInfoManager::~ShopInfoManager()
 	fs.close();
 }
 
-vector<ShopInfo*>& ShopInfoManager::getShopInfolist()
-{
-	return ShopInfolist;
-}
-
 void ShopInfoManager::ShopMainMenu()
 {
 	int shoping_menu;
@@ -59,19 +54,19 @@ void ShopInfoManager::ShopMainMenu()
 	switch (shoping_menu)
 	{
 	case 1:		// 주문
-		add_Shoplist(CM.getClientList(), PM.getproductList());
+		add_Shoplist();
 		break;
 	case 2:		//주문 내역 조회
-		shoplist_print(CM.getClientList(), PM.getproductList());
+		shoplist_print();
 		cout << "종료 (0) "; cin >> back;
 		if (back == 0)break;
 	case 3:		//주문 내역 검색
-		search_shoplist(CM.getClientList(), PM.getproductList());
+		search_shoplist();
 		cout << "종료 (0) "; cin >> back;
 		if (back == 0)break;
 	}
 }
-void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>& productList)       // 주문하기
+void ShopInfoManager::add_Shoplist()       // 주문하기
 {
 	int shopkey=1000, stock = 0,price =0;	//ShopInfo의 PK키 1000부터 시작 , 주문 할 수량, 가격
 	string cid, pid;	// 입력받을 ClientID와 ProductID 변수
@@ -95,7 +90,7 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 	while (1) {					//Client ID 중복검사 ( 같아야 진행 )
 		cflag = false;
 		cinput = 0;// ClientID가 정상적으로 생성되면 1, 아니면 0
-		for (auto it = clientList.begin(); it != clientList.end(); ++it)
+		for (auto it =CM.getClientList().begin(); it != CM.getClientList().end(); ++it)
 		{
 			auto sch_cid = (*it)->getclientID();
 			if (sch_cid == cid) {           // ClientID와 입력한 id가 같으면
@@ -117,7 +112,7 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 	while (1) {					//Product ID 중복검사 ( 같아야 진행 )
 		pflag = false;
 		pinput = 0;	// ProductID가 정상적으로 생성되면 1, 아니면 0
-		for (auto it = productList.begin(); it != productList.end(); ++it)
+		for (auto it = PM.getproductList().begin(); it != PM.getproductList().end(); ++it)
 		{
 			auto sch_pid = (*it)->getProductID();
 			if (sch_pid == pid) {           // ClientID와 입력한 id가 같으면
@@ -135,7 +130,7 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 		if (pid == "0") return;		//종료조건
 		}
 
-		for (auto cit = clientList.begin(); cit != clientList.end(); ++cit)		// Client의 데이터를 ShopInfolist 벡터에 값복사
+		for (auto cit = CM.getClientList().begin(); cit != CM.getClientList().end(); ++cit)		// Client의 데이터를 ShopInfolist 벡터에 값복사
 		{
 			auto sch_cid = (*cit)->getclientID();
 			if (sch_cid == cid) {           
@@ -146,7 +141,7 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 			}
 		}
 
-		for (auto pit = productList.begin(); pit != productList.end(); ++pit)		// Product의 데이터를 ShopInfolist 벡터에 값복사
+		for (auto pit = PM.getproductList().begin(); pit != PM.getproductList().end(); ++pit)		// Product의 데이터를 ShopInfolist 벡터에 값복사
 		{
 			auto sch_PK = (*pit)->getProductID();
 			if (sch_PK == pid) {
@@ -166,7 +161,7 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 		}
 	}
 	
-	for (auto pit = productList.begin(); pit != productList.end(); ++pit) {				// 주문 할 때 Product의 재고가 빠지는 동작
+	for (auto pit = PM.getproductList().begin(); pit != PM.getproductList().end(); ++pit) {				// 주문 할 때 Product의 재고가 빠지는 동작
 		auto id = (*pit)->getProductID();	////Product에 있는 고객ID
 		if (pid == id) {			//pid는 주문 할 때 입력한 고객 id
 			while (1) {
@@ -197,7 +192,7 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 }//void add_Shoplist(vector<Client*>& clientList, vector<Product*>& productList)       // 주문하기 함수 종료
 
 
-void ShopInfoManager::shoplist_print(vector<Client*>& clientList, vector<Product*>& productList)     // 조회
+void ShopInfoManager::shoplist_print()     // 조회
 {
 	int sum = 0;   //총합
 
@@ -229,7 +224,7 @@ void ShopInfoManager::shoplist_print(vector<Client*>& clientList, vector<Product
 	cout << LINE << endl;
 }//void shoplist_print(vector<Client*>& clientList, vector<Product*>& productList)     // 조회하기 함수 종료
 
-void ShopInfoManager::search_shoplist(vector<Client*>& clientList, vector<Product*>& productList)    //검색
+void ShopInfoManager::search_shoplist()    //검색
 {
 	string name, phonenumber, address, productname, producttype;            //Client 고객명, 전화번호, 주소, 제품명, 제품종류
 	string input;	//검색 시 수정할 데이터와 매칭하기 위해 입력받는 지역변수
@@ -265,7 +260,7 @@ void ShopInfoManager::search_shoplist(vector<Client*>& clientList, vector<Produc
 			{
 				string p_ID = (*it)->getProductID();
 				string c_ID = (*it)->getclientID();
-				for (auto cit = clientList.begin(); cit != clientList.end(); ++cit)
+				for (auto cit = CM.getClientList().begin(); cit != CM.getClientList().end(); ++cit)
 				{
 					if ((*cit)->getclientID().find(input) != -1) {// 클라이언트 ID와 입력한 input 문자열에 겹치는게 있으면
 						flag = true;
@@ -276,7 +271,7 @@ void ShopInfoManager::search_shoplist(vector<Client*>& clientList, vector<Produc
 						}
 					}
 				}
-				for (auto pit = productList.begin(); pit != productList.end(); ++pit)
+				for (auto pit = PM.getproductList().begin(); pit != PM.getproductList().end(); ++pit)
 				{
 					if (p_ID == (*pit)->getProductID()) {
 						productname = (*pit)->getProductName();
@@ -316,7 +311,7 @@ void ShopInfoManager::search_shoplist(vector<Client*>& clientList, vector<Produc
 			{
 				string p_ID = (*it)->getProductID();
 				string c_ID = (*it)->getclientID();
-				for (auto pit = productList.begin(); pit != productList.end(); ++pit)
+				for (auto pit = PM.getproductList().begin(); pit != PM.getproductList().end(); ++pit)
 				{
 					if ((*pit)->getProductID().find(input) != -1) {// 클라이언트 ID와 입력한 input 문자열에 겹치는게 있으면
 						flag = true;
@@ -328,7 +323,7 @@ void ShopInfoManager::search_shoplist(vector<Client*>& clientList, vector<Produc
 						}
 					}
 				}
-				for (auto cit = clientList.begin(); cit != clientList.end(); ++cit)
+				for (auto cit = CM.getClientList().begin(); cit != CM.getClientList().end(); ++cit)
 				{
 					if (c_ID == (*cit)->getclientID()) {
 						name = (*cit)->getName();
