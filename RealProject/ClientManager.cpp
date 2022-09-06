@@ -47,6 +47,8 @@ vector<Client*>& ClientManager::getClientList()
 	return clientList;
 }
 
+
+
 void ClientManager::add_Client()		// 고객 추가
 {
 	string name, clientid, phonenumber, address;		// 입력할 고객 명 , 고객id, 전화번호, 주소
