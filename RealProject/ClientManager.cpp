@@ -141,11 +141,7 @@ void ClientManager::client_print()		//조회
 
 	for (auto it = clientList.begin(); it != clientList.end(); ++it)
 	{
-		cout << (*it)->getName() << " / "
-			<< (*it)->getclientID() << " / "
-			<< (*it)->getPhoneNumber() << " / "
-			<< (*it)->getAddress() << endl;
-		
+		showClientlist(*it);		//clientList 출력
 	}
 	cout << "[고객정보 조회 완료]" << endl;
 	cout << LINE << endl;
@@ -181,10 +177,7 @@ void ClientManager::search_client()		//검색
 			auto sch_name = (*it)->getName();
 			if (sch_name.find(input) != -1) {
 				flag = true;
-				cout << (*it)->getName() << " / "
-					<< (*it)->getclientID() << " / "
-					<< (*it)->getPhoneNumber() << " / "
-					<< (*it)->getAddress() << endl;
+				showClientlist(*it);		//clientList 출력
 			}
 		}
 		if (flag == false)
@@ -206,10 +199,7 @@ void ClientManager::search_client()		//검색
 			auto sch_id = (*it)->getclientID();
 			if (sch_id.find(input) != -1) {
 				flag = true;
-				cout << (*it)->getName() << " / "
-					<< (*it)->getclientID() << " / "
-					<< (*it)->getPhoneNumber() << " / "
-					<< (*it)->getAddress() << endl;
+				showClientlist(*it);		//clientList 출력
 			}
 		}
 		if (flag == false)
@@ -298,8 +288,14 @@ void ClientManager::update_client()	//정보 변경
 
 		cout << LINE << endl;
 	
-}// void ClientManager::update_client()	//정보 변경
-
+}// 정보 변경 함수 끝
+void ClientManager::showClientlist(Client* clientinfo)		//clientList 출력
+{
+	cout << clientinfo->getName() << " / "
+		<< clientinfo->getclientID() << " / "
+		<< clientinfo->getPhoneNumber() << " / "
+		<< clientinfo->getAddress() << endl;
+}
 int ClientManager::csearach_menu()		// 검색 메뉴 입력 예외처리
 {
 	int menu;

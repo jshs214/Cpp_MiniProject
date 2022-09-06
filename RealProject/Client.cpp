@@ -8,7 +8,6 @@ Client::Client(string name, string clientID, string phoneNumber, string address)
     : m_name(name), m_clientID(clientID), m_phoneNumber(phoneNumber), m_address(address)
 {
 }
-
 string Client::getName()const
 {
     return m_name;

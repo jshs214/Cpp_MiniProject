@@ -140,7 +140,7 @@ void ProductManager::Product_print()		// 조회
 	system("cls");
 
 	cout << LINE << endl;
-	cout << "                                            제품정보조회                             " << endl;
+	cout << "                                            제품정보조회" << endl;
 	cout << LINE << endl;
 	cout << "    제품코드 (PK)     /   제품명   /   가격     /    종류   /   재고" << endl;
 	cout << LINE << endl;
@@ -151,11 +151,7 @@ void ProductManager::Product_print()		// 조회
 
 	for (auto it = productList.begin(); it != productList.end(); ++it)
 	{
-		cout << "(PK)" << (*it)->getProductID() << "-> "
-			<< (*it)->getProductName() << " / "
-			<< (*it)->getPrice() << " / "
-			<< (*it)->getProductType() << " / "
-			<< (*it)->getStock() << "개" << endl;
+		showProductlist(*it);
 	}
 
 	cout << "[제품정보 조회 완료]" << endl;
@@ -195,11 +191,7 @@ void ProductManager::search_Product()		// 검색
 			auto sch_name = (*it)->getProductName();
 			if (sch_name.find(input) != -1) {
 				flag = true;
-				cout << (*it)->getProductID() << " : "
-					<< (*it)->getProductName() << " / "
-					<< (*it)->getPrice() << " / "
-					<< (*it)->getProductType() << " / " 
-					<< (*it)->getStock()<< endl;
+				showProductlist(*it);
 			}
 		}
 		if (flag == false)
@@ -222,11 +214,7 @@ void ProductManager::search_Product()		// 검색
 			auto sch_type = (*it)->getProductType();
 			if (sch_type.find(input) != -1) {
 				flag = true;
-				cout << (*it)->getProductID() << " : "
-					<< (*it)->getProductName() << " / "
-					<< (*it)->getPrice() << " / "
-					<< (*it)->getProductType() << " / "
-					<< (*it)->getStock() << endl;
+				showProductlist(*it);
 			}
 		}
 		if (flag == false)
@@ -305,7 +293,16 @@ void ProductManager::update_product()	//정보 변경
 
 		cout << LINE << endl;
 	
-}// void ProductManager::update_product()	//정보 변경 함수 종료
+}//정보 변경 함수 종료
+void ProductManager::showProductlist(Product* productinfo)		//clientList 출력
+{
+	cout << "(PK)" << productinfo->getProductID() << "-> "
+		<< productinfo->getProductName() << " / "
+		<< productinfo->getPrice() << " / "
+		<< productinfo->getProductType() << " / "
+		<< productinfo->getStock() << "개" << endl;
+}
+
 int ProductManager::cpmenu()	// 고객,제품 관리 메뉴에서 정해진 범위만 받도록
 {
 	int menu;

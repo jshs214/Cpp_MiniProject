@@ -20,6 +20,8 @@ public:
 	int csearach_menu();	//검색 예외값 입력 처리
 	int cupdate_menu();	//변경 예외값 입력 처리
 	
+	void showClientlist(Client* clientinfo);	//clientList 출력
+
 	~ClientManager();
 
 	vector<string> parseCSV(istream&, char);

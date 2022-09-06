@@ -19,6 +19,8 @@ public:
 
 	int smenu();
 	int ssearach_menu();		// ShopInfo 검색 메뉴 입력 예외처리
+
+	void showShoplist(ShopInfo* shopinfo);	//ShopInfolist 벡터 출력
 	~ShopInfoManager();
 
 	vector<string> parseCSV(istream&, char);
