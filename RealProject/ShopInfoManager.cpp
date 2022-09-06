@@ -31,6 +31,8 @@ ShopInfoManager::ShopInfoManager(ClientManager& cm,ProductManager& pm)		//ShopIn
 			}
 		}
 	}
+	cout << "ShopInfo.txt을 로드하였습니다." << endl;
+	Sleep(1000);
 	file.close();
 }
 
@@ -49,6 +51,8 @@ ShopInfoManager::~ShopInfoManager()			//ShopInfoManager 소멸자에서 파일 입력
 			<< (*it)->getname() << ", " << (*it)->getclientID() << ", " << (*it)->getphoneNumber() << ", "
 			<<(*it)->getaddress() << ", " << (*it)->getyear() << ", " << (*it)->getmonth() << ", " << (*it)->getday()  << ", " <<endl;
 	}
+	cout << "ShopInfo.txt을 저장했습니다." << endl;
+	Sleep(1000);
 	fs.close();
 }
 
@@ -399,7 +403,7 @@ void ShopInfoManager::update_shop()	//주문정보 변경 함수
 
 								int up_stock = (*pit)->getStock() - (*it)->getStock();	// 제품재고 - 변경한 주문수량 
 								(*pit)->setStock(up_stock);
-								cout << endl << "[수량이 변경되었습니다.]" << endl;
+								cout << "[수량이 변경되었습니다.]" << endl;
 							}
 							break;
 						}

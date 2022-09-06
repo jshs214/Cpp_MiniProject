@@ -21,6 +21,8 @@ ClientManager::ClientManager()		//ClientManager 생성자에서 파일 load
 			}
 		}
 	}
+	cout << "Client.txt을 로드하였습니다." << endl;
+	Sleep(1000);
 	file.close();
 }
 ClientManager::~ClientManager()		//ClientManager 소멸자에서 파일 입력
@@ -38,6 +40,8 @@ ClientManager::~ClientManager()		//ClientManager 소멸자에서 파일 입력
 			<< (*it)->getPhoneNumber() << ", "
 			<< (*it)->getAddress() << endl;
 	}
+	cout << "Client.txt을 저장했습니다." << endl;
+	Sleep(1000);
 	fs.close();
 
 }

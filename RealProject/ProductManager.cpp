@@ -21,6 +21,8 @@ ProductManager::ProductManager()		//ProductManager 생성자에서 파일 load
 			}
 		}
 	}
+	cout << "Product.txt을 로드하였습니다." << endl;
+	Sleep(1000);
 	file.close();
 }
 
@@ -40,6 +42,8 @@ ProductManager::~ProductManager()		//ProductManager 소멸자에서 파일 입력
 			<< (*it)->getProductType() << ", "
 			<< (*it)->getStock()<<endl;
 	}
+	cout << "Product.txt을 저장했습니다." << endl;
+	Sleep(1000);
 	fs.close();
 }
 
