@@ -8,7 +8,8 @@
 #include <iomanip>
 
 
-ShopInfoManager::ShopInfoManager()
+ShopInfoManager::ShopInfoManager(ClientManager& cm,ProductManager& pm)
+	:CM(cm), PM(pm)
 {
 	ifstream file;
 	file.open("ShopInfo.txt");
@@ -48,6 +49,27 @@ ShopInfoManager::~ShopInfoManager()
 vector<ShopInfo*>& ShopInfoManager::getShopInfolist()
 {
 	return ShopInfolist;
+}
+
+void ShopInfoManager::ShopMainMenu()
+{
+	int shoping_menu;
+	int back = 0;
+	shoping_menu = smenu();	//쇼핑정보메뉴에서 정해진 범위만 받도록
+	switch (shoping_menu)
+	{
+	case 1:		// 주문
+		add_Shoplist(CM.getClientList(), PM.getproductList());
+		break;
+	case 2:		//주문 내역 조회
+		shoplist_print(CM.getClientList(), PM.getproductList());
+		cout << "종료 (0) "; cin >> back;
+		if (back == 0)break;
+	case 3:		//주문 내역 검색
+		search_shoplist(CM.getClientList(), PM.getproductList());
+		cout << "종료 (0) "; cin >> back;
+		if (back == 0)break;
+	}
 }
 void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>& productList)       // 주문하기
 {
@@ -113,10 +135,10 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 		if (pid == "0") return;		//종료조건
 		}
 
-		for (auto cit = clientList.begin(); cit != clientList.end(); ++cit)
+		for (auto cit = clientList.begin(); cit != clientList.end(); ++cit)		// Client의 데이터를 ShopInfolist 벡터에 값복사
 		{
 			auto sch_cid = (*cit)->getclientID();
-			if (sch_cid == cid) {           // ClientID와 입력한 id가 같으면
+			if (sch_cid == cid) {           
 				name = (*cit)->getName();
 				clientid = (*cit)->getclientID();
 				phonenumber = (*cit)->getPhoneNumber();
@@ -124,7 +146,7 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 			}
 		}
 
-		for (auto pit = productList.begin(); pit != productList.end(); ++pit)
+		for (auto pit = productList.begin(); pit != productList.end(); ++pit)		// Product의 데이터를 ShopInfolist 벡터에 값복사
 		{
 			auto sch_PK = (*pit)->getProductID();
 			if (sch_PK == pid) {
@@ -143,7 +165,6 @@ void ShopInfoManager::add_Shoplist(vector<Client*>& clientList, vector<Product*>
 			shopkey++;
 		}
 	}
-
 	
 	for (auto pit = productList.begin(); pit != productList.end(); ++pit) {				// 주문 할 때 Product의 재고가 빠지는 동작
 		auto id = (*pit)->getProductID();	////Product에 있는 고객ID
@@ -191,7 +212,16 @@ void ShopInfoManager::shoplist_print(vector<Client*>& clientList, vector<Product
 		return a->getShopkey() < b->getShopkey();
 		});
 
-	print_Shoplist(ShopInfolist);	//ShopInfolist 벡터 출력
+	for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)    //Shoplist 벡터 출력
+	{
+		sum = (*it)->getPrice() * (*it)->getStock();
+		cout.setf(ios::left); //좌측 정렬 후 출력
+		cout << " #" << setw(27) << (*it)->getShopkey() << setw(15) << (*it)->getProductID() << setw(15) << (*it)->getproductName() << setw(15)
+			<< (*it)->getproductType() << setw(11) << (*it)->getPrice()
+			<< setw(11) << (*it)->getStock() << setw(15) << sum << endl;
+		cout << "  " << setw(27) << (*it)->getname() << setw(15) << (*it)->getclientID() << setw(15) << (*it)->getphoneNumber()
+			<< (*it)->getaddress() << endl << endl;
+	}
 
 	cout << "[주문내역 조회 완료]" << endl;
 	cout << LINE << endl;
@@ -323,6 +353,25 @@ void ShopInfoManager::search_shoplist(vector<Client*>& clientList, vector<Produc
 }//void search_shoplist(vector<Client*>& clientList, vector<Product*>& productList) 검색하기 함수
 
 
+
+int ShopInfoManager::smenu()	// 쇼핑정보 메뉴에서 정해진 범위만 받도록
+{
+	int menu;
+	cin >> menu;
+	if (!cin) {		// cin menu 에 숫자만 입력 받도록
+		cout << "[메뉴 번호만 입력해주세요]";
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+		Sleep(1000);
+	}
+	else if (menu >= 0 && menu < 6)
+		return menu;
+	else {
+		cout << "[메뉴 번호만 입력해주세요]" << endl;
+		Sleep(1000);
+	}
+	return 0;
+}
 int ShopInfoManager::ssearach_menu()		// 검색 메뉴 입력 예외처리
 {
 	int menu;
@@ -349,20 +398,7 @@ void ShopInfoManager::print_Shopmenu()		//주문내역 테이블 메뉴
 	cout << setw(29) << " 고객명" << setw(15) << "고객ID" << setw(15) << "전화번호" << "주소" << endl;
 	cout << LINE << endl;
 }
-void ShopInfoManager::print_Shoplist(vector<ShopInfo*>& ShopInfolist)	//ShopInfolist 벡터 출력 함수
-{
-	int sum;
-	for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)    //Shoplist 벡터 검사
-	{
-		sum = (*it)->getPrice() * (*it)->getStock();
-		cout.setf(ios::left); //좌측 정렬 후 출력
-		cout << " #" << setw(27) << (*it)->getShopkey() << setw(15) << (*it)->getProductID() << setw(15) << (*it)->getproductName() << setw(15)
-			<< (*it)->getproductType() << setw(11) << (*it)->getPrice()
-			<< setw(11) << (*it)->getStock() << setw(15) << sum << endl;
-		cout << "  " << setw(27) << (*it)->getname() << setw(15) << (*it)->getclientID() << setw(15) << (*it)->getphoneNumber()
-			<< (*it)->getaddress() << endl << endl;
-	}
-}
+
 vector<string> ShopInfoManager::parseCSV(istream& file, char delimiter)
 {
 	stringstream ss;

@@ -47,7 +47,40 @@ vector<Client*>& ClientManager::getClientList()
 	return clientList;
 }
 
+void ClientManager::ClientMainMenu()	//고객 메인 화면
+{
+	int back = 0;
+	int Client_menu;
+	Client_menu = cpmenu();		//고객관리메뉴에서 정해진 범위만 받도록
+	switch (Client_menu)
+	{
+	case 0:	//메인화면으로
+		break;
+	case 1:		//입력
+		add_Client();
+		break;
+	case 2:		//조회
+		client_print();
+		cout << "종료 (0) "; cin >> back;
+		if (back == 0)break;
+	case 3:		//검색
+		search_client();
+		cout << "종료 (0) "; cin >> back;
+		if (back == 0)break;
+		break;
+	case 4:		//삭제
+		delete_client();
+		cout << "종료 (0) "; cin >> back;
+		if (back == 0)break;
+		break;
+	case 5:		//변경
+		update_client();
+		cout << "종료 (0) "; cin >> back;
+		if (back == 0)break;
+		break;
+	}	//고객 관리 프로그램 switch case문 종료
 
+}
 
 void ClientManager::add_Client()		// 고객 추가
 {
@@ -304,6 +337,24 @@ int ClientManager::cupdate_menu()	// 변경 메뉴 입력 예외 처리
 	return 0;
 }
 
+int ClientManager::cpmenu()	// 고객,제품 관리 메뉴에서 정해진 범위만 받도록
+{
+	int menu;
+	cin >> menu;
+	if (!cin) {		// cin menu 에 숫자만 입력 받도록
+		cout << "[메뉴 번호만 입력해주세요]";
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+		Sleep(1000);
+	}
+	else if (menu >= 0 && menu < 6)
+		return menu;
+	else {
+		cout << "[메뉴 번호만 입력해주세요]" << endl;
+		Sleep(1000);
+	}
+	return 0;
+}
 vector<string> ClientManager::parseCSV(istream& file, char delimiter)
 {
 	stringstream ss;
