@@ -14,7 +14,8 @@ public:
     int getShopkey() const;
     void setShopkey(int&);
     string getclientID() const;     // °í°´ ID
-    string getProductID() const;    
+    string getProductID() const;   
+
     int getStock() const;
     void setStock(int& );
 
