@@ -2,7 +2,10 @@
 #define __CLIENTMANAGER_H__
 #include "Client.h"
 #include <vector>
-
+/**
+* 고객정보를 관리하는 클래스
+* @author 홍성주
+*/
 class ClientManager {
 public:
 	ClientManager();
@@ -25,6 +28,6 @@ public:
 	vector<string> parseCSV(istream&, char);
 	vector<Client*>& getClientList();
 private:
-	vector<Client*>clientList;
+	vector<Client*>clientList;	// 고객정보가 저장되는 벡터
 };
 #endif

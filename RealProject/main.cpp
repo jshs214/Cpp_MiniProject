@@ -7,19 +7,18 @@
 void showMenu();	//디자인을위한 메뉴 출력 함수 
 void showInfo();	//디자인을 위한 메뉴 선택창 함수
 void showShopInfo(); //ShopInfo 디자인을 위한 함수
-
 int inmenu();	// 1 ~ 4 정해진 입력 범위만 받도록
 
 
 int main()
 {
-	int menu=0;	// 1. 고객 정보 관리 p2. 상품 정보 관리 3. 쇼핑 정보 관리
+	int menu=0;	// 1 ~ 3 메뉴
 
 	bool whileflag = false;
 
-	ClientManager CM;
-	ProductManager PM;
-	ShopInfoManager SM(CM,PM);
+	ClientManager CM;		// 고객정보를 관리하는 객체
+	ProductManager PM;		// 제품정보를 관리하는 객체
+	ShopInfoManager SM(CM,PM);	// 주문정보를 관리하는 객체
 
 	while (1) {
 		showMenu();
@@ -47,18 +46,21 @@ int main()
 			showShopInfo();		//디자인을 위한 메뉴 선택창 함수
 			SM.ShopMainMenu();	//주문정보관리 동작함수
 			break;
-		case 4:		// 종료
-			whileflag = true;	// 정상종료 조건
+		case 4:	
+			whileflag = true;	// 종료조건
 			break;
 		}
-		if (whileflag == true)	break;	// while 종료조건
-	}	//while 종료
+		if (whileflag == true)	break;
+	}
 
 	cout << "[프로그램이 정상 종료 되었습니다.]" << endl;
 	return 0;
 }
 
-void showMenu()		// 디자인을위한 메뉴 출력 함수
+/**
+*  디자인을위한 디자인메뉴출력 함수
+*/
+void showMenu()	
 {
 	system("cls"); 
 	cout << LINE << endl;
@@ -70,24 +72,37 @@ void showMenu()		// 디자인을위한 메뉴 출력 함수
 	cout << LINE << endl;
 }
 
-void showInfo()		// 디자인을 위한 1 ~ 5 메뉴선택 함수
+/**
+*  디자인을 위한 1 ~ 5 메뉴선택 출력함수
+*/
+void showInfo()	
 {
 	cout << LINE << endl;
 	cout << "   1.입력   /   2. 조회   /   3. 검색   /   4. 삭제   /   5. 변경   / (메인화면가기 0)" << endl;
 	cout << LINE << endl;
 }
-void showShopInfo()		//ShopInfo 디자인을 위한 함수
+
+/**
+* ShopInfo 디자인을 위한 출력함수
+*/
+void showShopInfo()
 {
 	cout << LINE << endl;
 	cout << "   1. 주문  /   2. 주문내역조회   /   3. 주문내역검색   /   4. 주문정보 변경   /   5. 주문내역삭제" << endl;
 	cout << LINE << endl;
 }
 
-int inmenu() //1 ~ 4 정해진 입력 범위만 받도록
+
+/**
+* 입력값 예외처리 함수
+* @ exception 정해진 입력값이 아닐 경우 예외처리
+* @ return 입력값 반환
+*/
+int inmenu()
 {
 	int menu;
 	cin >> menu;
-	if (!cin) {		// cin menu 에 숫자만 입력 받도록
+	if (!cin) {		// cin에 숫자만 입력 받도록
 		cout << "[메뉴 번호만 입력해주세요]";
 		cin.clear();
 		cin.ignore(INT_MAX, '\n');

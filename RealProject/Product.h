@@ -6,7 +6,10 @@
 #include "Line.h"
 
 using namespace std;
-
+/**
+* 제품정보의 데이터를 관리하는 클래스
+* @author 홍성주
+*/
 class Product{
 public:
     Product(string = 0, string = "", int = 0,  string="", int = 0);

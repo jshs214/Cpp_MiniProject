@@ -8,7 +8,11 @@
 #define C_YLLW "\033[33m"
 #define C_NRML "\033[0m"
 
-ProductManager::ProductManager()		//ProductManager 생성자에서 파일 load
+/**
+* 생성자에서 Product.txt 파일이 존재하면, ','로 구분한 텍스트를 한줄씩 불러옴.
+* @ exception 파일이 없으면 로드되지 않음.
+*/
+ProductManager::ProductManager()
 {
 	ifstream file;
 	file.open("Product.txt");
@@ -28,7 +32,10 @@ ProductManager::ProductManager()		//ProductManager 생성자에서 파일 load
 	Sleep(1000);
 	file.close();
 }
-
+/**
+* 소멸자에서 Product.txt 파일이 존재하면 productList 벡터의 ','로 구분한 텍스트 한줄 씩 저장
+* @ exception 파일이 없으면 파일 생성.
+*/
 ProductManager::~ProductManager()		//ProductManager 소멸자에서 파일 입력
 {
 	ofstream fs("Product.txt");
@@ -49,12 +56,18 @@ ProductManager::~ProductManager()		//ProductManager 소멸자에서 파일 입력
 	Sleep(1000);
 	fs.close();
 }
-
+/**
+* @ return 제품정보가 저장된 clientList벡터 반환
+*/
 vector<Product*>& ProductManager::getproductList()
 {
 	return productList;
 }
-
+/**
+* 제품관리메인
+* 화면에서 입력값을 받아 입력, 조회, 검색, 삭제, 변경 등 함수를 호출
+* @ exception 정해진 입력값이 아니면 함수 종료
+*/
 void ProductManager::ProductMainMenu()
 {
 	int back = 0;
@@ -90,7 +103,13 @@ void ProductManager::ProductMainMenu()
 		break;
 	}
 }
-void ProductManager::add_Product()		// 제품 추가
+/**
+* 제품정보입력
+* 제품정보를 관리하는 productList벡터에 입력한 데이터를 추가
+*
+* @ exception 제품코드(PK)를 중복검사 해 중복이면 추가되지 않도록 예외처리.
+*/
+void ProductManager::add_Product()
 {
 	string productID, productName, productType;
 	int price = 0, stock=0;	
@@ -163,7 +182,11 @@ void ProductManager::add_Product()		// 제품 추가
 	Sleep(1000);	//Delay 1초
 }
 
-void ProductManager::Product_print()		// productList 제품정보조회
+/**
+* 제품정보조회
+* 제품정보를 관리하는 productList벡터에 입력된 데이터를 조회.
+*/
+void ProductManager::Product_print()
 {
 	system("cls");
 
@@ -188,7 +211,12 @@ void ProductManager::Product_print()		// productList 제품정보조회
 	cout << LINE << endl;
 }
 
-
+/**
+* 제품정보검색
+* 문자열을 입력받아 문자열이 고객정보의 입력된 데이터에 포함되는 데이터가 있으면 productList의 데이터 검색.
+*
+* @ exception 정해진 입력값이 아닐 경우 예외처리
+*/
 void ProductManager::search_Product()		// 제품정보검색
 {
 	string input;
@@ -263,7 +291,11 @@ void ProductManager::search_Product()		// 제품정보검색
 	}
 }
 
-void ProductManager::delete_Product()		//제품정보삭제 함수
+/**
+* 제품정보삭제
+* 제품PK 문자열을 입력받아 문자열이 제품정보의 PK와 일치하면 해당 productList의 데이터 삭제.
+*/
+void ProductManager::delete_Product()
 {
 	string input;
 	bool flag = false;
@@ -294,7 +326,13 @@ void ProductManager::delete_Product()		//제품정보삭제 함수
 	cout << LINE << endl;
 }
 
-void ProductManager::update_product()	// 제품정보변경함수
+/**
+* 제품정보변경
+* 변경할 정보를 선택 후 입력받아 해당 productList의 데이터 변경.
+*
+* @ exception 정해진 입력값이 아닐 경우 예외처리
+*/
+void ProductManager::update_product()
 {
 	string input;
 	bool flag = false;
@@ -323,20 +361,21 @@ void ProductManager::update_product()	// 제품정보변경함수
 			case 1:		//가격 변경
 				cout << "변경할 가격 입력" << endl;
 				data=update_data();
-				if (data != 0) {
+				if (data > 0) {
 					(*it)->setPrice(data);
 					cout << "[가격 변경 완료]" << endl;
 				}
 				else if (data == 0) {
-					(*it)->setPrice(data);
-					cout << "[가격 변경 완료]" << endl;
+					cout << "[범위가 벗어났습니다. 999999999 이하의 양수만 입력해주세요]" << endl;
+					Sleep(1000);
 				}
+				
 				break;
 
 			case 2:		//재고 변경
 				cout << "변경할 재고 수량 입력" << endl;
 				data = update_data();
-				if (data != 0) {
+				if (data > 0) {
 					(*it)->setStock(data);
 					cout << "[재고 변경 완료]" << endl;
 				}
@@ -362,8 +401,12 @@ void ProductManager::update_product()	// 제품정보변경함수
 
 		cout << LINE << endl;
 	
-}//정보 변경 함수 종료
-void ProductManager::showProductlist(Product* productinfo)		//clientList 출력
+}
+
+/**
+* productList에 입력된 데이터 출력함수
+*/
+void ProductManager::showProductlist(Product* productinfo)
 {
 	cout << "(PK)" << productinfo->getProductID() << "-> "
 		<< productinfo->getProductName() << " / "
@@ -372,7 +415,12 @@ void ProductManager::showProductlist(Product* productinfo)		//clientList 출력
 		<< productinfo->getStock() << "개" << endl;
 }
 
-int ProductManager::cpmenu()	// 고객,제품 관리 메뉴에서 정해진 범위만 받도록
+/**
+* 입력값 예외처리 함수
+* @ exception 정해진 입력값이 아닐 경우 예외처리
+* @ return 입력값 반환
+*/
+int ProductManager::cpmenu()
 {
 	int menu;
 	cin >> menu;
@@ -391,7 +439,12 @@ int ProductManager::cpmenu()	// 고객,제품 관리 메뉴에서 정해진 범위만 받도록
 	return 0;
 }
 
-int ProductManager::pupdate_menu()	// 검색,변경 메뉴 입력 예외 처리
+/**
+* 입력값 예외처리 함수
+* @ exception 정해진 입력값이 아닐 경우 예외처리
+* @ return 입력값 반환
+*/
+int ProductManager::pupdate_menu()
 {
 	int menu;
 	cin >> menu;
@@ -409,7 +462,13 @@ int ProductManager::pupdate_menu()	// 검색,변경 메뉴 입력 예외 처리
 	}
 	return 0;
 }
-int ProductManager::update_data() // 예외 처리
+
+/**
+* 입력값 예외처리 함수
+* @ exception 정해진 입력값이 아닐 경우 예외처리
+* @ return 입력값 반환
+*/
+int ProductManager::update_data()
 {
 	int data;
 	cin >> data;
@@ -428,6 +487,12 @@ int ProductManager::update_data() // 예외 처리
 	return 0;
 }
 
+/**
+* CSV 파일의 형식을 한 행씩 가져옴
+* @ param istream& file 가져올 내용이 들어있는 파일
+* @ param char delimiter 구분 문자
+* @ return 한 행씩 반환
+*/
 vector<string> ProductManager::parseCSV(istream& file, char delimiter)
 {
 	stringstream ss;

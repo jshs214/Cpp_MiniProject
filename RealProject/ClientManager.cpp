@@ -8,6 +8,10 @@
 #define C_YLLW "\033[33m"
 #define C_NRML "\033[0m"
 
+/**
+* 생성자에서 Client.txt 파일이 존재하면, ','로 구분한 텍스트를 한줄씩 불러옴.
+* @ exception 파일이 없으면 로드되지 않음.
+*/
 ClientManager::ClientManager()		//ClientManager 생성자에서 파일 load
 {
 	ifstream file;
@@ -26,6 +30,11 @@ ClientManager::ClientManager()		//ClientManager 생성자에서 파일 load
 	Sleep(1000);
 	file.close();
 }
+
+/**
+* 소멸자에서 Client.txt 파일이 존재하면 productList벡터의 ','로 구분한 텍스트 한줄 씩 저장
+* @ exception 파일이 없으면 파일 생성.
+*/
 ClientManager::~ClientManager()		//ClientManager 소멸자에서 파일 입력
 {
 	ofstream fs("Client.txt");
@@ -47,12 +56,21 @@ ClientManager::~ClientManager()		//ClientManager 소멸자에서 파일 입력
 
 }
 
+/**
+* @ return 고객정보가 저장된 clientList벡터 반환
+*/
 vector<Client*>& ClientManager::getClientList()
 {
 	return clientList;
 }
 
-void ClientManager::ClientMainMenu()	//고객 메인 화면
+/**
+* 고객관리메인
+* 화면에서 입력값을 받아 입력, 조회, 검색, 삭제, 변경 등 함수를 호출
+* 
+* @ exception 정해진 입력값이 아닐 경우 예외처리
+*/
+void ClientManager::ClientMainMenu()
 {
 	int back = 0;
 	int Client_menu;	//1. 입력 2. 조회 3. 검색 4. 삭제 5. 변경
@@ -86,7 +104,13 @@ void ClientManager::ClientMainMenu()	//고객 메인 화면
 	}
 }
 
-void ClientManager::add_Client()		 // clientList 벡터에 데이터를 push_back 하는 고객추가 함수
+/**
+* 고객정보입력
+* 고객정보를 관리하는 clientList벡터에 입력한 데이터를 추가
+*
+* @ exception 고객ID(PK)를 중복검사 해 중복이면 추가되지 않도록 예외처리.
+*/
+void ClientManager::add_Client()
 {
 	string name, clientid, phonenumber, address;
 
@@ -127,7 +151,11 @@ void ClientManager::add_Client()		 // clientList 벡터에 데이터를 push_bac
 	Sleep(1000);	//Delay 1초
 }
 
-void ClientManager::client_print()		// clientList 고객정보조회
+/**
+* 고객정보조회
+* 고객정보를 관리하는 clientList벡터에 입력된 데이터를 조회.
+*/
+void ClientManager::client_print()
 {
 
 	system("cls");
@@ -151,7 +179,13 @@ void ClientManager::client_print()		// clientList 고객정보조회
 	cout << LINE << endl;
 }
 
-void ClientManager::search_client()		// 고객정보검색함수
+/**
+* 고객정보검색
+* 문자열을 입력받아 문자열이 고객정보의 입력된 데이터에 포함되는 데이터가 있으면 clientList의 데이터 검색.
+* 
+* @ exception 정해진 입력값이 아닐 경우 예외처리
+*/
+void ClientManager::search_client()	
 {
 	bool flag = false;
 	int num = 0;
@@ -219,7 +253,11 @@ void ClientManager::search_client()		// 고객정보검색함수
 	}
 }
 
-void ClientManager::delete_client()		//고객정보삭제 함수
+/**
+* 고객정보삭제
+* PK 문자열을 입력받아 문자열이 고객정보의 PK와 일치하면 해당 clientList의 데이터 삭제.
+*/
+void ClientManager::delete_client()
 {
 	bool flag = false;
 	string input;	//삭제 시 수정할 데이터와 매칭하기 위해 입력받는 지역변수
@@ -251,7 +289,13 @@ void ClientManager::delete_client()		//고객정보삭제 함수
 	cout << LINE << endl;
 }
 
-void ClientManager::update_client()	// 고객정보변경
+/**
+* 고객정보변경
+* 변경할 정보를 선택 후 입력받아 해당 clientList의 데이터 변경.
+* 
+* * @ exception 정해진 입력값이 아닐 경우 예외처리
+*/
+void ClientManager::update_client()
 {
 	int num = 0;
 	bool flag = false;
@@ -303,14 +347,24 @@ void ClientManager::update_client()	// 고객정보변경
 		cout << LINE << endl;
 	
 }
-void ClientManager::showClientlist(Client* clientinfo)		//clientList 출력함수
+
+/**
+* clientList에 입력된 데이터 출력함수
+*/
+void ClientManager::showClientlist(Client* clientinfo)
 {
 	cout << clientinfo->getName() << " / "
 		<< clientinfo->getclientID() << " / "
 		<< clientinfo->getPhoneNumber() << " / "
 		<< clientinfo->getAddress() << endl;
 }
-int ClientManager::csearach_menu()		// 검색메뉴입력 예외처리함수
+
+/**
+* 입력값 예외처리 함수
+* @ exception 정해진 입력값이 아닐 경우 예외처리
+* @ return 입력값 반환
+*/
+int ClientManager::csearach_menu()
 {
 	int menu;
 	cin >> menu;
@@ -328,7 +382,13 @@ int ClientManager::csearach_menu()		// 검색메뉴입력 예외처리함수
 	}
 	return 0;
 }
-int ClientManager::cupdate_menu()	// 변경메뉴입력 예외처리함수
+
+/**
+* 입력값 예외처리 함수
+* @ exception 정해진 입력값이 아닐 경우 예외처리
+* @ return 입력값 반환
+*/
+int ClientManager::cupdate_menu()
 {
 	int menu;
 	cin >> menu;
@@ -347,7 +407,12 @@ int ClientManager::cupdate_menu()	// 변경메뉴입력 예외처리함수
 	return 0;
 }
 
-int ClientManager::cpmenu()	// 고객,제품 관리 메뉴에서 입력 예외처리함수
+/**
+* 입력값 예외처리 함수
+* @ exception 정해진 입력값이 아닐 경우 예외처리
+* @ return 입력값 반환
+*/
+int ClientManager::cpmenu()
 {
 	int menu;
 	cin >> menu;
@@ -365,6 +430,13 @@ int ClientManager::cpmenu()	// 고객,제품 관리 메뉴에서 입력 예외�
 	}
 	return 0;
 }
+
+/**
+* CSV 파일의 형식을 한 행씩 가져옴
+* @ param istream& file 가져올 내용이 들어있는 파일
+* @ param char delimiter 구분 문자
+* @ return 한 행씩 반환
+*/
 vector<string> ClientManager::parseCSV(istream& file, char delimiter)
 {
 	stringstream ss;

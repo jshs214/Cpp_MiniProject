@@ -11,7 +11,13 @@
 #define C_YLLW "\033[33m"
 #define C_NRML "\033[0m"
 
-ShopInfoManager::ShopInfoManager(ClientManager& cm,ProductManager& pm)		//ShopInfoManager 생성자에서 파일 load
+/**
+* 생성자에서 ShopInfo.txt 파일이 존재하면, ','로 구분한 텍스트를 한줄씩 불러옴.
+* @ param ClientManager& cm : // 고객정보를 관리하는 객체
+* @ param ProductManager& pm : // 제품정보를 관리하는 객체
+* @ exception 파일이 없으면 로드되지 않음.
+*/
+ShopInfoManager::ShopInfoManager(ClientManager& cm,ProductManager& pm)
 	:CM(cm), PM(pm)
 {
 	ifstream file;
@@ -36,8 +42,11 @@ ShopInfoManager::ShopInfoManager(ClientManager& cm,ProductManager& pm)		//ShopIn
 	Sleep(1000);
 	file.close();
 }
-
-ShopInfoManager::~ShopInfoManager()			//ShopInfoManager 소멸자에서 파일 입력
+/**
+* 소멸자에서 ShopInfo.txt 파일이 존재하면 ShopInfolist 벡터의 ','로 구분한 텍스트 한줄 씩 저장
+* @ exception 파일이 없으면 파일 생성.
+*/
+ShopInfoManager::~ShopInfoManager()
 {
 	ofstream fs("ShopInfo.txt");
 	if (!fs) {
@@ -56,8 +65,12 @@ ShopInfoManager::~ShopInfoManager()			//ShopInfoManager 소멸자에서 파일 입력
 	Sleep(1000);
 	fs.close();
 }
-
-void ShopInfoManager::ShopMainMenu()	//ShopInfo 화면
+/**
+* 주문관리메인
+* 화면에서 입력값을 받아 주문, 조회, 검색, 변경, 삭제 등 함수를 호출
+* @ exception 정해진 입력값이 아니면 함수 종료
+*/
+void ShopInfoManager::ShopMainMenu()
 {
 	int shoping_menu;	// 1. 주문 2. 조회 3. 검색 4. 변경 5. 삭제
 	int back = 0;
@@ -85,7 +98,17 @@ void ShopInfoManager::ShopMainMenu()	//ShopInfo 화면
 		if (back == 0)break;
 	}
 }
-void ShopInfoManager::add_Shoplist()       // ShopInfolist벡터에 데이터를 push_back 하는 주문 함수
+
+/**
+* 주문정보입력
+* 주문정보를 관리하는 ShopInfolist벡터에 입력한 데이터를 추가
+*
+* @ exception 고객ID(고객의 PK)를 중복검사 해 중복이여야 주문가능하도록 예외처리.
+* @ exception 제품코드(제품의 PK)를 중복검사 해 중복이여야 주문가능하도록 예외처리.
+* @ exception 주문에관한 PK는 중복되지 않게 예외처리.
+* @ exception 주문 시, 제품의 재고가 주문수량보다 적다면 주문되지 않게 예외처리.
+*/
+void ShopInfoManager::add_Shoplist()
 {
 	int shopkey=1000, stock = 0,price =0;
 	string productid, productname, producttype, name, clientid, phonenumber, address;
@@ -105,9 +128,15 @@ void ShopInfoManager::add_Shoplist()       // ShopInfolist벡터에 데이터를 push_b
 	
 	system("cls");
 	cout << LINE << endl;
-	cout << "                                            주문                             " << endl;
+	cout << "                                                      주문 " << endl;
 	cout << LINE << endl;
-
+	cout << "                                            현재 등록된 제품 내역 " << endl;
+	cout << LINE << endl;
+	for (auto it = PM.getproductList().begin(); it != PM.getproductList().end(); ++it)
+	{
+		PM.showProductlist(*it);	//productList 출력
+	}
+	cout << LINE << endl;
 	cout << "고객 ID : "; cin >> cid;
 	cout << "제품 ID : "; cin >> pid;
 	cout << "구매할 제품 개수 : "; cin >> stock;
@@ -213,8 +242,11 @@ void ShopInfoManager::add_Shoplist()       // ShopInfolist벡터에 데이터를 push_b
 	}
 	Sleep(1000);
 }
-
-void ShopInfoManager::shoplist_print()     // ShopInfolist 주문정보조회
+/**
+* 주문정보조회
+* 주문정보를 관리하는 ShopInfolist벡터에 입력된 데이터를 조회.
+*/
+void ShopInfoManager::shoplist_print()
 {
 	int sum = 0;
 
@@ -250,7 +282,13 @@ void ShopInfoManager::shoplist_print()     // ShopInfolist 주문정보조회
 	cout << LINE << endl;
 }
 
-void ShopInfoManager::search_shoplist()    // ShopInfolist 검색
+/**
+* 주문정보검색
+* 문자열을 입력받아 문자열이 주문정보의 입력된 데이터에 포함되는 데이터가 있으면 ShopInfolist의 데이터 검색.
+*
+* @ exception 정해진 입력값이 아닐 경우 예외처리
+*/
+void ShopInfoManager::search_shoplist()
 {
 	int price, sum = 0;
 	string name, phonenumber, address, productname, producttype; 
@@ -365,9 +403,18 @@ void ShopInfoManager::search_shoplist()    // ShopInfolist 검색
 	case 3: 		cout << "[메뉴 번호만 입력해주세요]" << endl;
 		Sleep(1000); break;
 	}
-}//검색하기 함수 종료
+}
 
-void ShopInfoManager::update_shop()	//주문정보 변경 함수
+
+/**
+* 주문정보변경
+* 변경할 정보를 선택 후 입력받아 해당 ShopInfolist의 데이터 변경.
+*
+* @ exception 정해진 입력값이 아닐 경우 예외처리
+* @ exception 재고 변경 시 주문내역의 재고와 제품PK의 재고를 연동하여 수량체크. 
+              변경 시, 재고의 현재주문수량 + 제품재고수량이 0보다 작으면 변경 불가.
+*/
+void ShopInfoManager::update_shop()
 {
 	int input;
 	int up_stock;	// 변경 시 업데이트할 수량 변수
@@ -382,7 +429,7 @@ void ShopInfoManager::update_shop()	//주문정보 변경 함수
 	cout << LINE << endl;
 	cout << " 1. 재고변경, 2. 수령인 연락처 변경 3. 배송지 변경 ";
 
-	num=ssearach_menu();	// 1,2,3 외에 입력 예외 처리
+	num=ssearach_menu();
 	switch (num) {
 	case 1:	// 재고변경
 		cout << "재고변경할 주문번호를 입력하세요 : "; cin >> input;
@@ -452,8 +499,13 @@ void ShopInfoManager::update_shop()	//주문정보 변경 함수
 			cout << "[입력하신 주문번호가 없습니다]" << endl;
 		break;	//case 3 종료
 	}
-}	//주문정보 변경 함수 종료
-void ShopInfoManager::delete_shoplist() {	//삭제 함수
+}
+
+/**
+* 주문정보삭제
+* 주문정보PK 문자열을 입력받아 문자열이 주문정보의 PK와 일치하면 해당 ShopInfolist의 데이터 삭제.
+*/
+void ShopInfoManager::delete_shoplist() {
 	int input;
 	bool flag = false;
 	for (auto it = ShopInfolist.begin(); it != ShopInfolist.end(); ++it)    //Shoplist 벡터 출력
@@ -478,7 +530,11 @@ void ShopInfoManager::delete_shoplist() {	//삭제 함수
 		cout << "[입력하신 주문번호가 없습니다]" << endl;
 	cout << LINE << endl;
 }
-void ShopInfoManager::showShoplist(ShopInfo* shopinfo)		//ShopInfolist 출력 해주는 함수
+
+/**
+* ShopInfolist에 입력된 데이터 출력함수
+*/
+void ShopInfoManager::showShoplist(ShopInfo* shopinfo)
 {
 	int sum = 0;
 	sum = shopinfo->getPrice() * shopinfo->getStock();
@@ -491,11 +547,16 @@ void ShopInfoManager::showShoplist(ShopInfo* shopinfo)		//ShopInfolist 출력 해주
 		<< shopinfo->getaddress() << endl << endl;
 }
 
-int ShopInfoManager::smenu()	// 메뉴에서 정해진 범위만 받도록
+/**
+* 입력값 예외처리 함수
+* @ exception 정해진 입력값이 아닐 경우 예외처리
+* @ return 입력값 반환
+*/
+int ShopInfoManager::smenu()
 {
 	int menu;
 	cin >> menu;
-	if (!cin) {		// cin menu 에 숫자만 입력 받도록
+	if (!cin) {		// cin에 숫자만 입력 받도록
 		cout << "[메뉴 번호만 입력해주세요]";
 		cin.clear();
 		cin.ignore(INT_MAX, '\n');
@@ -509,11 +570,17 @@ int ShopInfoManager::smenu()	// 메뉴에서 정해진 범위만 받도록
 	}
 	return 0;
 }
-int ShopInfoManager::ssearach_menu() // 메뉴에서 정해진 범위만 받도록
+
+/**
+* 입력값 예외처리 함수
+* @ exception 정해진 입력값이 아닐 경우 예외처리
+* @ return 입력값 반환
+*/
+int ShopInfoManager::ssearach_menu()
 {
 	int menu;
 	cin >> menu;
-	if (!cin) {		// cin menu 에 숫자만 입력 받도록
+	if (!cin) {		// cin 에 숫자만 입력 받도록
 		cout << "[메뉴 번호만 입력해주세요]" << endl;
 		cin.clear();
 		cin.ignore(INT_MAX, '\n');
@@ -528,7 +595,10 @@ int ShopInfoManager::ssearach_menu() // 메뉴에서 정해진 범위만 받도록
 	return 0;
 }
 
-void ShopInfoManager::print_Shopmenu()		//주문내역 디자인메뉴 출력
+/**
+* 	주문내역 디자인메뉴 출력함수
+*/
+void ShopInfoManager::print_Shopmenu()	
 {
 	cout.setf(ios::left); //좌측 정렬 후 출력
 	cout << setw(29) << " 주문번호(PK)" << setw(15) << "제품코드" << setw(15) << "제품명" << setw(15) << "제품종류" << setw(11) << "가격"
@@ -537,6 +607,12 @@ void ShopInfoManager::print_Shopmenu()		//주문내역 디자인메뉴 출력
 	cout << LINE << endl;
 }
 
+/**
+* CSV 파일의 형식을 한 행씩 가져옴
+* @ param istream& file 가져올 내용이 들어있는 파일
+* @ param char delimiter 구분 문자
+* @ return 한 행씩 반환
+*/
 vector<string> ShopInfoManager::parseCSV(istream& file, char delimiter)
 {
 	stringstream ss;

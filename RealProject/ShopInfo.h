@@ -4,7 +4,10 @@
 #include <iostream>
 
 using namespace std;
-
+/**
+* 주문정보의 데이터를 관리하는 클래스
+* @author 홍성주
+*/
 class ShopInfo {
 public:
     ShopInfo(int = 0, string = "", string = "", string = "", int = 0, int = 0, string = "",

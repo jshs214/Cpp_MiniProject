@@ -2,7 +2,10 @@
 #define __PRODUCTMANAGER_H__
 #include "Product.h"
 #include <vector>
-
+/**
+* 제품정보를 관리하는 클래스
+* @author 홍성주
+*/
 class ProductManager {
 public:
 	ProductManager();
@@ -24,6 +27,6 @@ public:
 	vector<string> parseCSV(istream&, char);
 	vector<Product*>& getproductList();
 private:
-	vector<Product*>productList;
+	vector<Product*>productList;	// 제품정보가 저장되는 벡터
 };
 #endif
