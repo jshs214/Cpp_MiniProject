@@ -8,13 +8,12 @@
 using namespace std;
 /**
 * 고객정보의 데이터를 관리하는 클래스
-* @author 홍성주
 */
 class Client {
 public:
-    
+    // 고객명, 고객ID, 전화번호, 주소
     Client(string = "", string ="", string = "", string = "");
-    // name, clientID, phoneNumber, address
+
 
     string getclientID()const;
     void setclientID(string&);

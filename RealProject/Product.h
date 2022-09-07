@@ -8,12 +8,12 @@
 using namespace std;
 /**
 * 제품정보의 데이터를 관리하는 클래스
-* @author 홍성주
 */
 class Product{
 public:
+    // 제품코드, 제품명, 가격, 제품종류, 재고
     Product(string = 0, string = "", int = 0,  string="", int = 0);
-    // productID, productName, price, producttype, stock
+    
 
     string getProductID() const;
     void setProductID(string&);

@@ -10,9 +10,9 @@
 
 /**
 * 생성자에서 Client.txt 파일이 존재하면, ','로 구분한 텍스트를 한줄씩 불러옴.
-* @ exception 파일이 없으면 로드되지 않음.
+* @exception 파일이 없으면 로드되지 않음.
 */
-ClientManager::ClientManager()		//ClientManager 생성자에서 파일 load
+ClientManager::ClientManager()
 {
 	ifstream file;
 	file.open("Client.txt");
@@ -33,9 +33,9 @@ ClientManager::ClientManager()		//ClientManager 생성자에서 파일 load
 
 /**
 * 소멸자에서 Client.txt 파일이 존재하면 productList벡터의 ','로 구분한 텍스트 한줄 씩 저장
-* @ exception 파일이 없으면 파일 생성.
+* @exception 파일이 없으면 파일 생성.
 */
-ClientManager::~ClientManager()		//ClientManager 소멸자에서 파일 입력
+ClientManager::~ClientManager()
 {
 	ofstream fs("Client.txt");
 	if (!fs) {
@@ -57,7 +57,7 @@ ClientManager::~ClientManager()		//ClientManager 소멸자에서 파일 입력
 }
 
 /**
-* @ return 고객정보가 저장된 clientList벡터 반환
+* @return 고객정보가 저장된 clientList벡터 반환
 */
 vector<Client*>& ClientManager::getClientList()
 {
@@ -68,7 +68,7 @@ vector<Client*>& ClientManager::getClientList()
 * 고객관리메인
 * 화면에서 입력값을 받아 입력, 조회, 검색, 삭제, 변경 등 함수를 호출
 * 
-* @ exception 정해진 입력값이 아닐 경우 예외처리
+@exception 정해진 입력값이 아닐 경우 예외처리
 */
 void ClientManager::ClientMainMenu()
 {
@@ -108,7 +108,7 @@ void ClientManager::ClientMainMenu()
 * 고객정보입력
 * 고객정보를 관리하는 clientList벡터에 입력한 데이터를 추가
 *
-* @ exception 고객ID(PK)를 중복검사 해 중복이면 추가되지 않도록 예외처리.
+* @exception 고객ID(PK)를 중복검사 해 중복이면 추가되지 않도록 예외처리.
 */
 void ClientManager::add_Client()
 {
@@ -183,7 +183,7 @@ void ClientManager::client_print()
 * 고객정보검색
 * 문자열을 입력받아 문자열이 고객정보의 입력된 데이터에 포함되는 데이터가 있으면 clientList의 데이터 검색.
 * 
-* @ exception 정해진 입력값이 아닐 경우 예외처리
+* @exception 정해진 입력값이 아닐 경우 예외처리
 */
 void ClientManager::search_client()	
 {
@@ -293,7 +293,7 @@ void ClientManager::delete_client()
 * 고객정보변경
 * 변경할 정보를 선택 후 입력받아 해당 clientList의 데이터 변경.
 * 
-* * @ exception 정해진 입력값이 아닐 경우 예외처리
+* @exception 정해진 입력값이 아닐 경우 예외처리
 */
 void ClientManager::update_client()
 {
@@ -361,8 +361,8 @@ void ClientManager::showClientlist(Client* clientinfo)
 
 /**
 * 입력값 예외처리 함수
-* @ exception 정해진 입력값이 아닐 경우 예외처리
-* @ return 입력값 반환
+* @exception 정해진 입력값이 아닐 경우 예외처리
+* @return 입력값 반환
 */
 int ClientManager::csearach_menu()
 {
@@ -385,8 +385,8 @@ int ClientManager::csearach_menu()
 
 /**
 * 입력값 예외처리 함수
-* @ exception 정해진 입력값이 아닐 경우 예외처리
-* @ return 입력값 반환
+* @exception 정해진 입력값이 아닐 경우 예외처리
+* @return 입력값 반환
 */
 int ClientManager::cupdate_menu()
 {
@@ -409,8 +409,8 @@ int ClientManager::cupdate_menu()
 
 /**
 * 입력값 예외처리 함수
-* @ exception 정해진 입력값이 아닐 경우 예외처리
-* @ return 입력값 반환
+* @exception 정해진 입력값이 아닐 경우 예외처리
+* @return 입력값 반환
 */
 int ClientManager::cpmenu()
 {
@@ -433,9 +433,9 @@ int ClientManager::cpmenu()
 
 /**
 * CSV 파일의 형식을 한 행씩 가져옴
-* @ param istream& file 가져올 내용이 들어있는 파일
-* @ param char delimiter 구분 문자
-* @ return 한 행씩 반환
+* @param istream& file 가져올 내용이 들어있는 파일
+* @param char delimiter 구분 문자
+* @return 한 행씩 반환
 */
 vector<string> ClientManager::parseCSV(istream& file, char delimiter)
 {

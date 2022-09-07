@@ -8,7 +8,6 @@
 #include "ProductManager.h"
 /**
 * 주문정보를 관리하는 클래스
-* @author 홍성주
 */
 class ShopInfoManager {
 public:

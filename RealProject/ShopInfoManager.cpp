@@ -13,9 +13,9 @@
 
 /**
 * 생성자에서 ShopInfo.txt 파일이 존재하면, ','로 구분한 텍스트를 한줄씩 불러옴.
-* @ param ClientManager& cm : // 고객정보를 관리하는 객체
-* @ param ProductManager& pm : // 제품정보를 관리하는 객체
-* @ exception 파일이 없으면 로드되지 않음.
+* @param ClientManager& cm : // 고객정보를 관리하는 객체
+* @param ProductManager& pm : // 제품정보를 관리하는 객체
+* @exception 파일이 없으면 로드되지 않음.
 */
 ShopInfoManager::ShopInfoManager(ClientManager& cm,ProductManager& pm)
 	:CM(cm), PM(pm)
@@ -44,7 +44,7 @@ ShopInfoManager::ShopInfoManager(ClientManager& cm,ProductManager& pm)
 }
 /**
 * 소멸자에서 ShopInfo.txt 파일이 존재하면 ShopInfolist 벡터의 ','로 구분한 텍스트 한줄 씩 저장
-* @ exception 파일이 없으면 파일 생성.
+* @exception 파일이 없으면 파일 생성.
 */
 ShopInfoManager::~ShopInfoManager()
 {
@@ -68,7 +68,7 @@ ShopInfoManager::~ShopInfoManager()
 /**
 * 주문관리메인
 * 화면에서 입력값을 받아 주문, 조회, 검색, 변경, 삭제 등 함수를 호출
-* @ exception 정해진 입력값이 아니면 함수 종료
+* @exception 정해진 입력값이 아니면 함수 종료
 */
 void ShopInfoManager::ShopMainMenu()
 {
@@ -103,10 +103,10 @@ void ShopInfoManager::ShopMainMenu()
 * 주문정보입력
 * 주문정보를 관리하는 ShopInfolist벡터에 입력한 데이터를 추가
 *
-* @ exception 고객ID(고객의 PK)를 중복검사 해 중복이여야 주문가능하도록 예외처리.
-* @ exception 제품코드(제품의 PK)를 중복검사 해 중복이여야 주문가능하도록 예외처리.
-* @ exception 주문에관한 PK는 중복되지 않게 예외처리.
-* @ exception 주문 시, 제품의 재고가 주문수량보다 적다면 주문되지 않게 예외처리.
+* @exception 고객ID(고객의 PK)를 중복검사 해 중복이여야 주문가능하도록 예외처리.
+* @exception 제품코드(제품의 PK)를 중복검사 해 중복이여야 주문가능하도록 예외처리.
+* @exception 주문에관한 PK는 중복되지 않게 예외처리.
+* @exception 주문 시, 제품의 재고가 주문수량보다 적다면 주문되지 않게 예외처리.
 */
 void ShopInfoManager::add_Shoplist()
 {
@@ -286,7 +286,7 @@ void ShopInfoManager::shoplist_print()
 * 주문정보검색
 * 문자열을 입력받아 문자열이 주문정보의 입력된 데이터에 포함되는 데이터가 있으면 ShopInfolist의 데이터 검색.
 *
-* @ exception 정해진 입력값이 아닐 경우 예외처리
+* @exception 정해진 입력값이 아닐 경우 예외처리
 */
 void ShopInfoManager::search_shoplist()
 {
@@ -410,8 +410,8 @@ void ShopInfoManager::search_shoplist()
 * 주문정보변경
 * 변경할 정보를 선택 후 입력받아 해당 ShopInfolist의 데이터 변경.
 *
-* @ exception 정해진 입력값이 아닐 경우 예외처리
-* @ exception 재고 변경 시 주문내역의 재고와 제품PK의 재고를 연동하여 수량체크. 
+* @exception 정해진 입력값이 아닐 경우 예외처리
+* @exception 재고 변경 시 주문내역의 재고와 제품PK의 재고를 연동하여 수량체크. 
               변경 시, 재고의 현재주문수량 + 제품재고수량이 0보다 작으면 변경 불가.
 */
 void ShopInfoManager::update_shop()
@@ -549,8 +549,8 @@ void ShopInfoManager::showShoplist(ShopInfo* shopinfo)
 
 /**
 * 입력값 예외처리 함수
-* @ exception 정해진 입력값이 아닐 경우 예외처리
-* @ return 입력값 반환
+* @exception 정해진 입력값이 아닐 경우 예외처리
+* @return 입력값 반환
 */
 int ShopInfoManager::smenu()
 {
@@ -573,8 +573,8 @@ int ShopInfoManager::smenu()
 
 /**
 * 입력값 예외처리 함수
-* @ exception 정해진 입력값이 아닐 경우 예외처리
-* @ return 입력값 반환
+* @exception 정해진 입력값이 아닐 경우 예외처리
+* @return 입력값 반환
 */
 int ShopInfoManager::ssearach_menu()
 {
@@ -609,9 +609,9 @@ void ShopInfoManager::print_Shopmenu()
 
 /**
 * CSV 파일의 형식을 한 행씩 가져옴
-* @ param istream& file 가져올 내용이 들어있는 파일
-* @ param char delimiter 구분 문자
-* @ return 한 행씩 반환
+* @param istream& file 가져올 내용이 들어있는 파일
+* @param char delimiter 구분 문자
+* @return 한 행씩 반환
 */
 vector<string> ShopInfoManager::parseCSV(istream& file, char delimiter)
 {

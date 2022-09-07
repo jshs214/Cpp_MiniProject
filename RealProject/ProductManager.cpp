@@ -10,7 +10,7 @@
 
 /**
 * 생성자에서 Product.txt 파일이 존재하면, ','로 구분한 텍스트를 한줄씩 불러옴.
-* @ exception 파일이 없으면 로드되지 않음.
+* @exception 파일이 없으면 로드되지 않음.
 */
 ProductManager::ProductManager()
 {
@@ -34,7 +34,7 @@ ProductManager::ProductManager()
 }
 /**
 * 소멸자에서 Product.txt 파일이 존재하면 productList 벡터의 ','로 구분한 텍스트 한줄 씩 저장
-* @ exception 파일이 없으면 파일 생성.
+* @exception 파일이 없으면 파일 생성.
 */
 ProductManager::~ProductManager()		//ProductManager 소멸자에서 파일 입력
 {
@@ -57,7 +57,7 @@ ProductManager::~ProductManager()		//ProductManager 소멸자에서 파일 입력
 	fs.close();
 }
 /**
-* @ return 제품정보가 저장된 clientList벡터 반환
+* @return 제품정보가 저장된 clientList벡터 반환
 */
 vector<Product*>& ProductManager::getproductList()
 {
@@ -66,7 +66,7 @@ vector<Product*>& ProductManager::getproductList()
 /**
 * 제품관리메인
 * 화면에서 입력값을 받아 입력, 조회, 검색, 삭제, 변경 등 함수를 호출
-* @ exception 정해진 입력값이 아니면 함수 종료
+* @exception 정해진 입력값이 아니면 함수 종료
 */
 void ProductManager::ProductMainMenu()
 {
@@ -107,7 +107,7 @@ void ProductManager::ProductMainMenu()
 * 제품정보입력
 * 제품정보를 관리하는 productList벡터에 입력한 데이터를 추가
 *
-* @ exception 제품코드(PK)를 중복검사 해 중복이면 추가되지 않도록 예외처리.
+* @exception 제품코드(PK)를 중복검사 해 중복이면 추가되지 않도록 예외처리.
 */
 void ProductManager::add_Product()
 {
@@ -215,7 +215,7 @@ void ProductManager::Product_print()
 * 제품정보검색
 * 문자열을 입력받아 문자열이 고객정보의 입력된 데이터에 포함되는 데이터가 있으면 productList의 데이터 검색.
 *
-* @ exception 정해진 입력값이 아닐 경우 예외처리
+* @exception 정해진 입력값이 아닐 경우 예외처리
 */
 void ProductManager::search_Product()		// 제품정보검색
 {
@@ -330,7 +330,7 @@ void ProductManager::delete_Product()
 * 제품정보변경
 * 변경할 정보를 선택 후 입력받아 해당 productList의 데이터 변경.
 *
-* @ exception 정해진 입력값이 아닐 경우 예외처리
+* @exception 정해진 입력값이 아닐 경우 예외처리
 */
 void ProductManager::update_product()
 {
@@ -417,8 +417,8 @@ void ProductManager::showProductlist(Product* productinfo)
 
 /**
 * 입력값 예외처리 함수
-* @ exception 정해진 입력값이 아닐 경우 예외처리
-* @ return 입력값 반환
+* @exception 정해진 입력값이 아닐 경우 예외처리
+* @return 입력값 반환
 */
 int ProductManager::cpmenu()
 {
@@ -441,8 +441,8 @@ int ProductManager::cpmenu()
 
 /**
 * 입력값 예외처리 함수
-* @ exception 정해진 입력값이 아닐 경우 예외처리
-* @ return 입력값 반환
+* @exception 정해진 입력값이 아닐 경우 예외처리
+* @return 입력값 반환
 */
 int ProductManager::pupdate_menu()
 {
@@ -465,8 +465,8 @@ int ProductManager::pupdate_menu()
 
 /**
 * 입력값 예외처리 함수
-* @ exception 정해진 입력값이 아닐 경우 예외처리
-* @ return 입력값 반환
+* @exception 정해진 입력값이 아닐 경우 예외처리
+* @return 입력값 반환
 */
 int ProductManager::update_data()
 {
@@ -489,9 +489,9 @@ int ProductManager::update_data()
 
 /**
 * CSV 파일의 형식을 한 행씩 가져옴
-* @ param istream& file 가져올 내용이 들어있는 파일
-* @ param char delimiter 구분 문자
-* @ return 한 행씩 반환
+* @param istream& file 가져올 내용이 들어있는 파일
+* @param char delimiter 구분 문자
+* @return 한 행씩 반환
 */
 vector<string> ProductManager::parseCSV(istream& file, char delimiter)
 {

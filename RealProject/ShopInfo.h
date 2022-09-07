@@ -6,14 +6,14 @@
 using namespace std;
 /**
 * 주문정보의 데이터를 관리하는 클래스
-* @author 홍성주
 */
 class ShopInfo {
 public:
+    //주문번호(PK키), 제품코드, 제품명, 종류, 가격, 수량, 고객명, 
+    //고객ID, 전화번호, 주소, 연, 월, 일
     ShopInfo(int = 0, string = "", string = "", string = "", int = 0, int = 0, string = "",
              string = "", string = "", string = "",int =0,int =0,int =0);
-            //shopkey, shoppid, productName, productType, price, sstock, name, 
-            //shopcid, phonenumber, address, year, mon, mday
+
     int getShopkey() const;
     void setShopkey(int&);
     string getclientID() const;

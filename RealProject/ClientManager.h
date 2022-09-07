@@ -2,9 +2,8 @@
 #define __CLIENTMANAGER_H__
 #include "Client.h"
 #include <vector>
-/**
+/** 
 * 고객정보를 관리하는 클래스
-* @author 홍성주
 */
 class ClientManager {
 public:
